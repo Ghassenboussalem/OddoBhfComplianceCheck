@@ -1,0 +1,11 @@
+# AI-Enhanced Compliance Checker Dependencies
+
+# Core dependencies
+python-dotenv>=1.0.0
+
+# AI/LLM Integration
+google-generativeai>=0.3.0
+
+# Optional: For enhanced features
+# requests>=2.31.0
+# aiohttp>=3.9.0

@@ -1,0 +1,343 @@
+{
+  "agent_name": "ESG Agent",
+  "agent_id": "ESG_AGENT_001",
+  "description": "Validates ESG-specific mentions and compliance (Section 4.1). Ensures proper ESG communication based on fund classification and regulatory requirements.",
+  "domain": "Environmental, Social, and Governance Compliance",
+  "regulatory_framework": "French AMF regulations for fund documentation",
+  "target_audience": "Retail clients and professional investors",
+  "keywords": ["ESG", "environmental", "social", "governance", "sustainability", "exclusions", "portfolio coverage", "fund classification", "compliance", "OBAM", "cartographie", "green finance", "responsible investment"],
+  
+  "rules": [
+    {
+      "rule_id": "ESG_001",
+      "rule_name": "ESG Fund Classification Requirement",
+      "section": "4.1 - Specific ESG-related mentions",
+      "subsection": "Classification and categorization",
+      "rule_text": "Distinguish the fund's ESG approach according to the ESG Mapping (Engaging, Reduced, Limited to prospectus)",
+      "detailed_description": "Every fund must be classified into one of the ESG approach categories defined in the ESG Mapping document. This classification determines what ESG-related content can be communicated in retail documentation. The classification is mandatory and serves as the foundation for all subsequent ESG communication rules.",
+      "purpose": "Establishes the baseline ESG classification framework that governs all ESG communication for each fund",
+      "applies_to": {
+        "client_type": ["retail", "non-professional"],
+        "document_type": ["fund", "marketing materials", "presentations", "factsheets", "brochures", "reports"],
+        "fund_status": ["all", "UCITS", "AIF", "FCP", "SICAV"],
+        "geographic_scope": ["France", "European Union"]
+      },
+      "severity": "critical",
+      "severity_definition": "Non-compliance prevents document approval and publication",
+      "consequences": "Document rejection, regulatory risk, potential AMF sanctions",
+      "cross_references": [
+        {
+          "type": "reference_data",
+          "reference": "ESG Mapping",
+          "original_name": "Cartographie ESG",
+          "location": "I:\\service\\OAM\\PROCEDURES ET POLITIQUES OBAM SAS\\CARTOGRAPHIE ESG",
+          "note": "Master ESG classification document maintained by OBAM",
+          "description": "Contains the official classification of all funds into ESG approach categories"
+        }
+      ],
+      "validation_type": "classification_check",
+      "validation_method": "Cross-reference fund identifier with ESG Mapping database to verify correct classification",
+      "related_concepts": ["fund categorization", "ESG taxonomy", "regulatory classification", "investment approach"],
+      "common_errors": ["Misclassification of fund ESG level", "Using outdated ESG Mapping version", "Missing classification"],
+      "search_terms": ["ESG classification", "fund mapping", "ESG approach", "categorization", "ESG framework", "fund ESG level"]
+    },
+    {
+      "rule_id": "ESG_002",
+      "rule_name": "Engaging Approach Communication Freedom",
+      "section": "4.1 - Specific ESG-related mentions",
+      "subsection": "Engaging approach requirements",
+      "rule_text": "Engaging approach (≥ 20% exclusion and ≥ 90% portfolio coverage) → no limit to ESG communication",
+      "detailed_description": "Funds classified with an 'Engaging' ESG approach have met stringent ESG criteria and are allowed unlimited ESG communication in retail documentation. This approach requires at least 20% of the investment universe to be excluded based on ESG criteria, and at least 90% of the portfolio must be covered by ESG analysis.",
+      "purpose": "Enables full ESG storytelling for funds with strong, demonstrable ESG commitments",
+      "quantitative_thresholds": {
+        "minimum_exclusion_rate": "20%",
+        "minimum_portfolio_coverage": "90%",
+        "measurement_basis": "Percentage of investment universe and portfolio value"
+      },
+      "applies_to": {
+        "client_type": ["retail", "non-professional", "professional"],
+        "document_type": ["fund", "marketing materials", "presentations", "factsheets", "brochures", "website content"],
+        "fund_status": ["all"],
+        "esg_approach": ["engaging", "engageante"],
+        "fund_characteristics": ["high ESG integration", "strong exclusion policy", "comprehensive ESG coverage"]
+      },
+      "severity": "info",
+      "severity_definition": "Informational - describes permitted communication scope",
+      "consequences": "None - this is a permissive rule allowing maximum flexibility",
+      "cross_references": [],
+      "validation_type": "policy_check",
+      "validation_method": "Verify fund meets threshold criteria (20% exclusion, 90% coverage) and confirm classification as 'Engaging' in ESG Mapping",
+      "permitted_content": [
+        "Detailed ESG strategy explanation",
+        "ESG performance metrics",
+        "Impact reporting",
+        "ESG ratings and scores",
+        "Engagement activities",
+        "Voting policies",
+        "Carbon footprint data",
+        "SDG alignment",
+        "Sustainability themes"
+      ],
+      "related_concepts": ["sustainable investing", "impact investing", "exclusion policies", "ESG integration", "responsible investment", "SRI", "Article 9 SFDR"],
+      "common_errors": ["Incorrectly assuming engaging status without verification", "Missing threshold documentation"],
+      "search_terms": ["engaging ESG", "unlimited ESG communication", "20% exclusion", "90% coverage", "strong ESG approach", "ESG freedom", "comprehensive ESG"]
+    },
+    {
+      "rule_id": "ESG_003",
+      "rule_name": "Reduced Approach Volume Limitation",
+      "section": "4.1 - Specific ESG-related mentions",
+      "subsection": "Reduced approach restrictions",
+      "rule_text": "Reduced approach → communication limited to less than 10% of the volume of the strategy presentation (measurable in number of characters if necessary)",
+      "detailed_description": "Funds with a 'Reduced' ESG approach must limit ESG-related communication to less than 10% of the total volume of the strategy presentation. This can be measured by character count, word count, or page space. ESG content must be proportionate and not dominate the investment narrative.",
+      "purpose": "Prevents over-emphasis on ESG factors for funds with limited ESG integration",
+      "quantitative_thresholds": {
+        "maximum_esg_content": "< 10%",
+        "measurement_units": ["character count", "word count", "page space", "presentation time"],
+        "calculation_basis": "Percentage of total strategy presentation volume"
+      },
+      "applies_to": {
+        "client_type": ["retail", "non-professional"],
+        "document_type": ["fund", "marketing materials", "presentations", "factsheets"],
+        "fund_status": ["all"],
+        "esg_approach": ["reduced", "réduite"],
+        "fund_characteristics": ["limited ESG integration", "basic ESG considerations"]
+      },
+      "severity": "major",
+      "severity_definition": "Significant violation requiring document revision before approval",
+      "consequences": "Document rejection, mandatory revision, potential delays in marketing materials approval",
+      "cross_references": [],
+      "validation_type": "volume_check",
+      "validation_method": "Calculate total character/word count of strategy presentation, then measure ESG-related content and verify it is below 10% threshold",
+      "calculation_example": "If strategy presentation = 5,000 characters, ESG content must be < 500 characters",
+      "permitted_content": [
+        "Brief mention of ESG considerations",
+        "Reference to exclusion policies",
+        "High-level ESG integration statement"
+      ],
+      "prohibited_content": [
+        "Detailed ESG methodology",
+        "Extensive ESG metrics",
+        "Impact reporting",
+        "ESG-focused branding"
+      ],
+      "related_concepts": ["proportionality", "content volume", "ESG materiality", "limited disclosure", "ESG mentions"],
+      "common_errors": ["Exceeding 10% threshold", "Unclear calculation methodology", "Not measuring ESG content properly"],
+      "search_terms": ["reduced ESG", "10% limit", "volume restriction", "character count", "limited ESG communication", "proportionate ESG mention"]
+    },
+    {
+      "rule_id": "ESG_004",
+      "rule_name": "Prospectus-Limited Approach Prohibition",
+      "section": "4.1 - Specific ESG-related mentions",
+      "subsection": "Prospectus-limited approach restrictions",
+      "rule_text": "Prospectus-limited approach → no ESG mention except in a document reserved for a professional institutional investor",
+      "detailed_description": "Funds classified as 'Prospectus-limited' approach must not include any ESG mentions in retail client documentation. ESG information can only appear in the regulatory prospectus and in documents specifically prepared for professional institutional investors. This is the most restrictive ESG communication category.",
+      "purpose": "Prevents misleading retail investors about funds with minimal or no ESG integration",
+      "applies_to": {
+        "client_type": ["retail", "non-professional"],
+        "document_type": ["fund", "marketing materials", "presentations", "factsheets", "brochures", "advertisements"],
+        "fund_status": ["all"],
+        "esg_approach": ["prospectus_limited", "limitée au prospectus", "limited_to_prospectus"],
+        "fund_characteristics": ["minimal ESG integration", "no ESG strategy"]
+      },
+      "exceptions": {
+        "allowed_documents": ["professional institutional investor materials", "regulatory prospectus"],
+        "allowed_audience": ["professional institutional investors only"],
+        "rationale": "Professional investors can assess ESG information with appropriate expertise"
+      },
+      "severity": "critical",
+      "severity_definition": "Absolute prohibition - any violation is a critical compliance breach",
+      "consequences": "Immediate document rejection, regulatory breach, potential AMF investigation, reputational risk",
+      "cross_references": [],
+      "validation_type": "absence_check",
+      "validation_method": "Scan entire document for any ESG-related keywords, terms, or references. Flag any occurrence as violation.",
+      "prohibited_keywords": [
+        "ESG", "environmental", "social", "governance", "sustainability", "sustainable",
+        "responsible investment", "SRI", "green", "climate", "carbon", "impact",
+        "exclusion" , "engagement" , "stewardship",
+        "SFDR", "Article 8", "Article 9", "taxonomy", "SDG"
+      ],
+      "related_concepts": ["retail investor protection", "greenwashing prevention", "communication restrictions", "professional vs retail"],
+      "common_errors": ["Accidental ESG keyword inclusion", "Implicit ESG references", "Confusion with professional materials"],
+      "search_terms": ["prospectus limited", "no ESG mention", "ESG prohibition", "retail restriction", "professional only", "ESG blackout"]
+    },
+    {
+      "rule_id": "ESG_005",
+      "rule_name": "Other Funds ESG Baseline Exception",
+      "section": "4.1 - Specific ESG-related mentions",
+      "subsection": "Other funds category",
+      "rule_text": "Other funds → no ESG mention, except mention of OBAM common baseline exclusions",
+      "detailed_description": "Funds that do not fall into the Engaging, Reduced, or Prospectus-limited categories (classified as 'Other funds') must not include ESG mentions in retail documentation. The only permitted exception is mentioning the OBAM common baseline exclusions policy that applies to all funds managed by OBAM.",
+      "purpose": "Maintains consistency in ESG communication while allowing disclosure of firm-wide exclusion policies",
+      "applies_to": {
+        "client_type": ["retail", "non-professional"],
+        "document_type": ["fund", "marketing materials", "presentations", "factsheets"],
+        "fund_status": ["all"],
+        "esg_approach": ["other", "autres", "not_classified"],
+        "fund_characteristics": ["no specific ESG approach", "standard investment approach"]
+      },
+      "exceptions": {
+        "allowed_content": ["OBAM common baseline exclusions"],
+        "exclusion_types": [
+          "Controversial weapons (cluster munitions, anti-personnel mines, chemical weapons, biological weapons)",
+          "Severe human rights violations",
+          "Other firm-wide exclusions per OBAM policy"
+        ],
+        "rationale": "Common baseline exclusions are firm policy, not fund-specific ESG strategy"
+      },
+      "severity": "major",
+      "severity_definition": "Significant violation requiring document revision",
+      "consequences": "Document rejection, mandatory revision to remove unauthorized ESG content",
+      "cross_references": [
+        {
+          "type": "policy_document",
+          "reference": "OBAM Common Baseline Exclusions Policy",
+          "description": "Defines the firm-wide exclusions applicable to all OBAM funds"
+        }
+      ],
+      "validation_type": "limited_content_check",
+      "validation_method": "Verify no ESG content exists except for specific mention of OBAM baseline exclusions",
+      "permitted_phrasing_examples": [
+        "OBAM applies a common exclusion policy to all funds",
+        "This fund is subject to OBAM's firm-wide exclusions including controversial weapons",
+        "Exclusions apply in accordance with OBAM's responsible investment policy"
+      ],
+      "prohibited_content": [
+        "Fund-specific ESG strategy",
+        "ESG analysis methodology",
+        "ESG ratings or scores",
+        "Sustainability objectives",
+        "ESG performance metrics"
+      ],
+      "related_concepts": ["baseline exclusions", "firm-wide policy", "negative screening", "weapons exclusions", "default ESG policy"],
+      "common_errors": ["Going beyond baseline exclusions", "Describing exclusions as ESG strategy", "Adding fund-specific ESG elements"],
+      "search_terms": ["other funds", "baseline exclusions", "OBAM exclusions", "common policy", "firm-wide exclusions", "no ESG approach"]
+    },
+    {
+      "rule_id": "ESG_006",
+      "rule_name": "Professional Funds Exemption",
+      "section": "4.1 - Specific ESG-related mentions",
+      "subsection": "Scope and applicability",
+      "rule_text": "ESG rules apply excluding professional funds",
+      "detailed_description": "All ESG communication rules in this section apply only to retail client documentation. Professional funds (funds reserved for professional investors) are exempt from these restrictions. Professional investors are deemed to have sufficient expertise to evaluate ESG information independently.",
+      "purpose": "Clarifies scope of ESG communication restrictions and professional investor exemption",
+      "applies_to": {
+        "client_type": ["retail", "non-professional"],
+        "document_type": ["all retail documentation"],
+        "fund_status": ["non-professional funds", "retail funds"],
+        "exclusions": ["professional funds", "institutional funds", "qualified investor funds"]
+      },
+      "professional_fund_definition": {
+        "characteristics": [
+          "Minimum investment thresholds (typically €100,000+)",
+          "Reserved for professional investors per MiFID II",
+          "Institutional clients",
+          "Qualified investors"
+        ],
+        "regulatory_basis": "MiFID II professional client categorization, French AMF regulations"
+      },
+      "severity": "info",
+      "severity_definition": "Informational - defines scope of applicability",
+      "consequences": "None - clarifies which funds are subject to ESG rules",
+      "cross_references": [
+        {
+          "type": "regulatory_framework",
+          "reference": "MiFID II Professional Client Definition",
+          "description": "Defines criteria for professional investor status"
+        }
+      ],
+      "validation_type": "scope_check",
+      "validation_method": "Verify fund classification (retail vs professional) before applying ESG communication rules",
+      "exemption_rationale": "Professional investors have resources, expertise, and regulatory protections that reduce need for prescriptive ESG communication rules",
+      "related_concepts": ["professional investors", "retail investors", "investor categorization", "regulatory scope", "exemptions"],
+      "common_errors": ["Applying retail rules to professional funds", "Unclear fund classification"],
+      "search_terms": ["professional funds", "exemption", "scope", "applicability", "retail vs professional", "investor type", "ESG rules scope"]
+    }
+  ],
+  
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-11-11",
+    "authority": "OBAM SAS",
+    "regulatory_reference": "French AMF fund documentation regulations",
+    "language": "English",
+    "original_language": "French",
+    "document_classification": "Internal compliance rules",
+    "review_frequency": "Annual or upon regulatory changes"
+  },
+  
+  "global_concepts": {
+    "esg_approaches": [
+      {
+        "name": "Engaging",
+        "french_name": "Engageante",
+        "description": "Strong ESG integration with ≥20% exclusion and ≥90% portfolio coverage",
+        "communication_level": "Unlimited",
+        "typical_fund_types": ["SRI funds", "Article 9 SFDR funds", "Impact funds"]
+      },
+      {
+        "name": "Reduced",
+        "french_name": "Réduite",
+        "description": "Limited ESG integration with basic ESG considerations",
+        "communication_level": "Less than 10% of strategy presentation",
+        "typical_fund_types": ["Article 8 SFDR funds", "Funds with basic ESG screening"]
+      },
+      {
+        "name": "Prospectus-Limited",
+        "french_name": "Limitée au prospectus",
+        "description": "Minimal or no ESG integration",
+        "communication_level": "No ESG mention in retail documents",
+        "typical_fund_types": ["Traditional funds", "Non-ESG funds"]
+      },
+      {
+        "name": "Other",
+        "french_name": "Autres",
+        "description": "Funds not classified in above categories",
+        "communication_level": "Only OBAM baseline exclusions",
+        "typical_fund_types": ["Standard funds with firm-wide exclusions only"]
+      }
+    ],
+    
+    "key_terms_glossary": {
+      "ESG": "Environmental, Social, and Governance factors in investment decisions",
+      "Exclusion rate": "Percentage of investment universe excluded based on ESG criteria",
+      "Portfolio coverage": "Percentage of portfolio assets subject to ESG analysis",
+      "OBAM": "Ostrum Asset Management",
+      "AMF": "Autorité des Marchés Financiers (French financial markets regulator)",
+      "SFDR": "Sustainable Finance Disclosure Regulation (EU)",
+      "Retail client": "Non-professional investor requiring enhanced protections",
+      "Professional investor": "Investor meeting MiFID II professional client criteria",
+      "Baseline exclusions": "Firm-wide exclusion policy applied to all funds",
+      "Cartographie ESG": "ESG Mapping - master classification document"
+    },
+    
+    "validation_workflow": {
+      "step_1": "Identify fund and retrieve ESG classification from ESG Mapping",
+      "step_2": "Identify target client type (retail vs professional)",
+      "step_3": "Identify document type and purpose",
+      "step_4": "Apply relevant ESG rules based on classification",
+      "step_5": "Validate content against specific rule requirements",
+      "step_6": "Flag violations with appropriate severity level",
+      "step_7": "Generate compliance report with remediation guidance"
+    }
+  },
+  
+  "search_optimization": {
+    "primary_tags": ["ESG", "compliance", "fund documentation", "regulatory", "OBAM", "retail clients"],
+    "secondary_tags": ["exclusions", "portfolio coverage", "communication limits", "classification", "AMF", "greenwashing prevention"],
+    "use_cases": [
+      "Validating ESG content in fund factsheets",
+      "Reviewing marketing materials for ESG compliance",
+      "Classifying new funds in ESG framework",
+      "Training compliance teams on ESG rules",
+      "Auditing existing documentation for ESG violations"
+    ],
+    "common_queries": [
+      "What can I say about ESG for this fund?",
+      "How much ESG content is allowed?",
+      "Can I mention ESG exclusions?",
+      "What are the ESG communication limits?",
+      "Is this fund engaging approach?",
+      "Do ESG rules apply to professional funds?"
+    ]
+  }
+}

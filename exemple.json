@@ -1,0 +1,125 @@
+{
+  "document_metadata": {
+    "fund_isin": "LU1833929729",
+    "fund_name": "ODDO BHF Algo Trend US",
+    "client_type": "retail",
+    "document_type": "fund_presentation",
+    "fund_status": "active",
+    "country_code": "FR",
+    "fund_esg_classification": "other",
+    "fund_age_years": 7.2,
+    "document_date": "Septembre 2025",
+    "language": "French"
+  },
+  "page_de_garde": {
+    "slide_number": 1,
+    "title": "ODDO BHF Algo Trend US",
+    "subtitle": "Tirer parti du momentum des actions américaines",
+    "date": "SEPTEMBRE 2025",
+    "fund_name": "ODDO BHF Algo Trend US",
+    "inception_date": "2018",
+    "aum": "228M€",
+    "text_content": "ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025"
+  },
+  "slide_2": {
+    "slide_number": 1,
+    "title": "Caractéristiques principales et du fonds",
+    "text_content": "CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données historiques, telles que celles utilisées pour calculer le SRI, pourraient ne pas constituer une indication fiable du profil de risque futur du Fonds. Source: ODDO BHF AM. Données au 31/08/2025",
+    "disclaimers": [
+      "Risque de perte en capital",
+      "Risque lié aux actions",
+      "Risque de change",
+      "Risque lié à la gestion discrétionnaire",
+      "Les données historiques ne constituent pas une indication fiable du profil de risque futur"
+    ],
+    "fund_characteristics": {
+      "sfdr_classification": "Article 6",
+      "risk_indicator": "5/7",
+      "morningstar_category": "Actions Etats-Unis Gdes Cap. Mixte",
+      "data_date": "31/08/2025"
+    }
+  },
+  "pages_suivantes": [
+    {
+      "slide_number": 2,
+      "title": "Pourquoi investir dans le marché américain ?",
+      "content_type": "market_context",
+      "text_content": "UN ÉLÉMENT CLÉ DE TOUT PORTEFEUILLE D'ACTIONS. LA PLUS GRANDE ÉCONOMIE MONDIALE. L'AMPLEUR DU PAYS. UNE PERFORMANCE HISTORIQUEMENT ATTRACTIVE. UN MARCHÉ FINANCIER MAJEUR. INNOVATION ET DIVERSIFICATION: Siège de nombreuses entreprises technologiques de renommée mondiale et de start-ups innovantes. Accès aux grandes réussites de la nouvelle et de l'ancienne économie. LES 7 MAGNIFIQUES: Les 7 plus grandes compagnies tech américaines, qui dominent le marché boursier américain et le secteur technologique mondial. LES ENTREPRISES LEADERS AU DELÀ DE LA TECH: De nombreux exemples d'entreprises prospères issues de différents secteurs d'activité montrent la diversité sur le marché boursier américain. Ces exemples ne constituent pas des recommandations d'investissement. Source: ODDO BHF AM, Bloomberg, Friedrich Ebert Foundation, IFO, IG, Federal Reserve, Investopedia, WIPO, IMF, MSCI. Données au 31/08/2025"
+    },
+    {
+      "slide_number": 3,
+      "title": "Le cas des investissements Momentum",
+      "content_type": "strategy_explanation",
+      "text_content": "LES MARCHÉS BOURSIERS ÉVOLUENT SELON DES TENDANCES! L'EFFET MOMENTUM ET LA PHILOSOPHIE D'INVESTISSEMENT DERRIÈRE. LE MOMENTUM SUPERFORME HISTORIQUEMENT LE MARCHÉ CLASSIQUE AUX USA. CONTINUITÉ DES PERFORMANCES: Les actions qui ont surperformé dans le passé ont tendance à continuer à surperformer, créant ainsi des tendances sur le marché. ANOMALIE DU MARCHÉ BOURSIER: Cet effet dit momentum a fait l'objet de nombreuses recherches universitaires et persiste sur divers marchés et sur différentes périodes. CES TENDANCES DE MARCHÉ PEUVENT ÊTRE EXPLOITÉES: En capturant systématiquement ces tendances, une stratégie momentum cherche à générer des rendements supérieurs à ceux du marché dans son ensemble. LA FINANCE COMPORTEMENTALE FOURNIT DES THÉORIES POUR EXPLIQUER LE COMPORTEMENT IRRATIONNEL DES INVESTISSEURS À L'ORIGINE DES TENDANCES DE MARCHÉ. Les biais comportementaux des investisseurs conduisent à des réactions excessives ou insuffisantes face à l'actualité: ANCRAGE, EXCÈS DE CONFIANCE, COMPORTEMENT GRÉGAIRE. Les performances passées ne préjugent pas des performances futures et ne sont pas constantes dans le temps. Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020. Net Return en USD au 31/08/2025",
+      "performance_disclaimer": "Les performances passées ne préjugent pas des performances futures et ne sont pas constantes dans le temps",
+      "data_date": "31/08/2025",
+      "source": "ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020"
+    },
+    {
+      "slide_number": 4,
+      "title": "Notre approche systématique propriétaire",
+      "content_type": "investment_process",
+      "text_content": "Visant à tirer parti de l'effet momentum et adresser les risques spécifiques. APERÇU DU PROCESSUS D'INVESTISSEMENT. Etape 1: Identification de tendances de haute-qualité. Surperformances espérées à long terme, Tendance à court-terme intacte, Préférence pour une faible volatilité. Etape 2: Construction d'un portefeuille momentum diversifié. Optimisation quantitative, Construire un portefeuille à haut momentum en respectant des contraintes strictes de gestion du risque, Rebalancement mensuel. Résultat: Portefeuille final. Portefeuille largement diversifié et à risque contrôlé, Nombreuses positions couvrant beaucoup de tendances. UNE équipe DE GESTION EXPÉRIMENTÉE. Dr. Stefan Braun, CFA - Responsable des Stratégies Systématiques ODDO BHF AM - 25 années d'expérience en investissement. Karsten Seier, CFA - Responsable des Stratégies Systématiques ODDO BHF AM - 25 années d'expérience. Steffen Fuchs, CFA - Gérant de Portefeuille Senior / Analyste quantitatif ODDO BHF AM - 10 années d'expérience. Le fonds présente un risque de perte en capital. Source: ODDO BHF AM. Equipe actuelle, susceptible de changer",
+      "team": [
+        {
+          "name": "Dr. Stefan Braun, CFA",
+          "role": "Responsable des Stratégies Systématiques",
+          "experience": "25 années"
+        },
+        {
+          "name": "Karsten Seier, CFA",
+          "role": "Responsable des Stratégies Systématiques",
+          "experience": "25 années"
+        },
+        {
+          "name": "Steffen Fuchs, CFA",
+          "role": "Gérant de Portefeuille Senior / Analyste quantitatif",
+          "experience": "10 années"
+        }
+      ]
+    },
+    {
+      "slide_number": 5,
+      "title": "Pourquoi investir dans ODDO BHF Algo Trend US selon nous?",
+      "content_type": "investment_case",
+      "text_content": "Exploitation de l'effet momentum, une anomalie du marché reposant sur des bases économiques solides. Des études ont démontré, sur différentes périodes, que les marchés évoluent selon des tendances. Cette anomalie du marché, appelée effet momentum, est due aux biais comportementaux des acteurs du marché. Notre stratégie d'investissement propriétaire, qui consiste à suivre les tendances, est une approche diversifiée visant à investir dans différentes tendances de marché dans le but de tirer parti de ces dernières et de générer une surperformance à long terme. Processus d'investissement fondé sur des règles, sans biais humains. Approche d'investissement entièrement quantitative sans interventions discrétionnaires, retirant toute émotion des décisions relatives au portefeuille. Une approche systématique garantit que les investissements sont réalisés de manière cohérente et objective, tout en rendant la stratégie transparente et reproductible. La gestion active des risques au cœur de la stratégie. Le modèle quantitatif évalue les actions selon une stratégie smart momentum, qui met fortement l'accent sur la diversification et la gestion des risques en appliquant diverses contraintes à l'optimisation du portefeuille afin d'éviter les pièges classiques de l'investissement momentum, tels que les risques de renversement de tendance et de concentration. Équipe de direction stable comprenant les fondateurs du modèle quantitatif. Stefan Braun et Karsten Seier, qui ont développé cette stratégie il y a plus de 20 ans, ont géré le fonds avec succès tout au long des différents cycles de marché et continuent aujourd'hui encore à gérer le portefeuille. RISQUES: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de taux d'intérêt, risque de crédit, risque lié à la gestion discrétionnaire, risque de volatilité, risque de contrepartie, risque de liquidité des actifs sous-jacents, risque lié aux engagements sur des instruments financiers à terme, risques liés à la conversion monétaire et aux taux de change, risque lié aux marchés émergents, risque lié à la durabilité. L'investisseur est invité à lire le document d'informations clés et le prospectus du fonds pour obtenir des informations détaillées sur les risques auxquels le fonds est exposé. Source: ODDO BHF AM. Données au 2025"
+    }
+  ],
+  "page_de_fin": {
+    "slide_number": 6,
+    "title": "Caractéristiques",
+    "text_content": "Dénomination: ODDO BHF Algo Trend US. Indicateur de référence: S&P 500 EUR Net Total Return. Objectif de gestion: Le Compartiment est géré de manière active et vise à générer un rendement durable à partir des revenus provenant de la croissance des investissements en titres, tout en maintenant un risque financier faible. L'indice de référence du Compartiment est le S&P 500 NR (rendement net) en EUR, dividendes réinvestis. Le Compartiment ne suit pas précisément cet indice, mais vise à le surperformer. Durée d'investissement conseillée: 5 ans. Date de création: 16/07/2018. Admissibilité au plan d'épargne en actions PEA: Non. Classes de part: CR-EUR (LU1833929729), CI-EUR (LU1833929307), CIw-EUR (LU1833929992), CN-EUR (LU1833929216). Devise: EUR. Affectation des résultats: Accumulation. Souscription minimale initiale: CR-EUR: 100 EUR, CI-EUR: 250.000 EUR, CIw-EUR: 250.000 EUR, CN-EUR: 100 EUR. Commission de souscription: CR-EUR: 5% (maximum), CI-EUR: 2% (maximum), CIw-EUR: 2% (maximum), CN-EUR: 5% (maximum). Frais de gestion fixes: CR-EUR: maximum de 1.20%, CI-EUR: maximum de 0.60%, CIw-EUR: maximum de 0.70%, CN-EUR: maximum de 0.75%. Frais de rachat: Néant. Commission de performance: CI-EUR et CIw-EUR: Au maximum 10% de la surperformance du Compartiment par rapport à l'indice de référence, une fois compensée la sous-performance passée enregistrée au cours des cinq années précédentes, et sous réserve que la performance absolue soit positive. CN-EUR: Au maximum 10% de la surperformance du Compartiment par rapport à l'indice de référence, une fois que la sous-performance passée enregistrée au cours des cinq années précédentes a été compensée. Structure et informations techniques. Statut juridique: Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS). Société de gestion: ODDO BHF AM SAS. Dépositaire: CACEIS Bank, Luxembourg Branch. Souscriptions / Rachats: Tous les jours à 12:00 p.m. Fréquence de valorisation: Tous les jours à 12:00 p.m. Autorisé à la distribution: France, Allemagne, Suisse, Luxembourg, Espagne, Belgique. Source: ODDO BHF AM",
+    "fund_details": {
+      "isin_codes": {
+        "CR-EUR": "LU1833929729",
+        "CI-EUR": "LU1833929307",
+        "CIw-EUR": "LU1833929992",
+        "CN-EUR": "LU1833929216"
+      },
+      "fund_name": "ODDO BHF Algo Trend US",
+      "benchmark": "S&P 500 EUR Net Total Return",
+      "inception_date": "16/07/2018",
+      "recommended_horizon": "5 ans",
+      "currency": "EUR",
+      "domicile": "Luxembourg",
+      "legal_structure": "Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS)",
+      "management_company": "ODDO BHF AM SAS",
+      "custodian": "CACEIS Bank, Luxembourg Branch",
+      "pea_eligible": "Non",
+      "available_countries": ["France", "Allemagne", "Suisse", "Luxembourg", "Espagne", "Belgique"],
+      "management_fees": {
+        "CR-EUR": "1.20%",
+        "CI-EUR": "0.60%",
+        "CIw-EUR": "0.70%",
+        "CN-EUR": "0.75%"
+      },
+      "minimum_investment": {
+        "CR-EUR": "100 EUR",
+        "CI-EUR": "250,000 EUR",
+        "CIw-EUR": "250,000 EUR",
+        "CN-EUR": "100 EUR"
+      }
+    },
+    "legal_mentions": "ODDO BHF AM est la branche de gestion d'actifs du Groupe ODDO BHF. Elle est la marque commune des trois sociétés de gestion juridiquement distinctes ODDO BHF AM SAS (France), ODDO BHF AM GmbH (Allemagne) et ODDO BHF AM Lux (Luxembourg). Ce document, à caractère promotionnel, est établi par ODDO BHF ASSET MANAGEMENT SAS. L'investisseur potentiel doit consulter un conseiller en investissement avant de souscrire dans le fonds. L'investisseur est informé que le fonds présente un risque de perte en capital. En cas de souscription, l'investisseur doit obligatoirement prendre connaissance du Document d'information clé (DIC) ou du prospectus de l'OPC pour une présentation exacte des risques encourus et de l'ensemble des frais. Un résumé des droits des investisseurs est disponible gratuitement sous forme électronique en anglais sur le site web à l'adresse suivante: https://am.oddo-bhf.com/france/fr/investisseur_non_professionnel/infos_reglementaire. Le DIC (FR, ENG, DEU, ESP) et le prospectus (FR, ENG, DEU) sont disponibles gratuitement auprès de ODDO BHF ASSET MANAGEMENT SAS sur am.oddo-bhf.com. ODDO BHF Asset Management SAS (France). Société de Gestion de Portefeuille agréée par l'Autorité des Marchés Financiers sous le n° d'agrément GP 99011. 12 boulevard de la Madeleine - 75440 Paris Cedex 09 France. www.am.oddo-bhf.com"
+  }
+}

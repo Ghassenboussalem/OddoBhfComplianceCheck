@@ -1,0 +1,964 @@
+{
+  "agent_name": "General Rules Agent",
+  "description": "Validates general rules and pages following slide 2",
+  "rules": [
+    {
+      "rule_id": "GEN_001",
+      "section": "1 - General Rules",
+      "rule_text": "If retail document: include retail disclaimers",
+      "detailed_description": "Documents intended for retail (non-professional) clients must mandatorily contain the following legal mentions: 'Capital at risk' (warning that capital may decrease) and 'Past performance is no guarantee of future performance' (disclaimer on historical performance). These warnings must be visible, in bold, and in the same font as the main text.",
+      "keywords": [
+        "capital at risk",
+        "past performance",
+        "no guarantee",
+        "retail disclaimer",
+        "warning",
+        "risk",
+        "mandatory mention",
+        "non-professional clients"
+      ],
+      "violation_examples": [
+        "Retail document without 'Capital at risk' mention",
+        "Absence of the disclaimer 'Past performance is no guarantee of future performance'",
+        "Missing warnings for non-professional clients"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [
+        {
+          "type": "glossary",
+          "reference": "Glossary of disclaimers",
+          "note": "cf. Glossary of disclaimers"
+        }
+      ],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_002",
+      "section": "1 - General Rules",
+      "rule_text": "If professional document: include professional disclaimers",
+      "detailed_description": "Documents intended for professional investors must contain disclaimers specific to professionals. The document must clearly indicate: 'Document reserved for professional investors' or 'This document is intended exclusively for professional clients'. The warnings must mention the professional nature of the communication.",
+      "keywords": [
+        "professional investors",
+        "professional clients",
+        "reserved document",
+        "professional disclaimer",
+        "professional communication",
+        "exclusive use"
+      ],
+      "violation_examples": [
+        "Professional document without mention 'reserved for professional investors'",
+        "Absence of indication of the professional status of the recipient",
+        "Retail disclaimers used in a professional document"
+      ],
+      "applies_to": {
+        "client_type": [
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [
+        {
+          "type": "glossary",
+          "reference": "Glossary of disclaimers",
+          "note": "cf. Glossary of disclaimers"
+        }
+      ],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_003",
+      "section": "1 - General Rules",
+      "rule_text": "Studies/numerical data/graphics etc. must include a reference (footnote) specifying at minimum the source and the date",
+      "detailed_description": "Any numerical data, statistic, graph, performance table, market study or quantitative analysis must be accompanied by a source citation with date. Recommended format: 'Source: ODDO BHF Asset Management, as of 31/12/2024' or 'Source: Bloomberg, December 2024'. Performances, rates, percentages, indices must all have a source and date.",
+      "keywords": [
+        "source",
+        "citation",
+        "date",
+        "numerical data",
+        "performance",
+        "graph",
+        "statistics",
+        "study",
+        "footnote",
+        "reference",
+        "as of 31/12",
+        "Bloomberg",
+        "percentage"
+      ],
+      "violation_examples": [
+        "Performance of +15% without indication of source or date",
+        "Graph without mention 'Source: ..., as of ...'",
+        "Market data without citation of origin",
+        "Statistics presented without temporal reference"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "citation_check"
+    },
+    {
+      "rule_id": "GEN_004",
+      "section": "1 - General Rules",
+      "rule_text": "For each fund presented: mandatory mention of the SRI with the associated disclaimer on the same slide",
+      "detailed_description": "Each fund presentation must include the SRI (Synthetic Risk Indicator) on a scale of 1 to 7, accompanied by the explanatory disclaimer. Required format: 'SRI: X/7' followed by 'A synthetic risk indicator of X indicates a [low/moderate/high] risk level'. The SRI and its explanation must appear on the same slide as the fund presentation.",
+      "keywords": [
+        "SRI",
+        "synthetic risk indicator",
+        "synthetic risk indicator",
+        "scale of 1 to 7",
+        "risk level",
+        "risk indicator",
+        "SRI disclaimer",
+        "same slide",
+        "X/7"
+      ],
+      "violation_examples": [
+        "Fund presented without mention of the SRI",
+        "SRI indicated without the explanatory disclaimer",
+        "SRI disclaimer on a different slide from the fund presentation",
+        "Risk indicator absent from the presentation"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [
+        {
+          "type": "glossary",
+          "reference": "Glossary",
+          "note": "cf. Glossary for SRI disclaimer"
+        }
+      ],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_005",
+      "section": "1 - General Rules",
+      "rule_text": "For retail presentations: include a Glossary of technical terms at the end of the presentation and ensure these terms appear in the document",
+      "detailed_description": "Retail documents must contain a glossary at the end of the presentation defining all technical terms used. Terms requiring definition: SRI, duration, alpha, beta, volatility, tracking error, derivatives, hedging, momentum, stockpicking, small caps, ISIN, SRRI, ESG, etc. Each technical term in the document must have its explanation in the glossary.",
+      "keywords": [
+        "glossary",
+        "technical terms",
+        "definitions",
+        "end of presentation",
+        "retail",
+        "SRI",
+        "duration",
+        "alpha",
+        "volatility",
+        "derivatives",
+        "ISIN",
+        "explanation",
+        "financial vocabulary"
+      ],
+      "violation_examples": [
+        "Retail document using 'alpha' and 'tracking error' without glossary",
+        "Technical terms (momentum, derivatives) undefined",
+        "Glossary absent in a retail presentation",
+        "Terms from the document absent from the glossary"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "presence_check_with_consistency"
+    },
+    {
+      "rule_id": "GEN_006",
+      "section": "1 - General Rules",
+      "rule_text": "Risk warnings/disclaimers must be in bold",
+      "detailed_description": "All warnings and disclaimers relating to risks must be formatted in bold. This includes: 'Capital at risk', 'Past performance is no guarantee of future performance', SRI disclaimers, warnings on volatility, mentions of risk of capital loss. Bold formatting must be applied to the entire warning sentence.",
+      "keywords": [
+        "bold",
+        "bold",
+        "formatting",
+        "warning",
+        "disclaimer",
+        "risk",
+        "capital at risk",
+        "past performance",
+        "formatting",
+        "typography"
+      ],
+      "violation_examples": [
+        "Disclaimer 'Capital at risk' in normal text instead of bold",
+        "Risk warnings without bold formatting",
+        "Risk mentions not typographically highlighted"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "format_check"
+    },
+    {
+      "rule_id": "GEN_007",
+      "section": "1 - General Rules",
+      "rule_text": "Risk warnings/disclaimers must use the same font and size as the main text",
+      "detailed_description": "Disclaimers and warnings must use the same font and the same size as the main body text. They must not be reduced in small characters or placed in a different font. Prohibition of putting warnings in smaller font to make them less visible.",
+      "keywords": [
+        "font",
+        "text size",
+        "font",
+        "same size",
+        "body text",
+        "main text",
+        "characters",
+        "readability",
+        "uniform typography"
+      ],
+      "violation_examples": [
+        "Disclaimers in size 8 while main text is size 12",
+        "Warnings in a different font from the rest of the document",
+        "Risk mentions reduced in small characters"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "format_check"
+    },
+    {
+      "rule_id": "GEN_008",
+      "section": "1 - General Rules",
+      "rule_text": "Risk warnings/disclaimers must be visible (not in footnotes)",
+      "detailed_description": "Risk warnings must be clearly visible in the main body of the text. They must not be relegated to footnotes, small-sized footers, or appendices. Critical disclaimers ('Capital at risk', 'Past performance') must appear prominently in the main text.",
+      "keywords": [
+        "visible",
+        "visibility",
+        "prominent",
+        "body text",
+        "not in footer",
+        "not in footer",
+        "visible disclaimer",
+        "visible warning",
+        "main text",
+        "highlighting"
+      ],
+      "violation_examples": [
+        "Disclaimer 'Capital at risk' relegated to page footer",
+        "Warnings only in footnotes",
+        "Risks mentioned in small characters at the end of the document",
+        "Disclaimers in an appendix instead of the main body"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "visibility_check"
+    },
+    {
+      "rule_id": "GEN_009",
+      "section": "1 - General Rules",
+      "rule_text": "Opinions and assumptions must be softened: E.g.: \"according to our opinion\", \"according to our analyses\", \"the fund aims to…\"",
+      "detailed_description": "Any opinion, forecast, assumption or statement about markets must be nuanced with softened formulations. Use: 'according to our analysis', 'according to our opinion', 'we think that', 'the fund aims to', 'we estimate that'. Prohibition of assertive language: 'the fund will', 'markets will be', 'this strategy beats', 'we guarantee', 'guaranteed success'.",
+      "keywords": [
+        "softening",
+        "nuance",
+        "according to our opinion",
+        "according to our analysis",
+        "aims to",
+        "objective of",
+        "assumption",
+        "forecast",
+        "no guarantee",
+        "conditional language",
+        "estimate that"
+      ],
+      "violation_examples": [
+        "The fund will outperform the market (language too assertive)",
+        "This strategy beats all its competitors (un-nuanced statement)",
+        "Markets will explode in 2025 (forecast without softening)",
+        "Guaranteed success, assured performance (prohibited promises)"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "language_check"
+    },
+    {
+      "rule_id": "GEN_010",
+      "section": "1 - General Rules",
+      "rule_text": "The fund strategy must be presented in accordance with legal documentation: investment thresholds by asset class, strategy, geographic allocation, minimum ticket, etc.",
+      "detailed_description": "All information on the fund strategy must correspond exactly to the legal documentation (prospectus, DICI/KID). This includes: exposure percentages (e.g. 60-100% equities), geographic area (Europe, World), authorized asset classes, minimum investment ticket, recommended investment horizon, use of derivative instruments. No divergence is tolerated between the commercial document and the prospectus.",
+      "keywords": [
+        "prospectus",
+        "legal documentation",
+        "DICI",
+        "KID",
+        "compliant strategy",
+        "investment thresholds",
+        "allocation",
+        "asset class",
+        "minimum ticket",
+        "investment horizon",
+        "legal compliance"
+      ],
+      "violation_examples": [
+        "Presentation indicates '50-70% equities' while prospectus says '60-100%'",
+        "Geographic area different from that in the prospectus",
+        "Strategy described differently from legal documentation",
+        "Minimum ticket not compliant with prospectus"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [
+        {
+          "type": "legal_document",
+          "reference": "Legal documentation",
+          "note": "Must comply with legal documentation"
+        }
+      ],
+      "validation_type": "conformity_check"
+    },
+    {
+      "rule_id": "GEN_012",
+      "section": "1 - General Rules",
+      "rule_text": "Internal limits (set by the risk committee or risk control) must not appear in any presentation as they are non-contractual",
+      "detailed_description": "Internal management limits, set by the risk committee or internal control, are confidential and non-contractual. Never mention: internal VaR limits, internal concentration thresholds, internal liquidity constraints, internal hedging rules. Only regulatory and prospectus limits are communicable.",
+      "keywords": [
+        "internal limits",
+        "risk committee",
+        "risk control",
+        "non-contractual",
+        "confidential",
+        "internal rules",
+        "internal thresholds",
+        "internal VaR",
+        "internal constraints"
+      ],
+      "violation_examples": [
+        "Mention of an 'internal VaR limit of 5%'",
+        "Indication of internal concentration thresholds",
+        "Reference to constraints from the risk committee",
+        "Disclosure of internal management rules"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [],
+      "validation_type": "absence_check"
+    },
+    {
+      "rule_id": "GEN_013",
+      "section": "1 - General Rules",
+      "rule_text": "Avoid anglicisms in retail presentations, or define them (footnotes or glossary with reference)",
+      "detailed_description": "Retail presentations must prioritize French. English terms (stockpicking, momentum, tracking error, alpha, beta, hedge, leverage, small caps) must either be translated or defined in a glossary with reference. If an anglicism is used, add an explanatory note in French.",
+      "keywords": [
+        "anglicisms",
+        "English terms",
+        "French",
+        "translation",
+        "glossary",
+        "stockpicking",
+        "momentum",
+        "tracking error",
+        "hedge",
+        "leverage",
+        "definition in French"
+      ],
+      "violation_examples": [
+        "Use of 'stockpicking' without definition in a retail document",
+        "Terms 'momentum' and 'alpha' neither translated nor defined",
+        "Multiple anglicisms without explanatory glossary",
+        "Retail document with untranslated English vocabulary"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "minor",
+      "cross_references": [],
+      "validation_type": "language_check"
+    },
+    {
+      "rule_id": "GEN_014",
+      "section": "1 - General Rules",
+      "rule_text": "Commercial documents relating to strategies are reserved for professional clients only → include the professional disclaimer",
+      "detailed_description": "Any investment strategy presentation (not linked to a specific UCITS fund) is exclusively intended for professional investors. These documents must mandatorily mention: 'Document reserved for professional investors' or 'This document is intended exclusively for professional clients'. Strategies cannot be presented to retail clients.",
+      "keywords": [
+        "strategy",
+        "professional investors",
+        "professional clients",
+        "reserved document",
+        "professional disclaimer",
+        "exclusive use",
+        "non-retail",
+        "investment strategy"
+      ],
+      "violation_examples": [
+        "Strategy presentation without professional disclaimer",
+        "Strategy document targeting retail clients",
+        "Absence of mention 'reserved for professionals' on a strategy",
+        "Strategy presented without audience restriction"
+      ],
+      "applies_to": {
+        "client_type": [
+          "professional"
+        ],
+        "document_type": [
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [
+        {
+          "type": "glossary",
+          "reference": "Glossary of disclaimers",
+          "note": "cf. Glossary of professional disclaimers"
+        }
+      ],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_015",
+      "section": "1 - General Rules",
+      "rule_text": "No confusion between the presentation of a strategy and that of a fund in the same document",
+      "detailed_description": "A document must clearly distinguish whether it presents a specific UCITS fund (with ISIN, prospectus, DICI) or a general investment strategy. Do not mix the two in the same document. If presenting a fund, provide its legal characteristics. If presenting a strategy, indicate that it is a general approach without reference to a specific product.",
+      "keywords": [
+        "fund",
+        "strategy",
+        "UCITS",
+        "confusion",
+        "distinction",
+        "specific product",
+        "general approach",
+        "ISIN",
+        "prospectus",
+        "document clarity"
+      ],
+      "violation_examples": [
+        "Document mixing fund presentation and general strategy",
+        "ISIN mentioned in a strategy presentation",
+        "Legal characteristics of a fund in a strategy document",
+        "Ambiguity between general approach and specific product"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [],
+      "validation_type": "consistency_check"
+    },
+    {
+      "rule_id": "GEN_016",
+      "section": "1 - General Rules",
+      "rule_text": "For Belgium: if presentation intended for Belgian non-professional clients, ensure prior validation by the FSMA",
+      "detailed_description": "Any retail document intended for non-professional clients in Belgium must be validated by the FSMA (Financial Services and Markets Authority) before distribution. Verify that the document has received FSMA approval. Recommended mention: 'Document validated by the FSMA' or 'This document has received FSMA approval'. Without FSMA validation, the document cannot be distributed to Belgian retail clients.",
+      "keywords": [
+        "Belgium",
+        "FSMA",
+        "FSMA validation",
+        "Belgian clients",
+        "Belgian non-professionals",
+        "approval",
+        "authorization",
+        "Financial Services and Markets Authority",
+        "prior validation"
+      ],
+      "violation_examples": [
+        "Retail document for Belgium without FSMA validation",
+        "Absence of mention of FSMA approval for Belgian clients",
+        "Distribution in Belgium without prior authorization",
+        "Document not validated by the Belgian authority"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ],
+        "country": [
+          "BE"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [],
+      "validation_type": "approval_check"
+    },
+    {
+      "rule_id": "GEN_017",
+      "section": "1 - General Rules",
+      "rule_text": "Avoid mentioning other funds (Oddo or others) in a standard presentation of a fund unless it is a range presentation",
+      "detailed_description": "A presentation dedicated to a specific fund must not mention other funds (ODDO BHF or competitors) unless it is a multi-fund range presentation. Avoid comparisons with other funds, references to other products, or mentions of similar funds. Each fund presentation must be standalone.",
+      "keywords": [
+        "other funds",
+        "comparison",
+        "range presentation",
+        "competitor fund",
+        "mention of other products",
+        "standalone presentation",
+        "cross-reference"
+      ],
+      "violation_examples": [
+        "Fund presentation mentioning 'see also our XYZ fund'",
+        "Comparison with other ODDO BHF funds",
+        "Reference to competitor funds in a single-fund presentation",
+        "List of other products in a standard fund sheet"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "minor",
+      "cross_references": [],
+      "validation_type": "content_check"
+    },
+    {
+      "rule_id": "GEN_018",
+      "section": "1 - General Rules",
+      "rule_text": "Do not say that an ETF is liquid",
+      "detailed_description": "It is prohibited to state that an ETF is liquid or has guaranteed liquidity. ETF liquidity depends on multiple factors (trading volume, underlying market, market maker). Avoid formulations: 'liquid ETF', 'high liquidity', 'easy to buy/sell'. Prefer: 'ETF listed on exchange', 'tradable on exchange'.",
+      "keywords": [
+        "ETF",
+        "liquidity",
+        "liquid",
+        "tradable",
+        "listed on exchange",
+        "exchangeable",
+        "trading volume",
+        "secondary market"
+      ],
+      "violation_examples": [
+        "Document states 'this ETF is very liquid'",
+        "Mention of 'guaranteed liquidity' for an ETF",
+        "Statement 'easily sellable at any time'",
+        "Promise of liquidity for an ETF"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "content_check"
+    },
+    {
+      "rule_id": "GEN_019",
+      "section": "1 - General Rules",
+      "rule_text": "If two documents are versions of the same text but in different languages, the alignment between the meaning of each sentence and the data must be exact and consistent. Each sentence in one language must convey precisely the same information, intentions and nuances as its equivalent in the other language. No addition, omission or modification of meaning is permitted.",
+      "detailed_description": "For multilingual documents (French version and English/German/etc. version), consistency between versions is mandatory. Each sentence, numerical data, disclaimer, date, percentage must be identical in all versions. Translations must be faithful without addition or omission. Verify that: identical performances, faithfully translated disclaimers, matching dates, identical numerical data.",
+      "keywords": [
+        "translation",
+        "multilingual",
+        "versions",
+        "consistency",
+        "alignment",
+        "French",
+        "English",
+        "German",
+        "fidelity",
+        "concordance",
+        "identical data",
+        "equivalent meaning"
+      ],
+      "violation_examples": [
+        "French version indicates +15% but English version +16%",
+        "Disclaimer present in French but absent in English",
+        "Different dates between language versions",
+        "Addition of information in one version that does not exist in the other"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [],
+      "validation_type": "translation_consistency_check"
+    },
+    {
+      "rule_id": "GEN_020",
+      "section": "4 - Following Pages",
+      "rule_text": "Never start a presentation with performance: start at minimum with the fund presentation",
+      "detailed_description": "The document structure must start with the fund presentation (objective, strategy, characteristics) BEFORE presenting performances. Prohibition of placing performances (return figures, performance graphs) on the first slide or before the complete fund presentation. Recommended order: 1) Fund presentation, 2) Strategy, 3) Management team, 4) Performance.",
+      "keywords": [
+        "document structure",
+        "slide order",
+        "fund presentation",
+        "performance first",
+        "document start",
+        "first page",
+        "presentation order",
+        "content organization"
+      ],
+      "violation_examples": [
+        "Document starts with 'Performance +25% in 2024' before any presentation",
+        "First slide shows a performance graph",
+        "Performance presented before the fund objective",
+        "Returns displayed from the start without context"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "critical",
+      "cross_references": [],
+      "validation_type": "structure_check"
+    },
+    {
+      "rule_id": "GEN_021",
+      "section": "4 - Following Pages",
+      "rule_text": "The Morningstar Rating must be accompanied (if it exists) by the calculation date",
+      "detailed_description": "If a Morningstar rating (stars) is mentioned, it must mandatorily be accompanied by its calculation date. Recommended format: 'Morningstar Rating: ★★★★ (4 stars as of 31/12/2024)' or '★★★★★ - 5 Morningstar stars, December 2024'. Without date, the rating is not valid as it can change monthly.",
+      "keywords": [
+        "Morningstar",
+        "rating",
+        "stars",
+        "calculation date",
+        "rating",
+        "evaluation date",
+        "as of 31/12",
+        "Morningstar update"
+      ],
+      "violation_examples": [
+        "Morningstar 5-star rating without indication of date",
+        "Mention '★★★★' without specifying 'as of 31/12/2024'",
+        "Morningstar rating without reference date",
+        "Morningstar stars displayed without temporal context"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_022",
+      "section": "4 - Following Pages",
+      "rule_text": "The Morningstar Rating must be accompanied (if it exists) by the reference Morningstar category",
+      "detailed_description": "The Morningstar rating must mention the reference category used for the ranking. Recommended format: 'Morningstar Rating: ★★★★ in the Europe Equities category' or '5 Morningstar stars - Category: EAA Fund EUR Moderate Allocation'. The category allows understanding the comparison universe.",
+      "keywords": [
+        "Morningstar category",
+        "reference category",
+        "comparison universe",
+        "EAA Fund",
+        "Morningstar classification",
+        "peer group"
+      ],
+      "violation_examples": [
+        "Morningstar rating without mention of the category",
+        "Stars displayed without specifying 'in the Europe Equities category'",
+        "Rating without indication of the comparison universe",
+        "Isolated Morningstar rating without category context"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_024",
+      "section": "4 - Following Pages",
+      "rule_text": "At the end of the presentation: include detailed fund characteristics",
+      "detailed_description": "The last section of the document must contain a page of detailed fund characteristics including: ISIN, AMF classification, management company, depositary, management fees, entry/exit fees, valuation (daily/weekly), minimum investment, marketing countries, creation date, assets under management. This summary page is mandatory at the end of the presentation.",
+      "keywords": [
+        "fund characteristics",
+        "end of presentation",
+        "ISIN",
+        "fees",
+        "management company",
+        "depositary",
+        "classification",
+        "assets",
+        "valuation",
+        "summary page",
+        "technical sheet"
+      ],
+      "violation_examples": [
+        "Presentation without characteristics page at the end of the document",
+        "Absence of mention of ISIN, fees, management company in conclusion",
+        "Document ending without summary of characteristics",
+        "Missing technical information on the last page"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_026",
+      "section": "4 - Following Pages",
+      "rule_text": "Indication of the person responsible for validating the presentation, consistent with the general disclaimer and the management company",
+      "detailed_description": "The document must mention who validated the presentation. Recommended format: 'Document validation: Marketing Department - ODDO BHF Asset Management SAS' or 'Document validated by Marketing Management' or 'Validation responsible: Communication Department - ODDO BHF AM'. This mention must be consistent with the indicated management company and the general disclaimer.",
+      "keywords": [
+        "validation responsible",
+        "document validation",
+        "marketing department",
+        "marketing management",
+        "who validated",
+        "management company",
+        "ODDO BHF Asset Management",
+        "document responsible"
+      ],
+      "violation_examples": [
+        "Document without mention of the validation responsible",
+        "Absence of indication 'Document validated by...'",
+        "Validation not attributed to an identified department",
+        "Inconsistency between management company and mentioned validator"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "major",
+      "cross_references": [],
+      "validation_type": "presence_check"
+    },
+    {
+      "rule_id": "GEN_027",
+      "section": "4 - Following Pages",
+      "rule_text": "When presenting a management team, add at the bottom of the page that 'The team is subject to change'",
+      "detailed_description": "If the document presents the management team (names of managers, analysts, photos, biographies), it must mandatorily include the disclaimer: 'The management team is subject to change' or 'The team composition may evolve' or equivalent formulation. This disclaimer must appear on the same page as the team presentation, ideally in a footnote.",
+      "keywords": [
+        "management team",
+        "manager",
+        "manager",
+        "team subject to change",
+        "team composition",
+        "team disclaimer",
+        "may evolve",
+        "possible change"
+      ],
+      "violation_examples": [
+        "Team presentation without mention 'subject to change'",
+        "Manager biographies without disclaimer on possible changes",
+        "Management team page without warning of potential change",
+        "Manager names displayed without mention of team evolution"
+      ],
+      "applies_to": {
+        "client_type": [
+          "retail",
+          "professional"
+        ],
+        "document_type": [
+          "fund",
+          "strategy"
+        ],
+        "fund_status": [
+          "all"
+        ]
+      },
+      "severity": "minor",
+      "cross_references": [],
+      "validation_type": "presence_check"
+    }
+  ]
+}

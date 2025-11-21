@@ -1,0 +1,1433 @@
+{
+  "metadata": {
+    "agent_name": "Performance Compliance Agent",
+    "version": "1.0",
+    "last_updated": "2025-11-11",
+    "description": "Validates all performance-related mentions and compliance requirements for financial documents",
+    "scope": "Section 4.3 - Performance-specific mentions",
+    "total_rules": 58
+  },
+  "categories": {
+    "general_performance": "General performance display rules",
+    "strategy_performance": "Strategy-specific performance rules",
+    "listed_securities": "Rules for funds invested in listed securities",
+    "dated_funds": "Rules specific to dated funds",
+    "private_equity": "Private equity performance rules",
+    "future_simulations": "Future performance simulation rules",
+    "past_simulations": "Past performance simulation rules",
+    "mandatory_disclaimers": "Required disclaimer rules"
+  },
+  "glossary": {
+    "retail": "Retail client/investor",
+    "professional": "Professional client/investor",
+    "YTD": "Year To Date performance",
+    "MTD": "Month To Date performance",
+    "benchmark": "Reference indicator/index for performance comparison",
+    "NAV": "Net Asset Value (Valeur Liquidative)",
+    "TRI": "Internal Rate of Return",
+    "YTM": "Yield To Maturity",
+    "YTW": "Yield To Worst",
+    "rolling_performance": "Annualized rolling returns over consecutive periods",
+    "annualized_performance": "Average annual return over a specified period",
+    "cumulative_performance": "Total return over a specified period"
+  },
+  "rules": [
+    {
+      "rule_id": "PERF_001",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "A commercial document or external communication cannot begin with performance but must at minimum start with the fund presentation. Performance can never represent the central element of a commercial document",
+      "rationale": "Ensures balanced presentation and prevents misleading emphasis on returns",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "structure_check",
+      "validation_criteria": {
+        "check_document_opening": true,
+        "check_performance_prominence": true,
+        "required_elements_before_performance": ["fund_presentation"]
+      },
+      "consequences_of_violation": "Document must be restructured before distribution",
+      "examples": {
+        "compliant": "Document starts with fund objective and strategy, then presents performance",
+        "non_compliant": "Document leads with '20% annual returns' headline"
+      }
+    },
+    {
+      "rule_id": "PERF_002",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "Performance figures must not appear disproportionately compared to other elements (font size identical to main text)",
+      "rationale": "Prevents visual emphasis that could mislead investors",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "format_check",
+      "validation_criteria": {
+        "check_font_size": true,
+        "check_visual_prominence": true,
+        "max_font_size_ratio": 1.0
+      },
+      "consequences_of_violation": "Reformatting required before distribution"
+    },
+    {
+      "rule_id": "PERF_003",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "When the presentation is intended for retail clients, only retail share class performances (for listed: CR, DR, CN, DN, GC) may be presented",
+      "rationale": "Ensures clients see performance relevant to their accessible share classes",
+      "applies_to": {
+        "client_type": ["retail"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "content_check",
+      "validation_criteria": {
+        "allowed_share_classes": ["CR", "DR", "CN", "DN", "GC"],
+        "check_share_class_match": true
+      },
+      "consequences_of_violation": "Remove non-retail share class performance data"
+    },
+    {
+      "rule_id": "PERF_004",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "Performance must be presented over a minimum period of 10 years for annualized performance and 5 years for others",
+      "rationale": "Provides sufficient historical context for informed decision-making",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "duration_check",
+      "validation_criteria": {
+        "annualized_performance_min_years": 10,
+        "other_performance_min_years": 5
+      },
+      "consequences_of_violation": "Extend performance history or remove if unavailable",
+      "related_rules": ["PERF_005"]
+    },
+    {
+      "rule_id": "PERF_005",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "When the fund cannot display a 10-year history, performance must be presented since fund inception",
+      "rationale": "Ensures maximum available historical data is shown for newer funds",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "duration_check",
+      "validation_criteria": {
+        "show_since_inception": true,
+        "min_age_for_full_history": 10
+      },
+      "consequences_of_violation": "Adjust performance period to show since inception",
+      "related_rules": ["PERF_004", "PERF_011"]
+    },
+    {
+      "rule_id": "PERF_006",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "Performance must be presented in the form of rolling annual, annualized and/or cumulative returns",
+      "rationale": "Standardizes performance presentation for comparability",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "format_check",
+      "validation_criteria": {
+        "allowed_formats": ["rolling_annual", "annualized", "cumulative"],
+        "require_at_least_one": true
+      },
+      "consequences_of_violation": "Reformat performance data to compliant format"
+    },
+    {
+      "rule_id": "PERF_007",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "If the fund has less than 3 years of history, cumulative performance is not displayed (except YTD and MTD)",
+      "rationale": "Prevents misleading short-term cumulative figures",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "conditional_check",
+      "validation_criteria": {
+        "min_age_for_cumulative": 3,
+        "allowed_exceptions": ["YTD", "MTD"]
+      },
+      "consequences_of_violation": "Remove cumulative performance except YTD/MTD"
+    },
+    {
+      "rule_id": "PERF_008",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance - Germany",
+      "rule_text": "For Germany: rolling annual performance must be accompanied by performance from fund inception to the first year of rolling performance",
+      "rationale": "German regulatory requirement for complete historical context",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["DE"]
+      },
+      "severity": "critical",
+      "validation_type": "country_specific_check",
+      "validation_criteria": {
+        "require_inception_to_first_rolling": true,
+        "applicable_countries": ["DE"]
+      },
+      "consequences_of_violation": "Add inception-to-first-year performance data",
+      "related_rules": ["PERF_009"]
+    },
+    {
+      "rule_id": "PERF_009",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance - Germany",
+      "rule_text": "For Germany: the first year of rolling performance presentation incorporates maximum subscription fees. Similarly, maximum redemption fees (acquired or not acquired by the fund) specified in the prospectus must be mentioned in the last year",
+      "rationale": "German requirement to show all-in costs including entry/exit fees",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["DE"]
+      },
+      "severity": "critical",
+      "validation_type": "country_specific_check",
+      "validation_criteria": {
+        "include_subscription_fees_first_year": true,
+        "include_redemption_fees_last_year": true,
+        "applicable_countries": ["DE"]
+      },
+      "consequences_of_violation": "Adjust performance calculations to include fees",
+      "related_rules": ["PERF_008"]
+    },
+    {
+      "rule_id": "PERF_010",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "YTD performance may be mentioned strictly on condition that performance over 10 years, 5 years, 3 years, 1 year and/or since inception is displayed. It can never be presented alone",
+      "rationale": "Prevents cherry-picking short-term positive results",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "conditional_check",
+      "validation_criteria": {
+        "ytd_requires_long_term": true,
+        "required_periods": ["10Y", "5Y", "3Y", "1Y", "inception"],
+        "require_at_least_one_long_term": true
+      },
+      "consequences_of_violation": "Remove YTD or add long-term performance context",
+      "related_rules": ["PERF_013"]
+    },
+    {
+      "rule_id": "PERF_011",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "Funds with less than one year of performance history cannot display performance under any circumstances",
+      "rationale": "Minimum track record required to provide meaningful performance data",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "prohibition_check",
+      "validation_criteria": {
+        "min_age_for_any_performance": 1,
+        "strict_prohibition": true
+      },
+      "consequences_of_violation": "Remove all performance data from materials",
+      "related_rules": ["PERF_005"]
+    },
+    {
+      "rule_id": "PERF_012",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "Display of NAV (reference NAV and latest NAV) through an evolution chart is authorized except in Germany (simple mention of first and last NAV in table form)",
+      "rationale": "Allows visual performance representation with country-specific restrictions",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "conditional_allowance_check",
+      "validation_criteria": {
+        "allow_nav_chart": true,
+        "germany_exception": "table_only",
+        "prohibited_countries": ["DE"]
+      },
+      "consequences_of_violation": "Convert chart to table format for Germany"
+    },
+    {
+      "rule_id": "PERF_013",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "Performance of less than one month cannot be displayed under any circumstances (except YTD)",
+      "rationale": "Prevents emphasis on very short-term volatility",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "prohibition_check",
+      "validation_criteria": {
+        "min_period_days": 30,
+        "ytd_exception": true
+      },
+      "consequences_of_violation": "Remove sub-monthly performance data",
+      "related_rules": ["PERF_010"]
+    },
+    {
+      "rule_id": "PERF_014",
+      "category": "general_performance",
+      "section": "4.3 - Specific mentions relating to performance",
+      "rule_text": "Performance must be permanently and mandatorily compared to the fund's reference indicator if one exists",
+      "rationale": "Provides essential context for evaluating fund management",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "comparison_check",
+      "validation_criteria": {
+        "require_strategy_benchmark": true,
+        "show_alongside_strategy_performance": true
+      },
+      "consequences_of_violation": "Add benchmark comparison",
+      "related_rules": ["PERF_033"]
+    },
+    {
+      "rule_id": "PERF_033",
+      "category": "strategy_performance",
+      "section": "4.3 - Strategies",
+      "rule_text": "Performance may also be compared, for information purposes only (to be explicitly mentioned), to another benchmark (which must be consistent with the strategy's performance drivers and stable over time)",
+      "rationale": "Allows additional context with clear disclosure",
+      "applies_to": {
+        "client_type": ["professional"],
+        "document_type": ["strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "conditional_allowance_check",
+      "validation_criteria": {
+        "require_explicit_disclaimer": true,
+        "benchmark_must_be_relevant": true,
+        "benchmark_must_be_stable": true
+      },
+      "consequences_of_violation": "Add 'for information only' disclosure",
+      "related_rules": ["PERF_032"]
+    },
+    {
+      "rule_id": "PERF_034",
+      "category": "strategy_performance",
+      "section": "4.3 - Strategies",
+      "rule_text": "Strategy performance may be presented gross of fees (excluding fixed and variable management fees, transaction commission) to be specified in the document",
+      "rationale": "Professional client option with required disclosure",
+      "applies_to": {
+        "client_type": ["professional"],
+        "document_type": ["strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "disclosure_check",
+      "validation_criteria": {
+        "gross_performance_allowed": true,
+        "require_explicit_disclosure": true
+      },
+      "consequences_of_violation": "Add fee disclosure",
+      "related_rules": ["PERF_035"]
+    },
+    {
+      "rule_id": "PERF_035",
+      "category": "strategy_performance",
+      "section": "4.3 - Strategies",
+      "rule_text": "If gross performance is presented for strategies, this must be mandatorily highlighted via a specific disclaimer",
+      "rationale": "Ensures professional clients understand performance is pre-fee",
+      "applies_to": {
+        "client_type": ["professional"],
+        "document_type": ["strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "disclosure_check",
+      "validation_criteria": {
+        "require_specific_disclaimer": true,
+        "prominent_placement": true
+      },
+      "consequences_of_violation": "Add prominent gross performance disclaimer",
+      "related_rules": ["PERF_034"]
+    },
+    {
+      "rule_id": "PERF_036",
+      "category": "listed_securities",
+      "section": "4.3 - Funds invested in listed securities",
+      "rule_text": "When there has been a change in reference indicator and/or investment orientation and/or risk-return profile of the fund, a comment must be inserted in a visible manner identifying the nature and date of the change(s)",
+      "rationale": "Transparency about material changes affecting comparability",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "disclosure_check",
+      "validation_criteria": {
+        "identify_change_type": true,
+        "show_change_date": true,
+        "visible_placement": true
+      },
+      "consequences_of_violation": "Add visible change commentary",
+      "related_rules": ["PERF_037"]
+    },
+    {
+      "rule_id": "PERF_037",
+      "category": "listed_securities",
+      "section": "4.3 - Funds invested in listed securities",
+      "rule_text": "It is possible to present performance from the date of change in reference indicator and/or investment orientation and/or AMF-approved risk-return profile provided this new period is strictly greater than 1 year. This provision does not apply to dedicated funds",
+      "rationale": "Allows fresh start after material changes with minimum track record",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "conditional_allowance_check",
+      "validation_criteria": {
+        "min_period_after_change": 1,
+        "dedicated_funds_excluded": true
+      },
+      "consequences_of_violation": "Show full history or wait until 1+ year post-change",
+      "related_rules": ["PERF_036"]
+    },
+    {
+      "rule_id": "PERF_038",
+      "category": "listed_securities",
+      "section": "4.3 - Funds invested in listed securities",
+      "rule_text": "Reference indicator performance is stated according to prospectus terms (dividends included for example for equity funds)",
+      "rationale": "Ensures benchmark consistency with prospectus specifications",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "conformity_check",
+      "validation_criteria": {
+        "match_prospectus_specification": true,
+        "include_dividends_if_specified": true
+      },
+      "consequences_of_violation": "Adjust benchmark calculation to match prospectus"
+    },
+    {
+      "rule_id": "PERF_039",
+      "category": "listed_securities",
+      "section": "4.3 - Funds invested in listed securities",
+      "rule_text": "In the case of a merger between 2 funds, it is possible to adopt the absorbed fund's history if and only if the following conditions are met: 1/ the absorbing fund is strictly created by the merger with the absorbed fund, 2/ the investment strategy, management objective, management team and cost structure are strictly identical",
+      "rationale": "Strict criteria for historical performance continuity",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "conditional_allowance_check",
+      "validation_criteria": {
+        "absorbing_fund_new_creation": true,
+        "identical_strategy": true,
+        "identical_objective": true,
+        "identical_team": true,
+        "identical_costs": true
+      },
+      "consequences_of_violation": "Remove merged fund history if criteria not met"
+    },
+    {
+      "rule_id": "PERF_040",
+      "category": "dated_funds",
+      "section": "4.3 - Dated funds",
+      "rule_text": "Dated funds that specify in their prospectus they have active management cannot display YTM (yield to maturity) or YTW (yield to worst) for retail clients",
+      "rationale": "Active management makes maturity yields unreliable predictors",
+      "applies_to": {
+        "client_type": ["retail"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "prohibition_check",
+      "validation_criteria": {
+        "check_prospectus_for_active_management": true,
+        "prohibited_metrics": ["YTM", "YTW"]
+      },
+      "consequences_of_violation": "Remove YTM/YTW from retail materials",
+      "related_rules": ["PERF_041"]
+    },
+    {
+      "rule_id": "PERF_041",
+      "category": "dated_funds",
+      "section": "4.3 - Dated funds",
+      "rule_text": "Dated funds that specify in their prospectus they have a buy and hold or buy and maintain strategy may display YTM (yield to maturity) and YTW (yield to worst)",
+      "rationale": "Passive strategy makes maturity yields reliable indicators",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "info",
+      "validation_type": "conditional_allowance_check",
+      "validation_criteria": {
+        "check_prospectus_for_passive_strategy": true,
+        "allowed_strategies": ["buy_and_hold", "buy_and_maintain"]
+      },
+      "related_rules": ["PERF_040"]
+    },
+    {
+      "rule_id": "PERF_042",
+      "category": "private_equity",
+      "section": "4.3 - Private equity",
+      "rule_text": "Performance evolution in the form of net IRR is only communicated for professional private equity funds during their life",
+      "rationale": "IRR during fund life is appropriate for professional PE investors",
+      "applies_to": {
+        "client_type": ["professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "conditional_allowance_check",
+      "validation_criteria": {
+        "professional_only": true,
+        "during_fund_life": true
+      },
+      "related_rules": ["PERF_043"]
+    },
+    {
+      "rule_id": "PERF_043",
+      "category": "private_equity",
+      "section": "4.3 - Private equity",
+      "rule_text": "Prohibition on displaying retail fund performance as net IRR before fund maturity",
+      "rationale": "Protects retail investors from potentially misleading interim IRR figures",
+      "applies_to": {
+        "client_type": ["retail"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "prohibition_check",
+      "validation_criteria": {
+        "no_irr_before_maturity": true,
+        "retail_only": true
+      },
+      "consequences_of_violation": "Remove IRR from retail materials",
+      "related_rules": ["PERF_042"]
+    },
+    {
+      "rule_id": "PERF_044",
+      "category": "private_equity",
+      "section": "4.3 - Private equity",
+      "rule_text": "Prohibition on displaying institutional fund track record to retail clients",
+      "rationale": "Prevents misleading retail clients with institutional performance",
+      "applies_to": {
+        "client_type": ["retail"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "prohibition_check",
+      "validation_criteria": {
+        "no_institutional_track_record": true,
+        "retail_audience": true
+      },
+      "consequences_of_violation": "Remove all institutional fund references",
+      "related_rules": ["PERF_025"]
+    },
+    {
+      "rule_id": "PERF_045",
+      "category": "future_simulations",
+      "section": "4.3 - Future simulations",
+      "rule_text": "Information must not be based on or refer to simulations of past performance",
+      "rationale": "Prevents confusion between actual and simulated historical returns",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "content_check",
+      "validation_criteria": {
+        "no_past_simulations_in_future_projections": true
+      },
+      "consequences_of_violation": "Remove past simulation references"
+    },
+    {
+      "rule_id": "PERF_046",
+      "category": "future_simulations",
+      "section": "4.3 - Future simulations",
+      "rule_text": "It must be based on reasonable assumptions founded on objective elements",
+      "rationale": "Ensures projections are grounded in reality",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "content_check",
+      "validation_criteria": {
+        "reasonable_assumptions": true,
+        "objective_basis": true
+      },
+      "consequences_of_violation": "Revise assumptions or remove simulation"
+    },
+    {
+      "rule_id": "PERF_047",
+      "category": "future_simulations",
+      "section": "4.3 - Future simulations",
+      "rule_text": "When information is based on gross performance, the effect of commissions, fees or other charges must be specified",
+      "rationale": "Full transparency on impact of costs on projected returns",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "disclosure_check",
+      "validation_criteria": {
+        "specify_fee_impact": true,
+        "clear_disclosure": true
+      },
+      "consequences_of_violation": "Add fee impact disclosure",
+      "related_rules": ["PERF_022"]
+    },
+    {
+      "rule_id": "PERF_048",
+      "category": "future_simulations",
+      "section": "4.3 - Future simulations",
+      "rule_text": "Performance simulations must be based on realistic market assumptions",
+      "rationale": "Prevents overly optimistic or unrealistic projections",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "content_check",
+      "validation_criteria": {
+        "realistic_market_assumptions": true
+      },
+      "consequences_of_violation": "Revise market assumptions"
+    },
+    {
+      "rule_id": "PERF_049",
+      "category": "future_simulations",
+      "section": "4.3 - Future simulations",
+      "rule_text": "Volatility assumptions used in future performance simulation charts must be consistent with underlying assets, allocation and simulated investment duration",
+      "rationale": "Ensures volatility parameters reflect actual investment characteristics",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "major",
+      "validation_type": "content_check",
+      "validation_criteria": {
+        "volatility_consistent_with_assets": true,
+        "volatility_consistent_with_duration": true
+      },
+      "consequences_of_violation": "Adjust volatility assumptions"
+    },
+    {
+      "rule_id": "PERF_050",
+      "category": "past_simulations",
+      "section": "4.3 - Past simulations",
+      "rule_text": "Use of performance simulation for periods when no data was yet available is only authorized for a new share class of an existing UCITS or investment compartment based on the performance of another share class, provided that the proportion these two share classes represent in fund assets does not differ substantially",
+      "rationale": "Allows proxy performance for new share classes under strict conditions",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "conditional_allowance_check",
+      "validation_criteria": {
+        "new_share_class_only": true,
+        "based_on_existing_share_class": true,
+        "similar_asset_proportions": true
+      },
+      "consequences_of_violation": "Remove simulated historical performance",
+      "related_rules": ["PERF_023", "PERF_051"]
+    },
+    {
+      "rule_id": "PERF_051",
+      "category": "past_simulations",
+      "section": "4.3 - Past simulations",
+      "rule_text": "Any simulation on an already existing share class is prohibited",
+      "rationale": "Prevents rewriting actual performance history",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "prohibition_check",
+      "validation_criteria": {
+        "no_simulation_for_existing_shares": true
+      },
+      "consequences_of_violation": "Use only actual performance data",
+      "related_rules": ["PERF_050"]
+    },
+    {
+      "rule_id": "PERF_052",
+      "category": "past_simulations",
+      "section": "4.3 - Past simulations",
+      "rule_text": "Performance recalculation must mandatorily account for differences in fixed fees, variable fees, currencies, etc.",
+      "rationale": "Ensures simulated performance accurately reflects fee differences",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "calculation_check",
+      "validation_criteria": {
+        "account_for_fee_differences": true,
+        "account_for_currency_differences": true
+      },
+      "consequences_of_violation": "Recalculate with proper fee adjustments",
+      "related_rules": ["PERF_050", "PERF_058"]
+    },
+    {
+      "rule_id": "PERF_053",
+      "category": "mandatory_disclaimers",
+      "section": "4.3 - Mandatory disclaimers",
+      "rule_text": "The disclaimer must be displayed directly below or beside the performance and in clearly legible characters",
+      "rationale": "Ensures investors see and can read critical warnings",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "format_check",
+      "validation_criteria": {
+        "placement": ["below", "beside"],
+        "legible_font_size": true,
+        "proximity_to_performance": true
+      },
+      "consequences_of_violation": "Reposition and resize disclaimer"
+    },
+    {
+      "rule_id": "PERF_054",
+      "category": "mandatory_disclaimers",
+      "section": "4.3 - Mandatory disclaimers",
+      "rule_text": "When presenting realized performance, the following disclaimer must be mandatorily displayed: 'Past performance is not indicative of future performance and is not constant over time'",
+      "rationale": "Standard regulatory warning about performance",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "presence_check",
+      "validation_criteria": {
+        "required_text": "Past performance is not indicative of future performance and is not constant over time",
+        "exact_wording_required": true
+      },
+      "consequences_of_violation": "Add mandatory disclaimer",
+      "examples": {
+        "required_disclaimer": "Past performance is not indicative of future performance and is not constant over time"
+      }
+    },
+    {
+      "rule_id": "PERF_055",
+      "category": "mandatory_disclaimers",
+      "section": "4.3 - Mandatory disclaimers",
+      "rule_text": "When presenting backtested performance (professional clients and only in France), the following disclaimer must be mandatorily displayed: 'The figures refer to simulations of past performance. These simulations are the result of estimates by OBAM SAS at a given time, based on parameters selected by Oddo BHF Asset Management, market conditions at that time and historical data which do not prejudge future results. Consequently, these simulations have only an indicative value and cannot constitute in any way a promise of return.'",
+      "rationale": "Critical disclosure about limitations of backtested data",
+      "applies_to": {
+        "client_type": ["professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["FR"]
+      },
+      "severity": "critical",
+      "validation_type": "presence_check",
+      "validation_criteria": {
+        "required_for_backtesting": true,
+        "france_only": true,
+        "professional_only": true
+      },
+      "consequences_of_violation": "Add mandatory backtesting disclaimer",
+      "examples": {
+        "required_disclaimer": "The figures refer to simulations of past performance. These simulations are the result of estimates by OBAM SAS at a given time, based on parameters selected by Oddo BHF Asset Management, market conditions at that time and historical data which do not prejudge future results. Consequently, these simulations have only an indicative value and cannot constitute in any way a promise of return."
+      },
+      "related_rules": ["PERF_029"]
+    },
+    {
+      "rule_id": "PERF_056",
+      "category": "mandatory_disclaimers",
+      "section": "4.3 - Mandatory disclaimers",
+      "rule_text": "In case of future performance simulation, results must be mandatorily accompanied by the following disclaimer: 'The simulation presented does not constitute a forecast of the future performance of your investments. It is only intended to illustrate the mechanisms of your investment over the investment period. The evolution of the value of your investment may differ from what is displayed, upwards or downwards'",
+      "rationale": "Warns investors about uncertainty of projections",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "presence_check",
+      "validation_criteria": {
+        "required_for_future_simulations": true
+      },
+      "consequences_of_violation": "Add mandatory simulation disclaimer",
+      "examples": {
+        "required_disclaimer": "The simulation presented does not constitute a forecast of the future performance of your investments. It is only intended to illustrate the mechanisms of your investment over the investment period. The evolution of the value of your investment may differ from what is displayed, upwards or downwards"
+      }
+    },
+    {
+      "rule_id": "PERF_057",
+      "category": "mandatory_disclaimers",
+      "section": "4.3 - Mandatory disclaimers",
+      "rule_text": "In case of displaying multiple scenarios (such as favorable, unfavorable and neutral), add: 'Gains and losses may exceed the amounts displayed, respectively, in the most favorable and most unfavorable scenarios. By proceeding, you acknowledge having read this warning, understood it and accept its content'",
+      "rationale": "Ensures understanding that actual results may exceed scenario bounds",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "presence_check",
+      "validation_criteria": {
+        "required_for_multiple_scenarios": true
+      },
+      "consequences_of_violation": "Add scenario bounds disclaimer",
+      "examples": {
+        "required_disclaimer": "Gains and losses may exceed the amounts displayed, respectively, in the most favorable and most unfavorable scenarios. By proceeding, you acknowledge having read this warning, understood it and accept its content"
+      }
+    },
+    {
+      "rule_id": "PERF_058",
+      "category": "mandatory_disclaimers",
+      "section": "4.3 - Mandatory disclaimers",
+      "rule_text": "In case of simulated past performance, add: 'The performance displayed does not represent the actual performance of share class X over a given period. It is derived from simulations calculated by the management company from the performance of share class Y of the same fund, adjusted for fixed management fees, variable management fees, currencies'",
+      "rationale": "Clear disclosure that performance is simulated, not actual",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"],
+        "country": ["all"]
+      },
+      "severity": "critical",
+      "validation_type": "presence_check",
+      "validation_criteria": {
+        "required_for_simulated_past": true,
+        "identify_share_classes": true
+      },
+      "consequences_of_violation": "Add simulated performance disclaimer",
+      "examples": {
+        "required_disclaimer_template": "The performance displayed does not represent the actual performance of share class [X] over a given period. It is derived from simulations calculated by the management company from the performance of share class [Y] of the same fund, adjusted for fixed management fees, variable management fees, currencies"
+      },
+      "related_rules": ["PERF_050", "PERF_052"]
+    }
+  ],
+  "validation_workflows": {
+    "pre_publication_checklist": [
+      {
+        "step": 1,
+        "action": "Identify document type and target audience",
+        "checks": ["client_type", "document_type", "country"]
+      },
+      {
+        "step": 2,
+        "action": "Verify document structure",
+        "applicable_rules": ["PERF_001", "PERF_026"]
+      },
+      {
+        "step": 3,
+        "action": "Validate performance data presentation",
+        "applicable_rules": ["PERF_002", "PERF_004", "PERF_005", "PERF_006", "PERF_011"]
+      },
+      {
+        "step": 4,
+        "action": "Check benchmark comparisons",
+        "applicable_rules": ["PERF_014", "PERF_015", "PERF_016", "PERF_032"]
+      },
+      {
+        "step": 5,
+        "action": "Verify fee treatment",
+        "applicable_rules": ["PERF_021", "PERF_022", "PERF_034", "PERF_035"]
+      },
+      {
+        "step": 6,
+        "action": "Validate disclaimers",
+        "applicable_rules": ["PERF_053", "PERF_054", "PERF_055", "PERF_056", "PERF_057", "PERF_058"]
+      },
+      {
+        "step": 7,
+        "action": "Country-specific checks",
+        "applicable_rules": ["PERF_008", "PERF_009", "PERF_012", "PERF_055"]
+      }
+    ]
+  },
+  "common_violations": [
+    {
+      "violation": "Performance displayed without minimum history",
+      "related_rules": ["PERF_004", "PERF_011"],
+      "severity": "critical",
+      "remediation": "Extend history to required minimum or show since inception"
+    },
+    {
+      "violation": "YTD shown without long-term context",
+      "related_rules": ["PERF_010", "PERF_031"],
+      "severity": "critical",
+      "remediation": "Add 10Y, 5Y, 3Y, 1Y or inception performance"
+    },
+    {
+      "violation": "Missing mandatory disclaimer",
+      "related_rules": ["PERF_054", "PERF_056"],
+      "severity": "critical",
+      "remediation": "Add appropriate disclaimer per rule requirements"
+    },
+    {
+      "violation": "Performance not compared to prospectus benchmark",
+      "related_rules": ["PERF_014", "PERF_032"],
+      "severity": "critical",
+      "remediation": "Add official benchmark comparison"
+    },
+    {
+      "violation": "Retail document shows institutional performance",
+      "related_rules": ["PERF_003", "PERF_025", "PERF_044"],
+      "severity": "critical",
+      "remediation": "Remove non-retail share class data"
+    },
+    {
+      "violation": "Document leads with performance",
+      "related_rules": ["PERF_001", "PERF_026"],
+      "severity": "critical",
+      "remediation": "Restructure to lead with fund/strategy presentation"
+    }
+  ],
+  "quick_reference": {
+    "minimum_track_records": {
+      "any_performance_display": "1 year minimum (PERF_011)",
+      "annualized_performance": "10 years or since inception (PERF_004, PERF_005)",
+      "other_performance": "5 years or since inception (PERF_004, PERF_005)",
+      "cumulative_performance_alone": "3 years minimum (PERF_007, PERF_030)",
+      "ytd_display": "Must show 10Y/5Y/3Y/1Y/inception context (PERF_010, PERF_031)",
+      "strategies": "10 years or since inception (PERF_027, PERF_028)",
+      "post_material_change": "1 year minimum for fresh start (PERF_037)"
+    },
+    "prohibited_actions": {
+      "retail_clients": [
+        "Showing institutional track records (PERF_025, PERF_044)",
+        "Showing non-retail share class performance (PERF_003)",
+        "Displaying YTM/YTW for actively managed dated funds (PERF_040)",
+        "Showing IRR before fund maturity for PE funds (PERF_043)",
+        "Performance less than 1 month except YTD (PERF_013)",
+        "Sub-1-year fund displaying any performance (PERF_011)"
+      ],
+      "all_clients": [
+        "Comparing to non-prospectus benchmarks (PERF_016, PERF_020)",
+        "Document leading with performance (PERF_001, PERF_026)",
+        "Simulating existing share class performance (PERF_051)",
+        "Sub-monthly performance except YTD (PERF_013)"
+      ]
+    },
+    "mandatory_disclosures": {
+      "all_performance": "Past performance disclaimer (PERF_054)",
+      "gross_performance": "Fee impact disclosure (PERF_022, PERF_035, PERF_047)",
+      "backtested_performance": "Simulation disclaimer - France only (PERF_055)",
+      "future_simulations": "Non-forecast disclaimer (PERF_056)",
+      "multiple_scenarios": "Bounds exceeded warning (PERF_057)",
+      "simulated_past_performance": "Share class simulation disclaimer (PERF_058)",
+      "new_share_class": "Fee structure disclosure (PERF_023)",
+      "reference_period_and_source": "Date range and data source (PERF_024)"
+    },
+    "country_specific_rules": {
+      "germany": {
+        "description": "Additional requirements for German market",
+        "rules": [
+          {
+            "rule_id": "PERF_008",
+            "requirement": "Show inception to first rolling year performance"
+          },
+          {
+            "rule_id": "PERF_009",
+            "requirement": "Include max subscription fees in first year, max redemption fees in last year"
+          },
+          {
+            "rule_id": "PERF_012",
+            "requirement": "NAV in table form only, no charts"
+          }
+        ]
+      },
+      "france": {
+        "description": "France-specific requirements",
+        "rules": [
+          {
+            "rule_id": "PERF_055",
+            "requirement": "Specific backtesting disclaimer required for professional clients"
+          }
+        ]
+      }
+    }
+  },
+  "agent_search_indexes": {
+    "by_severity": {
+      "critical": [
+        "PERF_001", "PERF_003", "PERF_004", "PERF_005", "PERF_006", "PERF_008",
+        "PERF_009", "PERF_010", "PERF_011", "PERF_013", "PERF_014", "PERF_015",
+        "PERF_016", "PERF_020", "PERF_021", "PERF_022", "PERF_025", "PERF_026",
+        "PERF_027", "PERF_028", "PERF_031", "PERF_032", "PERF_035", "PERF_036",
+        "PERF_039", "PERF_040", "PERF_043", "PERF_044", "PERF_045", "PERF_047",
+        "PERF_050", "PERF_051", "PERF_052", "PERF_053", "PERF_054", "PERF_055",
+        "PERF_056", "PERF_057", "PERF_058"
+      ],
+      "major": [
+        "PERF_002", "PERF_007", "PERF_012", "PERF_017", "PERF_018", "PERF_019",
+        "PERF_023", "PERF_024", "PERF_030", "PERF_033", "PERF_034", "PERF_037",
+        "PERF_038", "PERF_042", "PERF_046", "PERF_048", "PERF_049"
+      ],
+      "info": [
+        "PERF_029", "PERF_041"
+      ]
+    },
+    "by_client_type": {
+      "retail_only": [
+        "PERF_003", "PERF_021", "PERF_025", "PERF_040", "PERF_043", "PERF_044"
+      ],
+      "professional_only": [
+        "PERF_026", "PERF_027", "PERF_028", "PERF_029", "PERF_030", "PERF_031",
+        "PERF_032", "PERF_033", "PERF_034", "PERF_035", "PERF_042", "PERF_055"
+      ],
+      "both": [
+        "PERF_001", "PERF_002", "PERF_004", "PERF_005", "PERF_006", "PERF_007",
+        "PERF_008", "PERF_009", "PERF_010", "PERF_011", "PERF_012", "PERF_013",
+        "PERF_014", "PERF_015", "PERF_016", "PERF_017", "PERF_018", "PERF_019",
+        "PERF_020", "PERF_022", "PERF_023", "PERF_024", "PERF_036", "PERF_037",
+        "PERF_038", "PERF_039", "PERF_041", "PERF_045", "PERF_046", "PERF_047",
+        "PERF_048", "PERF_049", "PERF_050", "PERF_051", "PERF_052", "PERF_053",
+        "PERF_054", "PERF_056", "PERF_057", "PERF_058"
+      ]
+    },
+    "by_category": {
+      "general_performance": [
+        "PERF_001", "PERF_002", "PERF_003", "PERF_004", "PERF_005", "PERF_006",
+        "PERF_007", "PERF_008", "PERF_009", "PERF_010", "PERF_011", "PERF_012",
+        "PERF_013", "PERF_014", "PERF_015", "PERF_016", "PERF_017", "PERF_018",
+        "PERF_019", "PERF_020", "PERF_021", "PERF_022", "PERF_023", "PERF_024",
+        "PERF_025"
+      ],
+      "strategy_performance": [
+        "PERF_026", "PERF_027", "PERF_028", "PERF_029", "PERF_030", "PERF_031",
+        "PERF_032", "PERF_033", "PERF_034", "PERF_035"
+      ],
+      "listed_securities": [
+        "PERF_036", "PERF_037", "PERF_038", "PERF_039"
+      ],
+      "dated_funds": [
+        "PERF_040", "PERF_041"
+      ],
+      "private_equity": [
+        "PERF_042", "PERF_043", "PERF_044"
+      ],
+      "future_simulations": [
+        "PERF_045", "PERF_046", "PERF_047", "PERF_048", "PERF_049"
+      ],
+      "past_simulations": [
+        "PERF_050", "PERF_051", "PERF_052"
+      ],
+      "mandatory_disclaimers": [
+        "PERF_053", "PERF_054", "PERF_055", "PERF_056", "PERF_057", "PERF_058"
+      ]
+    },
+    "by_validation_type": {
+      "structure_check": ["PERF_001", "PERF_026"],
+      "format_check": ["PERF_002", "PERF_006", "PERF_053"],
+      "content_check": ["PERF_003", "PERF_045", "PERF_046", "PERF_048", "PERF_049"],
+      "duration_check": ["PERF_004", "PERF_005", "PERF_027", "PERF_028"],
+      "conditional_check": ["PERF_007", "PERF_010", "PERF_030", "PERF_031"],
+      "country_specific_check": ["PERF_008", "PERF_009"],
+      "prohibition_check": ["PERF_011", "PERF_013", "PERF_016", "PERF_020", "PERF_025", "PERF_040", "PERF_043", "PERF_044", "PERF_051"],
+      "conditional_allowance_check": ["PERF_012", "PERF_019", "PERF_033", "PERF_037", "PERF_039", "PERF_041", "PERF_042", "PERF_050"],
+      "comparison_check": ["PERF_014", "PERF_015", "PERF_032"],
+      "historical_check": ["PERF_017", "PERF_018"],
+      "separation_check": ["PERF_019"],
+      "calculation_check": ["PERF_021", "PERF_052"],
+      "disclosure_check": ["PERF_022", "PERF_023", "PERF_024", "PERF_034", "PERF_035", "PERF_036", "PERF_047"],
+      "conformity_check": ["PERF_038"],
+      "presence_check": ["PERF_054", "PERF_055", "PERF_056", "PERF_057", "PERF_058"],
+      "exception_check": ["PERF_029"]
+    }
+  },
+  "agent_query_patterns": {
+    "performance_duration_queries": {
+      "keywords": ["minimum period", "track record", "history", "years", "inception"],
+      "relevant_rules": ["PERF_004", "PERF_005", "PERF_007", "PERF_011", "PERF_027", "PERF_028", "PERF_030"]
+    },
+    "benchmark_queries": {
+      "keywords": ["benchmark", "reference indicator", "comparison", "index"],
+      "relevant_rules": ["PERF_014", "PERF_015", "PERF_016", "PERF_017", "PERF_018", "PERF_019", "PERF_020", "PERF_032", "PERF_033", "PERF_038"]
+    },
+    "disclaimer_queries": {
+      "keywords": ["disclaimer", "warning", "disclosure", "text required"],
+      "relevant_rules": ["PERF_053", "PERF_054", "PERF_055", "PERF_056", "PERF_057", "PERF_058"]
+    },
+    "retail_restrictions": {
+      "keywords": ["retail", "retail client", "individual investor"],
+      "relevant_rules": ["PERF_003", "PERF_021", "PERF_025", "PERF_040", "PERF_043", "PERF_044"]
+    },
+    "fee_treatment": {
+      "keywords": ["fees", "gross", "net", "charges", "costs"],
+      "relevant_rules": ["PERF_021", "PERF_022", "PERF_034", "PERF_035", "PERF_047", "PERF_052"]
+    },
+    "ytd_queries": {
+      "keywords": ["YTD", "year to date", "short term", "monthly"],
+      "relevant_rules": ["PERF_010", "PERF_013", "PERF_031"]
+    },
+    "simulation_queries": {
+      "keywords": ["simulation", "backtesting", "projected", "forecast", "scenario"],
+      "relevant_rules": ["PERF_045", "PERF_046", "PERF_047", "PERF_048", "PERF_049", "PERF_050", "PERF_051", "PERF_052", "PERF_055", "PERF_056", "PERF_057", "PERF_058"]
+    },
+    "country_specific": {
+      "keywords": ["Germany", "France", "country", "jurisdiction"],
+      "relevant_rules": ["PERF_008", "PERF_009", "PERF_012", "PERF_055"]
+    },
+    "document_structure": {
+      "keywords": ["document start", "opening", "layout", "format", "structure"],
+      "relevant_rules": ["PERF_001", "PERF_002", "PERF_026"]
+    },
+    "private_equity": {
+      "keywords": ["private equity", "PE", "IRR", "internal rate"],
+      "relevant_rules": ["PERF_042", "PERF_043", "PERF_044"]
+    },
+    "share_class": {
+      "keywords": ["share class", "new share", "proxy performance"],
+      "relevant_rules": ["PERF_003", "PERF_023", "PERF_050", "PERF_051", "PERF_052", "PERF_058"]
+    }
+  },
+  "compliance_decision_tree": {
+    "question_1": {
+      "text": "What is the target audience?",
+      "options": {
+        "retail": {
+          "next": "question_2_retail",
+          "applicable_rules": ["PERF_003", "PERF_021", "PERF_025", "PERF_040", "PERF_043", "PERF_044"]
+        },
+        "professional": {
+          "next": "question_2_professional",
+          "additional_flexibility": ["PERF_022", "PERF_034", "PERF_055"]
+        }
+      }
+    },
+    "question_2_retail": {
+      "text": "What type of document?",
+      "options": {
+        "fund": {
+          "next": "question_3_fund",
+          "base_rules": ["PERF_001", "PERF_004", "PERF_006", "PERF_014", "PERF_021", "PERF_054"]
+        }
+      }
+    },
+    "question_2_professional": {
+      "text": "What type of document?",
+      "options": {
+        "fund": {
+          "next": "question_3_fund",
+          "base_rules": ["PERF_001", "PERF_004", "PERF_006", "PERF_014", "PERF_054"]
+        },
+        "strategy": {
+          "next": "question_3_strategy",
+          "base_rules": ["PERF_026", "PERF_027", "PERF_032", "PERF_054"]
+        }
+      }
+    },
+    "question_3_fund": {
+      "text": "Fund age and characteristics?",
+      "checks": [
+        {
+          "condition": "fund_age < 1 year",
+          "rule": "PERF_011",
+          "action": "STOP - No performance can be shown"
+        },
+        {
+          "condition": "fund_age >= 1 year and < 3 years",
+          "rules": ["PERF_005", "PERF_007"],
+          "action": "Show since inception, no cumulative except YTD/MTD"
+        },
+        {
+          "condition": "fund_age >= 3 years and < 10 years",
+          "rules": ["PERF_005"],
+          "action": "Show since inception (can show cumulative)"
+        },
+        {
+          "condition": "fund_age >= 10 years",
+          "rules": ["PERF_004"],
+          "action": "Show 10 years minimum"
+        }
+      ]
+    },
+    "question_3_strategy": {
+      "text": "Strategy age and characteristics?",
+      "checks": [
+        {
+          "condition": "strategy_age >= 10 years",
+          "rule": "PERF_027",
+          "action": "Show 10 years minimum"
+        },
+        {
+          "condition": "strategy_age < 10 years",
+          "rule": "PERF_028",
+          "action": "Show since inception"
+        },
+        {
+          "condition": "backtested",
+          "rule": "PERF_029",
+          "action": "No 10-year minimum required, but must use PERF_055 disclaimer"
+        }
+      ]
+    }
+  },
+  "example_scenarios": [
+    {
+      "scenario_id": "SCN_001",
+      "description": "3-year old retail fund showing YTD performance",
+      "details": {
+        "fund_age": 3,
+        "client_type": "retail",
+        "performance_shown": ["YTD"]
+      },
+      "applicable_rules": ["PERF_010"],
+      "compliance_status": "NON-COMPLIANT",
+      "reason": "YTD cannot be shown alone - must show 10Y/5Y/3Y/1Y/inception",
+      "remediation": "Add 3-year, 1-year, and since inception performance alongside YTD"
+    },
+    {
+      "scenario_id": "SCN_002",
+      "description": "German retail fund with NAV evolution chart",
+      "details": {
+        "country": "DE",
+        "client_type": "retail",
+        "visualization": "NAV_chart"
+      },
+      "applicable_rules": ["PERF_012"],
+      "compliance_status": "NON-COMPLIANT",
+      "reason": "Germany requires table format only for NAV display",
+      "remediation": "Convert chart to table showing first and last NAV"
+    },
+    {
+      "scenario_id": "SCN_003",
+      "description": "New share class showing proxy performance from existing class",
+      "details": {
+        "share_class_age": 0.5,
+        "proxy_share_age": 5,
+        "client_type": "retail"
+      },
+      "applicable_rules": ["PERF_023", "PERF_050", "PERF_058"],
+      "compliance_status": "CONDITIONALLY COMPLIANT",
+      "reason": "Allowed if fee differences disclosed and simulated performance disclaimer added",
+      "required_actions": [
+        "Add explicit statement: 'The fees of the new share class are those of share class [X]'",
+        "Add PERF_058 disclaimer about simulated performance",
+        "Ensure proxy share has 1+ year history"
+      ]
+    },
+    {
+      "scenario_id": "SCN_004",
+      "description": "Professional strategy document with backtested performance (France)",
+      "details": {
+        "document_type": "strategy",
+        "client_type": "professional",
+        "country": "FR",
+        "performance_type": "backtested"
+      },
+      "applicable_rules": ["PERF_029", "PERF_055"],
+      "compliance_status": "CONDITIONALLY COMPLIANT",
+      "reason": "Backtesting allowed for professional strategies with proper disclaimer",
+      "required_actions": [
+        "Add PERF_055 mandatory backtesting disclaimer",
+        "Clearly label as simulated/backtested",
+        "No minimum 10-year requirement"
+      ]
+    },
+    {
+      "scenario_id": "SCN_005",
+      "description": "Retail actively managed dated fund showing YTM",
+      "details": {
+        "fund_type": "dated_fund",
+        "management_style": "active",
+        "client_type": "retail",
+        "metrics_shown": ["YTM", "YTW"]
+      },
+      "applicable_rules": ["PERF_040"],
+      "compliance_status": "NON-COMPLIANT",
+      "reason": "YTM/YTW prohibited for retail on actively managed dated funds",
+      "remediation": "Remove YTM and YTW metrics from retail materials"
+    },
+    {
+      "scenario_id": "SCN_006",
+      "description": "Document comparing fund to non-prospectus benchmark",
+      "details": {
+        "official_benchmark": "MSCI World",
+        "additional_comparison": "S&P 500",
+        "sp500_in_prospectus": false
+      },
+      "applicable_rules": ["PERF_016", "PERF_019", "PERF_020"],
+      "compliance_status": "NON-COMPLIANT (current) / CONDITIONALLY COMPLIANT (if restructured)",
+      "reason": "Cannot compare to non-prospectus benchmark on same page as fund performance",
+      "remediation_options": [
+        "Option 1: Remove S&P 500 comparison entirely",
+        "Option 2: Move S&P 500 to separate appendix/markets section without fund performance"
+      ]
+    },
+    {
+      "scenario_id": "SCN_007",
+      "description": "8-month old fund with performance data",
+      "details": {
+        "fund_age": 0.67,
+        "client_type": "retail",
+        "performance_available": true
+      },
+      "applicable_rules": ["PERF_011"],
+      "compliance_status": "NON-COMPLIANT",
+      "reason": "Funds under 1 year cannot display any performance",
+      "remediation": "Remove all performance data until fund reaches 1 year"
+    },
+    {
+      "scenario_id": "SCN_008",
+      "description": "Professional PE fund showing interim IRR to retail investors",
+      "details": {
+        "fund_type": "private_equity",
+        "fund_status": "active",
+        "client_type": "retail",
+        "metric": "IRR_interim"
+      },
+      "applicable_rules": ["PERF_043"],
+      "compliance_status": "NON-COMPLIANT",
+      "reason": "Retail PE funds cannot show IRR before maturity",
+      "remediation": "Remove IRR from retail materials or wait until fund maturity"
+    }
+  ],
+  "implementation_notes": {
+    "for_developers": {
+      "search_optimization": "Index rules by rule_id, category, severity, client_type, and validation_type for fast retrieval",
+      "caching_strategy": "Cache frequently accessed rule combinations by scenario type",
+      "validation_pipeline": "Implement multi-stage validation: structure → content → format → disclaimers",
+      "error_reporting": "Return rule_id, severity, and remediation steps for each violation",
+      "multi_language_support": "Store original French text alongside English translation for reference",
+      "version_control": "Track rule changes with effective dates and superseded versions"
+    },
+    "for_compliance_teams": {
+      "priority_focus": "Critical severity rules must be checked before any publication",
+      "country_variations": "Always check country-specific rules for Germany and France",
+      "client_type_switching": "Validate audience type before applying rules - retail has more restrictions",
+      "documentation": "Maintain audit trail of validation checks and approvals"
+    },
+    "for_content_creators": {
+      "pre_writing_checklist": [
+        "Identify target audience (retail/professional)",
+        "Determine document type (fund/strategy)",
+        "Check fund/strategy age for minimum history requirements",
+        "Verify official benchmark from prospectus",
+        "Confirm share classes to be presented"
+      ],
+      "writing_guidelines": [
+        "Lead with fund/strategy presentation, not performance",
+        "Use consistent font sizes for all content",
+        "Always pair performance with official benchmark",
+        "Include required disclaimers adjacent to performance",
+        "Double-check country-specific requirements"
+      ],
+      "review_checklist": [
+        "Structure: Does document lead with presentation? (PERF_001/026)",
+        "Duration: Minimum history requirements met? (PERF_004/005/027/028)",
+        "Comparison: Official benchmark shown? (PERF_014/032)",
+        "Fees: Net of fees for retail? Disclosed for professional? (PERF_021/022)",
+        "Disclaimers: All required disclaimers present? (PERF_053-058)",
+        "Country: Special rules for Germany/France applied? (PERF_008/009/012/055)"
+      ]
+    }
+  },
+  "regulatory_context": {
+    "primary_regulation": "AMF (Autorité des Marchés Financiers) marketing rules",
+    "objective": "Ensure fair, balanced, and non-misleading presentation of fund and strategy performance to investors",
+    "key_principles": [
+      "Transparency: All performance data must be clearly sourced and dated",
+      "Context: Performance must not be isolated from appropriate comparisons and historical perspective",
+      "Balance: Performance cannot dominate document presentation",
+      "Accuracy: Fees, benchmarks, and calculations must reflect actual investor experience",
+      "Protection: Retail investors receive additional protections vs. professional clients"
+    ],
+    "enforcement": {
+      "pre_publication": "Internal compliance review required before external distribution",
+      "post_publication": "Subject to AMF review and potential sanctions for violations",
+      "documentation": "Maintain records of compliance checks and approvals"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0",
+      "date": "2025-11-11",
+      "changes": [
+        "Initial English translation from French source",
+        "Added comprehensive metadata and structure",
+        "Created agent-optimized search indexes",
+        "Added validation workflows and decision trees",
+        "Included example scenarios and implementation notes",
+        "Enhanced with glossary and quick reference guides"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,893 @@
+{
+  "agent_name": "Values and Securities Agent",
+  "agent_id": "VAL_AGENT_001",
+  "description": "Validates mentions of securities/values within fund presentations (Section 4.2). Ensures compliance with investment recommendation restrictions and proper disclosure of portfolio holdings.",
+  "domain": "Securities Disclosure and Investment Recommendations",
+  "regulatory_framework": "French AMF regulations on investment recommendations (MAR regulation)",
+  "target_audience": "Retail and professional clients",
+  "keywords": ["securities", "values", "stocks", "investment recommendation", "portfolio holdings", "buy", "sell", "valuation", "price target", "analysis", "MAR", "disclosure"],
+  
+  "rules": [
+    {
+      "rule_id": "VAL_001",
+      "rule_name": "No Direct or Indirect Investment Recommendations",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Investment recommendation prohibitions",
+      "rule_text": "No direct or indirect investment recommendations",
+      "detailed_description": "Fund presentations must not contain any direct or indirect investment recommendations regarding specific securities. This includes any statement that could be construed as advice to buy, sell, or hold a particular security. An investment recommendation is defined under MAR regulation as information recommending or suggesting an investment strategy regarding one or several financial instruments.",
+      "purpose": "Prevents unauthorized investment advice and protects clients from potential conflicts of interest",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation", "factsheet", "marketing materials"],
+        "fund_status": ["all", "UCITS", "AIF"],
+        "geographic_scope": ["France", "European Union"]
+      },
+      "severity": "critical",
+      "severity_definition": "Absolute prohibition - constitutes regulatory breach under MAR",
+      "consequences": "Document rejection, potential AMF sanctions, legal liability for unauthorized investment advice",
+      "cross_references": [
+        {
+          "type": "regulatory",
+          "reference": "MAR Regulation (EU) 596/2014",
+          "description": "Defines investment recommendations and disclosure requirements"
+        }
+      ],
+      "validation_type": "prohibition_check",
+      "validation_method": "Scan for language suggesting investment action or recommendation",
+      "category": "prohibition",
+      "violation_examples": [
+        "We recommend investing in Company X",
+        "This stock is a good buy opportunity",
+        "Investors should consider adding this security",
+        "We suggest accumulating shares of Company Y",
+        "This is an attractive investment at current levels"
+      ],
+      "prohibited_phrases": [
+        "recommend", "suggest", "should buy", "should invest", "good opportunity",
+        "attractive investment", "we advise", "recommended position", "buy recommendation"
+      ],
+      "related_concepts": ["investment advice", "MAR regulation", "recommendation", "buy/sell signals"],
+      "common_errors": ["Implicit recommendations through positive language", "Conditional recommendations"],
+      "search_terms": ["investment recommendation", "buy advice", "sell advice", "recommend investing", "MAR violation"]
+    },
+    {
+      "rule_id": "VAL_002",
+      "rule_name": "No Valuation Assessments",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Valuation opinion prohibitions",
+      "rule_text": "Do not indicate if a security is undervalued / overvalued / fairly valued",
+      "detailed_description": "Fund presentations must not provide valuation opinions about specific securities. This includes any assessment of whether a security's current market price is below, above, or at fair value. Such statements constitute implicit investment recommendations by suggesting the security may rise (if undervalued) or fall (if overvalued).",
+      "purpose": "Prevents implicit investment recommendations through valuation opinions",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation", "factsheet"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Absolute prohibition - implies investment recommendation",
+      "consequences": "Document rejection, regulatory breach, potential AMF investigation",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Detect valuation language and price-to-value comparisons",
+      "category": "prohibition",
+      "violation_examples": [
+        "Company X is trading below its intrinsic value",
+        "We believe the stock is undervalued at current prices",
+        "The security appears overpriced relative to fundamentals",
+        "Fair value is estimated at €50, current price €40",
+        "The market has not yet recognized the company's true value"
+      ],
+      "prohibited_phrases": [
+        "undervalued", "overvalued", "fairly valued", "mispriced", "cheap",
+        "expensive", "below fair value", "above intrinsic value", "trading at discount",
+        "trading at premium", "value gap", "price dislocation"
+      ],
+      "related_concepts": ["valuation", "intrinsic value", "fair value", "price targets", "mispricing"],
+      "common_errors": ["Comparative valuation statements", "Implicit valuation through peer comparison"],
+      "search_terms": ["undervalued", "overvalued", "fair value", "valuation opinion", "mispriced"]
+    },
+    {
+      "rule_id": "VAL_003",
+      "rule_name": "No Investment Strategy Suggestions",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Strategy recommendation prohibitions",
+      "rule_text": "Do not suggest an investment strategy",
+      "detailed_description": "Fund presentations must not suggest specific investment strategies related to individual securities or portfolio positions. This includes timing recommendations (when to buy/sell), positioning advice (overweight/underweight), or tactical allocation suggestions. General fund strategy descriptions are allowed, but not actionable strategy suggestions for specific securities.",
+      "purpose": "Prevents fund materials from becoming investment advisory documents",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Absolute prohibition - constitutes investment advice",
+      "consequences": "Document rejection, regulatory violation, potential licensing issues",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Identify strategy-suggesting language and tactical recommendations",
+      "category": "prohibition",
+      "violation_examples": [
+        "Investors should overweight technology stocks now",
+        "Consider reducing exposure to financials",
+        "Good time to accumulate defensive positions",
+        "We suggest rotating into value stocks",
+        "Tactical opportunity to increase energy allocation"
+      ],
+      "prohibited_phrases": [
+        "should overweight", "should underweight", "consider buying", "consider selling",
+        "time to buy", "time to sell", "opportune moment", "tactical opportunity",
+        "recommended allocation", "rotate into", "shift to", "increase exposure to"
+      ],
+      "related_concepts": ["tactical allocation", "investment timing", "portfolio positioning", "sector rotation"],
+      "common_errors": ["Disguising strategy suggestions as market commentary", "Conditional strategy recommendations"],
+      "search_terms": ["investment strategy", "tactical allocation", "overweight", "underweight", "rotate"]
+    },
+    {
+      "rule_id": "VAL_004",
+      "rule_name": "No Comparative Analysis Between Securities",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Comparative analysis prohibitions",
+      "rule_text": "Do not compare securities to each other",
+      "detailed_description": "Fund presentations must not compare individual securities to each other in ways that suggest relative investment merit. Direct comparisons of performance, valuation metrics, growth prospects, or quality between specific securities can constitute implicit recommendations by suggesting one is superior to another.",
+      "purpose": "Prevents implicit recommendations through relative comparisons",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Significant violation - implies preference for one security over another",
+      "consequences": "Document rejection, must remove comparative language",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Detect comparative statements between specific securities",
+      "category": "prohibition",
+      "violation_examples": [
+        "Company A offers better growth prospects than Company B",
+        "Stock X is cheaper than Stock Y on a P/E basis",
+        "We prefer Company C over Company D for exposure to this sector",
+        "Security A has outperformed Security B over the past year",
+        "Company X is a better quality business than Company Y"
+      ],
+      "prohibited_phrases": [
+        "better than", "superior to", "prefer over", "cheaper than", "more attractive than",
+        "outperformed", "stronger than", "weaker than", "instead of", "versus",
+        "compared to" 
+      ],
+      "exceptions": {
+        "allowed_comparisons": [
+          "Sector-level comparisons (tech vs. financials)",
+          "Geographic comparisons (Europe vs. US)",
+          "Asset class comparisons (equities vs. bonds)",
+          "Historical performance of indices"
+        ]
+      },
+      "related_concepts": ["relative valuation", "peer comparison", "competitive analysis", "security selection"],
+      "common_errors": ["Subtle preference statements", "Performance comparisons between holdings"],
+      "search_terms": ["compare securities", "stock comparison", "prefer over", "better than", "versus"]
+    },
+    {
+      "rule_id": "VAL_005",
+      "rule_name": "No Repeated Mentions of Same Security",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Repetition restrictions",
+      "rule_text": "Do not cite the same security multiple times",
+      "detailed_description": "A specific security should not be mentioned multiple times throughout a fund presentation. Repeated mentions can give undue prominence to a particular holding and may suggest implicit recommendation or excessive focus on one position. If a security must be mentioned for illustration, it should appear only once.",
+      "purpose": "Prevents over-emphasis on specific holdings that could constitute implicit recommendation",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "major",
+      "severity_definition": "Significant violation - creates undue emphasis",
+      "consequences": "Document revision required, reduce mentions to maximum one instance",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Count occurrences of specific security names throughout document",
+      "category": "prohibition",
+      "violation_examples": [
+        "Mentioning 'Apple Inc.' in portfolio holdings, strategy discussion, and performance attribution",
+        "Citing 'TotalEnergies' multiple times across different slides",
+        "Repeated references to the same company in various contexts"
+      ],
+      "exceptions": {
+        "allowed_cases": [
+          "Single mention in portfolio holdings list",
+          "One illustrative example in strategy description",
+          "Reference in legal disclaimer if necessary"
+        ]
+      },
+      "related_concepts": ["holding disclosure", "portfolio transparency", "fair representation"],
+      "common_errors": ["Inadvertent repetition across slides", "Same company mentioned in different contexts"],
+      "search_terms": ["repeated mention", "multiple citations", "same security", "over-emphasis"]
+    },
+    {
+      "rule_id": "VAL_006",
+      "rule_name": "No Future Projections for Securities",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Forward-looking statement prohibitions",
+      "rule_text": "No future projections for a security",
+      "detailed_description": "Fund presentations must not include forward-looking projections, forecasts, or predictions about individual securities' future performance, earnings, growth, or price movements. This includes both quantitative projections (price targets, earnings estimates) and qualitative forward-looking statements (expected to grow, likely to outperform).",
+      "purpose": "Prevents speculative statements that could mislead investors and constitute recommendations",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Absolute prohibition - constitutes forward-looking recommendation",
+      "consequences": "Document rejection, regulatory breach, potential AMF sanctions",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Detect future-oriented language about specific securities",
+      "category": "prohibition",
+      "violation_examples": [
+        "We expect Company X to grow earnings by 15% next year",
+        "Stock Y is projected to reach €100 per share",
+        "This security will likely outperform the market",
+        "Company Z should benefit from industry tailwinds",
+        "Target price of €50 within 12 months"
+      ],
+      "prohibited_phrases": [
+        "will grow", "expected to", "projected to", "forecast", "target price",
+        "should reach", "likely to", "anticipated", "estimated future", "outlook for",
+        "potential to reach", "poised to", "set to"
+      ],
+      "related_concepts": ["price targets", "earnings forecasts", "forward guidance", "projections"],
+      "common_errors": ["Citing analyst projections", "Conditional future statements"],
+      "search_terms": ["future projection", "price target", "forecast", "expected growth", "will reach"]
+    },
+    {
+      "rule_id": "VAL_007",
+      "rule_name": "No Opinions on Current or Future Value",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Value opinion prohibitions",
+      "rule_text": "No opinion on the current/future value of an instrument",
+      "detailed_description": "Fund presentations must not express opinions about the current or future value of specific financial instruments. This prohibition covers both explicit value opinions ('this stock is worth €X') and implicit opinions through qualitative assessments ('strong value proposition', 'compelling valuation'). Factual reporting of current market prices is allowed.",
+      "purpose": "Prevents subjective value assessments that constitute investment recommendations",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Absolute prohibition - value opinions imply recommendations",
+      "consequences": "Document rejection, regulatory violation",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Identify value assessment language and opinions",
+      "category": "prohibition",
+      "violation_examples": [
+        "In our view, this stock offers excellent value",
+        "We believe the company is worth significantly more",
+        "The security's true value is not reflected in the current price",
+        "Compelling valuation at current levels",
+        "Attractive risk-reward profile"
+      ],
+      "prohibited_phrases": [
+        "in our view", "we believe", "in our opinion", "our assessment",
+        "true value", "real value", "compelling valuation", "attractive value",
+        "excellent value", "strong value", "good value", "poor value"
+      ],
+      "related_concepts": ["value opinion", "subjective assessment", "investment view", "valuation opinion"],
+      "common_errors": ["Disguising opinions as analysis", "Using conditional language for opinions"],
+      "search_terms": ["value opinion", "in our view", "we believe", "compelling valuation", "attractive value"]
+    },
+    {
+      "rule_id": "VAL_008",
+      "rule_name": "No Buy/Sell/Hold Instructions",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Action verb prohibitions",
+      "rule_text": "Do not say buy, sell, reinforce a security",
+      "detailed_description": "Fund presentations must never use action verbs that instruct or suggest investors to buy, sell, hold, accumulate, reduce, or otherwise transact in specific securities. These are the most explicit forms of investment recommendations and are strictly prohibited. Even conditional or hedged versions of these instructions are not allowed.",
+      "purpose": "Prevents explicit investment recommendations through action verbs",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Most severe violation - explicit recommendation language",
+      "consequences": "Immediate document rejection, serious regulatory breach, potential AMF penalties",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Detect action verbs related to trading and investment decisions",
+      "category": "prohibition",
+      "violation_examples": [
+        "Buy shares of Company X",
+        "Sell holdings in Stock Y",
+        "Accumulate positions in this security",
+        "Reduce exposure to Company Z",
+        "Hold this stock for long-term gains",
+        "Reinforce positions in sector leaders"
+      ],
+      "prohibited_phrases": [
+        "buy", "sell", "hold", "accumulate", "reduce", "divest", "acquire",
+        "dispose", "take profit", "cut losses", "add to position", "trim position",
+        "build position", "exit position", "enter position", "reinforce", "lighten"
+      ],
+      "related_concepts": ["trading instructions", "transaction recommendations", "buy/sell signals"],
+      "common_errors": ["Using softer action verbs ('consider buying')", "Third-person instructions"],
+      "search_terms": ["buy", "sell", "hold", "accumulate", "trading instruction", "action verb"]
+    },
+    {
+      "rule_id": "VAL_009",
+      "rule_name": "No Specific Security Analysis",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Analysis prohibitions",
+      "rule_text": "Do not provide specific analysis on a security",
+      "detailed_description": "Fund presentations must not include detailed analytical commentary focused on individual securities. This includes fundamental analysis (financial metrics, business quality, competitive advantages), technical analysis (chart patterns, price trends), or any detailed examination that could inform investment decisions about specific securities. General portfolio characteristics and broad sector commentary remain allowed.",
+      "purpose": "Prevents fund materials from becoming research reports with implied recommendations",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Significant violation - detailed analysis implies recommendation",
+      "consequences": "Document rejection, must remove specific security analysis",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Identify detailed analytical content about individual securities",
+      "category": "prohibition",
+      "violation_examples": [
+        "Company X has strong cash flow generation with ROIC of 20%",
+        "Stock Y shows improving margins and market share gains",
+        "Technical analysis indicates strong support at €45",
+        "The company's competitive moat provides pricing power",
+        "Balance sheet analysis reveals hidden value in assets"
+      ],
+      "prohibited_content": [
+        "Detailed financial metrics (P/E, EV/EBITDA, ROE, margins)",
+        "Business quality assessments",
+        "Competitive advantage analysis",
+        "Technical chart analysis",
+        "Detailed earnings or revenue analysis",
+        "Management quality commentary"
+      ],
+      "exceptions": {
+        "allowed_content": [
+          "Broad sector characteristics",
+          "General market trends",
+          "Aggregate portfolio metrics",
+          "Factual company information (sector, geography)"
+        ]
+      },
+      "related_concepts": ["security analysis", "fundamental analysis", "research report", "investment research"],
+      "common_errors": ["Including detailed metrics in portfolio holdings descriptions", "Analytical language in examples"],
+      "search_terms": ["security analysis", "fundamental analysis", "detailed metrics", "company analysis"]
+    },
+    {
+      "rule_id": "VAL_010",
+      "rule_name": "No Favorable/Unfavorable Opinions on Issuers",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Opinion prohibitions",
+      "rule_text": "No favorable/unfavorable opinion on an issuer or narrow sector",
+      "detailed_description": "Fund presentations must not express favorable or unfavorable opinions about specific issuers (companies) or narrow/restricted sectors. Opinions indicating preference, quality assessment, or investment merit constitute implicit recommendations. Broad sector commentary (technology, healthcare, financials) without specific opinions is allowed, but narrow subsectors with limited issuers are treated like individual securities.",
+      "purpose": "Prevents implicit recommendations through qualitative assessments",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "severity_definition": "Absolute prohibition - opinions constitute recommendations",
+      "consequences": "Document rejection, remove opinion language",
+      "cross_references": [],
+      "validation_type": "prohibition_check",
+      "validation_method": "Detect opinion language about issuers and narrow sectors",
+      "category": "prohibition",
+      "violation_examples": [
+        "Company X is a high-quality operator in its sector",
+        "We like the management team at Company Y",
+        "This is a well-managed company with strong fundamentals",
+        "European EV battery manufacturers face challenges",
+        "French luxury conglomerates are well-positioned"
+      ],
+      "prohibited_phrases": [
+        "high quality", "low quality", "well-managed", "poorly managed", "strong company",
+        "weak company", "we like", "we dislike", "favorable view", "unfavorable view",
+        "positive on", "negative on", "attractive issuer", "concerns about"
+      ],
+      "narrow_sector_examples": [
+        "European luxury automakers (3-4 companies)",
+        "French nuclear power operators (1-2 companies)",
+        "German chemical producers (few companies)",
+        "Nordic paper manufacturers (limited universe)"
+      ],
+      "exceptions": {
+        "allowed_content": [
+          "Broad sector trends (technology sector outlook)",
+          "Geographic market commentary",
+          "Factual issuer information (size, sector, geography)",
+          "Historical factual performance"
+        ]
+      },
+      "related_concepts": ["qualitative assessment", "issuer opinion", "sector preference", "quality judgment"],
+      "common_errors": ["Positive language about holdings", "Sector opinions that are too narrow"],
+      "search_terms": ["issuer opinion", "favorable view", "quality assessment", "narrow sector", "we like"]
+    },
+    {
+      "rule_id": "VAL_011",
+      "rule_name": "Opinion Phrases Can Constitute Recommendations",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Language interpretation",
+      "rule_text": "The use of phrases such as 'in our view', 'in our opinion', even in conditional form, can constitute an investment recommendation depending on context",
+      "detailed_description": "Phrases that introduce subjective opinions or views can transform factual statements into investment recommendations depending on the context. Even when used conditionally or with hedging language, phrases like 'in our view', 'we believe', 'in our opinion' can be interpreted as recommendations if they relate to investment merit, valuation, or future prospects of specific securities.",
+      "purpose": "Clarifies that opinion language creates recommendation risk regardless of grammatical structure",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "major",
+      "severity_definition": "Context-dependent violation - requires careful review",
+      "consequences": "Document revision required, remove opinion phrases or reformulate factually",
+      "cross_references": [],
+      "validation_type": "language_check",
+      "validation_method": "Flag opinion phrases and assess context for recommendation risk",
+      "category": "prohibition",
+      "violation_examples": [
+        "In our view, this company offers strong growth potential",
+        "We believe the stock is attractively valued",
+        "In our opinion, this sector will outperform",
+        "According to us, this represents a good opportunity",
+        "It is our assessment that the security is undervalued"
+      ],
+      "prohibited_phrases": [
+        "in our view", "we believe", "in our opinion", "according to us",
+        "in our assessment", "our perspective is", "we think", "it is our belief",
+        "from our standpoint", "in our judgment"
+      ],
+      "context_dependent_risk": {
+        "high_risk_contexts": [
+          "Statements about specific securities",
+          "Valuation or price commentary",
+          "Future performance expectations",
+          "Investment merit assessments"
+        ],
+        "lower_risk_contexts": [
+          "General market outlook",
+          "Economic environment discussion",
+          "Fund strategy description (not security-specific)"
+        ]
+      },
+      "related_concepts": ["subjective language", "opinion markers", "hedging language", "conditional statements"],
+      "common_errors": ["Assuming conditional language removes recommendation risk", "Using opinion phrases for securities commentary"],
+      "search_terms": ["in our view", "we believe", "opinion phrases", "subjective language", "conditional recommendation"]
+    },
+    {
+      "rule_id": "VAL_012",
+      "rule_name": "Market Trends Discussion Allowed",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Permitted content",
+      "rule_text": "Discussing market trends (allowed)",
+      "detailed_description": "Fund presentations may discuss broad market trends, themes, and developments without restriction. This includes commentary on overall market conditions, sector trends affecting multiple securities, macroeconomic factors, and investment themes. Such discussions must remain at a general level and not focus on specific securities or narrow groups of issuers.",
+      "purpose": "Clarifies scope of permitted market commentary",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "info",
+      "severity_definition": "Informational - describes permitted content",
+      "consequences": "None - this content is explicitly allowed",
+      "cross_references": [],
+      "validation_type": "allowance_check",
+      "validation_method": "Verify market trend discussion remains general and broad",
+      "category": "allowed",
+      "permitted_examples": [
+        "The European equity market has experienced volatility",
+        "Technology sector benefiting from digital transformation trends",
+        "Emerging markets showing recovery momentum",
+        "Energy transition driving renewable energy growth",
+        "Consumer behavior shifting toward e-commerce"
+      ],
+      "permitted_topics": [
+        "Overall market performance and outlook",
+        "Broad sector trends and themes",
+        "Geographic market developments",
+        "Investment style trends (growth vs. value)",
+        "Market regime changes"
+      ],
+      "boundaries": {
+        "do_not_cross_into": [
+          "Specific security recommendations within the trend",
+          "Narrow sector opinions",
+          "Timing recommendations based on trends"
+        ]
+      },
+      "related_concepts": ["market commentary", "sector trends", "thematic investing", "macro outlook"],
+      "search_terms": ["market trends", "sector themes", "market commentary", "allowed content", "broad trends"]
+    },
+    {
+      "rule_id": "VAL_013",
+      "rule_name": "Macro References Allowed",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Permitted content",
+      "rule_text": "References to exchange rates, interest rates, commodities, macroeconomic indicators (without mention of a specific instrument or issuer) (allowed)",
+      "detailed_description": "Fund presentations may freely reference and discuss macroeconomic variables including exchange rates, interest rates, commodity prices, and economic indicators, provided these references do not link to specific financial instruments or issuers. Discussion can include expectations and views on these macro variables as they affect broad markets, not individual securities.",
+      "purpose": "Permits necessary macro context for investment strategy without creating recommendation risk",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "info",
+      "severity_definition": "Informational - describes permitted content",
+      "consequences": "None - this content is explicitly allowed",
+      "cross_references": [],
+      "validation_type": "allowance_check",
+      "validation_method": "Verify macro references remain general without instrument-specific connections",
+      "category": "allowed",
+      "permitted_examples": [
+        "EUR/USD exchange rate has strengthened by 5%",
+        "Central banks raising interest rates to combat inflation",
+        "Oil prices increased due to supply constraints",
+        "GDP growth projections revised upward",
+        "Inflation rates declining across developed markets"
+      ],
+      "permitted_topics": [
+        "Exchange rate movements and outlook",
+        "Interest rate policies and expectations",
+        "Commodity price trends (oil, gold, metals, agriculture)",
+        "Economic indicators (GDP, inflation, unemployment)",
+        "Monetary and fiscal policy discussion"
+      ],
+      "boundaries": {
+        "allowed": "Rising interest rates may pressure bond valuations",
+        "not_allowed": "We recommend buying inflation-linked bond X to protect against inflation"
+      },
+      "related_concepts": ["macroeconomics", "forex", "interest rates", "commodities", "economic indicators"],
+      "search_terms": ["exchange rates", "interest rates", "commodities", "macro indicators", "allowed references"]
+    },
+    {
+      "rule_id": "VAL_014",
+      "rule_name": "General Sector Discussion Allowed",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Permitted content",
+      "rule_text": "Discussing general sectors (caution if sector is narrow) (allowed)",
+      "detailed_description": "Fund presentations may discuss general, broad sectors (technology, healthcare, financials, consumer goods, etc.) including trends, outlook, and positioning. However, caution is required if the sector is narrow or restricted to a small number of issuers, as this approaches specific issuer commentary. Broad sectors with many participants are safe for discussion.",
+      "purpose": "Permits necessary sector context while preventing circumvention through narrow sector focus",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "info",
+      "severity_definition": "Informational - describes permitted content with caution note",
+      "consequences": "None if sector is sufficiently broad; violation if sector is too narrow",
+      "cross_references": [],
+      "validation_type": "allowance_check",
+      "validation_method": "Verify sector breadth - many issuers indicates general sector, few issuers indicates narrow",
+      "category": "allowed",
+      "permitted_examples": [
+        "Technology sector benefiting from cloud adoption",
+        "Healthcare sector supported by aging demographics",
+        "Financial services navigating regulatory changes",
+        "Consumer discretionary impacted by spending trends",
+        "Industrial sector exposed to manufacturing cycles"
+      ],
+      "broad_sectors_safe": [
+        "Technology", "Healthcare", "Financials", "Consumer Discretionary",
+        "Consumer Staples", "Industrials", "Materials", "Energy",
+        "Utilities", "Real Estate", "Communication Services"
+      ],
+      "narrow_sectors_caution": [
+        "European luxury automakers (3-4 major players)",
+        "French nuclear operators (1-2 major companies)",
+        "Nordic paper manufacturers (limited universe)",
+        "Belgian pharmaceutical companies (few players)",
+        "Swiss private banks (concentrated market)"
+      ],
+      "related_concepts": ["sector analysis", "industry trends", "sector allocation", "thematic exposure"],
+      "search_terms": ["sector discussion", "industry trends", "broad sectors", "narrow sectors", "allowed commentary"]
+    },
+    {
+      "rule_id": "VAL_015",
+      "rule_name": "Factual Information Allowed",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Permitted content",
+      "rule_text": "Providing factual information (e.g., recent events, public announcements) (allowed)",
+      "detailed_description": "Fund presentations may include factual, objective information about companies, securities, or markets. This includes recent events, public announcements, historical data, and verifiable facts that are publicly available. The key distinction is that information must be purely factual without interpretation, opinion, or forward-looking implications that could constitute recommendations.",
+      "purpose": "Permits necessary factual context for portfolio holdings and strategy explanation",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "info",
+      "severity_definition": "Informational - describes permitted content",
+      "consequences": "None - factual information is explicitly allowed",
+      "cross_references": [],
+      "validation_type": "allowance_check",
+      "validation_method": "Verify information is factual, public, and without opinion or forward-looking implications",
+      "category": "allowed",
+      "permitted_examples": [
+        "Company X announced a dividend of €2 per share",
+        "The company completed its acquisition of Company Y in Q3",
+        "Stock Z is listed on the Paris Stock Exchange",
+        "The firm reported revenues of €5 billion in fiscal year 2024",
+        "The company operates in 15 countries across Europe"
+      ],
+      "factual_information_types": [
+        "Corporate actions (M&A, divestitures, spin-offs)",
+        "Dividend announcements",
+        "Earnings releases (historical results)",
+        "Regulatory approvals or licenses",
+        "Management changes",
+        "Geographic presence",
+        "Business description",
+        "Listing information"
+      ],
+      "boundaries": {
+        "factual_allowed": "Company X reported 10% revenue growth in 2024",
+        "opinion_not_allowed": "Company X's strong 10% revenue growth demonstrates excellent execution",
+        "forward_looking_not_allowed": "Company X is expected to grow revenues by 10% in 2025"
+      },
+      "related_concepts": ["factual disclosure", "public information", "objective data", "historical facts"],
+      "common_errors": ["Adding interpretive commentary to facts", "Mixing facts with opinions"],
+      "search_terms": ["factual information", "public announcements", "objective data", "historical facts", "allowed disclosure"]
+    },
+    {
+      "rule_id": "VAL_016",
+      "rule_name": "Portfolio Holdings with Disclaimers Allowed",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Permitted content",
+      "rule_text": "Mentioning portfolio holdings + past performance with appropriate disclaimers (allowed)",
+      "detailed_description": "Fund presentations may disclose current or past portfolio holdings along with their historical performance, provided appropriate disclaimers are included. Required disclaimers include 'past performance is not indicative of future results' and 'capital at risk'. Holdings should be presented factually without commentary suggesting investment merit, and performance data must be historical only.",
+      "purpose": "Permits transparency about fund composition and track record with proper risk disclosure",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation", "factsheet"],
+        "fund_status": ["all"]
+      },
+      "severity": "info",
+      "severity_definition": "Informational - describes permitted content with required disclaimers",
+      "consequences": "None if disclaimers present; violation if disclaimers missing",
+      "cross_references": [
+        {
+          "type": "related_rule",
+          "reference": "GEN_XXX - Performance disclaimer requirements",
+          "description": "General rules for performance disclosure and disclaimers"
+        }
+      ],
+      "validation_type": "allowance_check",
+      "validation_method": "Verify holdings disclosure includes required disclaimers and remains factual",
+      "category": "allowed",
+      "permitted_examples": [
+        "Top 10 holdings as of [date]: [list with percentages]",
+        "Portfolio allocation by sector: Technology 25%, Healthcare 20%...",
+        "Security X contributed +2.5% to fund performance in 2024",
+        "Geographic distribution: France 40%, Germany 25%, Italy 15%..."
+      ],
+      "required_disclaimers": [
+        "Past performance is not indicative of future results",
+        "Capital at risk / investment value may fluctuate",
+        "Holdings subject to change without notice",
+        "Portfolio composition as of [specific date]"
+      ],
+      "permitted_formats": [
+        "Top holdings list (name, weight, sector)",
+        "Sector allocation pie chart",
+        "Geographic distribution",
+        "Performance attribution (historical)",
+        "Portfolio characteristics (avg market cap, P/E, etc.)"
+      ],
+      "boundaries": {
+        "allowed": "Company X represented 5% of portfolio at month-end and contributed +1.2% to returns",
+        "not_allowed": "Company X is our largest holding because we believe it will outperform"
+      },
+      "related_concepts": ["portfolio transparency", "holdings disclosure", "performance attribution", "past performance"],
+      "common_errors": ["Missing disclaimers on performance data", "Adding forward-looking commentary to holdings"],
+      "search_terms": ["portfolio holdings", "top positions", "performance attribution", "holdings disclosure", "required disclaimers"]
+    },
+    {
+      "rule_id": "VAL_017",
+      "rule_name": "Illustrative Examples Allowed",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Permitted content",
+      "rule_text": "Providing an illustrative example of an issuer or security, without projection or price estimate (allowed)",
+      "detailed_description": "Fund presentations may use specific securities or issuers as illustrative examples to explain investment strategy, portfolio construction, or market dynamics. Examples must be purely illustrative without projections, price estimates, valuations, or any language suggesting investment merit. The example should serve only to clarify a concept or demonstrate a process.",
+      "purpose": "Permits practical illustration of strategy without creating recommendation risk",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy", "presentation"],
+        "fund_status": ["all"]
+      },
+      "severity": "info",
+      "severity_definition": "Informational - describes permitted content with restrictions",
+      "consequences": "None if purely illustrative; violation if example includes projection/valuation",
+      "cross_references": [],
+      "validation_type": "allowance_check",
+      "validation_method": "Verify example is illustrative only, without forward-looking or value judgments",
+      "category": "allowed",
+      "permitted_examples": [
+        "For example, Company X operates in the renewable energy sector, illustrating our thematic approach",
+        "A typical holding might be a company like Y, with strong balance sheet and international presence",
+        "To illustrate sector diversification, we hold securities across technology (e.g., Company A), healthcare (e.g., Company B)...",
+        "An example of our ESG screening: Company Z meets our environmental criteria through..."
+      ],
+      "illustrative_purposes": [
+        "Demonstrating investment process",
+        "Explaining portfolio construction methodology",
+        "Clarifying ESG integration approach",
+        "Showing sector or geographic diversification",
+        "Illustrating risk management techniques"
+      ],
+      "prohibited_in_examples": [
+        "Future projections for the example company",
+        "Price targets or valuation estimates",
+        "Investment recommendations using the example",
+        "Detailed analysis suggesting merit",
+        "Language implying preference for the example"
+      ],
+      "boundaries": {
+        "allowed": "For example, Company X in the technology sector illustrates our focus on innovation",
+        "not_allowed": "Company X is an example of an undervalued technology stock we favor"
+      },
+      "related_concepts": ["illustrative disclosure", "case study", "example usage", "strategy demonstration"],
+      "common_errors": ["Using examples with hidden recommendations", "Adding valuation commentary to examples"],
+      "search_terms": ["illustrative example", "case study", "example security", "strategy illustration", "allowed examples"]
+    },
+    {
+      "rule_id": "VAL_018",
+      "rule_name": "Interview Guidelines for Portfolio Managers",
+      "section": "4.2 - Specific mentions of securities/values",
+      "subsection": "Interview and media content",
+      "rule_text": "During interviews: portfolio managers must limit themselves to publicly known facts; may comment on historical data, but no opinion on current/future value or price",
+      "detailed_description": "When portfolio managers participate in interviews, media appearances, podcasts, or other public communications, they must adhere to strict guidelines. Commentary must be limited to publicly available information and historical facts. Portfolio managers may discuss past performance and factual holdings information but must not express opinions on current or future security values, prices, or investment merit. All statements must avoid creating investment recommendations.",
+      "purpose": "Extends securities mention rules to oral communications and media appearances",
+      "applies_to": {
+        "client_type": ["retail", "professional", "media", "public"],
+        "document_type": ["fund", "strategy", "interview", "media appearance", "podcast", "video"],
+        "fund_status": ["all"]
+      },
+      "severity": "major",
+      "severity_definition": "Significant violation - oral communications have wide reach and regulatory scrutiny",
+      "consequences": "Reputational risk, potential AMF investigation, requirement for corrective public statement",
+      "cross_references": [],
+      "validation_type": "content_check",
+      "validation_method": "Review interview transcripts or recordings for compliance with securities mention restrictions",
+      "category": "allowed",
+      "permitted_in_interviews": [
+        "Public information about portfolio holdings",
+        "Historical performance with disclaimers",
+        "General market trends and outlook",
+        "Investment strategy and process description",
+        "Factual company information",
+        "Broad sector commentary",
+        "Discussion of fund characteristics"
+      ],
+      "prohibited_in_interviews": [
+        "Opinions on current security valuations",
+        "Future price predictions or targets",
+        "Buy/sell recommendations",
+        "Specific security analysis",
+        "Forward-looking projections for holdings",
+        "Valuation assessments (over/undervalued)",
+        "Investment timing suggestions"
+      ],
+      "interview_best_practices": [
+        "Prepare talking points in advance",
+        "Focus on process, not specific securities",
+        "Use 'publicly known' and 'as reported' language",
+        "Redirect security-specific questions to general themes",
+        "Always include performance disclaimers",
+        "Avoid opinion phrases ('in our view', 'we believe')"
+      ],
+      "example_responses": {
+        "safe": "Our fund focuses on quality companies with strong fundamentals. We look at factors like balance sheet strength and competitive positioning.",
+        "unsafe": "We really like Company X right now - it's undervalued and we expect strong returns from this position."
+      },
+      "related_concepts": ["media compliance", "oral communications", "interview protocol", "public statements"],
+      "common_errors": ["Spontaneous opinions in live interviews", "Responding to specific security questions"],
+      "search_terms": ["interview guidelines", "media appearance", "portfolio manager communications", "oral compliance", "public statements"]
+    }
+  ],
+  
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-11-11",
+    "authority": "OBAM SAS",
+    "regulatory_reference": "MAR Regulation (EU) 596/2014, French AMF regulations",
+    "language": "English",
+    "original_language": "French",
+    "document_classification": "Internal compliance rules",
+    "review_frequency": "Annual or upon regulatory changes"
+  },
+  
+  "global_concepts": {
+    "investment_recommendation_definition": {
+      "regulatory_source": "MAR Regulation Article 3(1)(35)",
+      "definition": "Information recommending or suggesting an investment strategy, explicitly or implicitly, concerning one or several financial instruments or the issuers of financial instruments, including any opinion as to the present or future value or price of such instruments",
+      "key_elements": [
+        "Recommendation or suggestion of investment strategy",
+        "Concerns specific financial instruments or issuers",
+        "Includes explicit or implicit recommendations",
+        "Covers opinions on present or future value/price"
+      ]
+    },
+    
+    "prohibition_categories": {
+      "action_verbs": ["Buy", "Sell", "Hold", "Accumulate", "Reduce", "Divest"],
+      "valuation_opinions": ["Undervalued", "Overvalued", "Fairly valued", "Mispriced", "Cheap", "Expensive"],
+      "forward_looking": ["Will grow", "Expected to", "Projected", "Forecast", "Target price", "Outlook"],
+      "opinion_markers": ["In our view", "We believe", "In our opinion", "According to us"],
+      "preference_language": ["Prefer", "Like", "Favor", "Better than", "Superior to"]
+    },
+    
+    "allowed_content_categories": {
+      "market_commentary": "Broad market trends, sector themes, geographic markets",
+      "macro_references": "Interest rates, exchange rates, commodities, economic indicators",
+      "factual_information": "Public announcements, historical events, verifiable facts",
+      "portfolio_disclosure": "Holdings lists, sector allocation, geographic distribution",
+      "illustrative_examples": "Examples to explain strategy without projections",
+      "historical_performance": "Past returns and attribution with disclaimers"
+    },
+    
+    "key_distinctions": {
+      "allowed_vs_prohibited": {
+        "allowed_sector": "Technology sector benefiting from digital transformation",
+        "prohibited_narrow_sector": "European luxury automakers are well-positioned (only 3-4 companies)",
+        "allowed_factual": "Company X reported 10% revenue growth",
+        "prohibited_opinion": "Company X's strong growth demonstrates excellent management",
+        "allowed_holdings": "Company Y represents 5% of portfolio",
+        "prohibited_recommendation": "We hold Company Y because it's undervalued"
+      }
+    },
+    
+    "severity_framework": {
+      "critical": {
+        "definition": "Explicit investment recommendations, action verbs, valuations, projections",
+        "examples": ["Buy Stock X", "Target price €100", "Stock is undervalued"],
+        "consequences": "Immediate document rejection, regulatory breach"
+      },
+      "major": {
+        "definition": "Implicit recommendations, opinion language, comparative analysis",
+        "examples": ["In our view, Company X offers value", "Prefer Stock A over B"],
+        "consequences": "Document revision required, compliance review"
+      },
+      "minor": {
+        "definition": "Borderline language that could be misinterpreted",
+        "examples": ["Company X shows strong characteristics"],
+        "consequences": "Suggested revision for clarity"
+      },
+      "info": {
+        "definition": "Permitted content guidelines and clarifications",
+        "consequences": "None - informational only"
+      }
+    },
+    
+    "compliance_workflow": {
+      "step_1": "Identify all security mentions in document",
+      "step_2": "Classify each mention (name only, with analysis, with opinion, etc.)",
+      "step_3": "Check for prohibited language patterns",
+      "step_4": "Verify required disclaimers present",
+      "step_5": "Count repeated mentions of same security",
+      "step_6": "Assess context for implicit recommendations",
+      "step_7": "Flag violations with severity and remediation"
+    }
+  },
+  
+  "search_optimization": {
+    "primary_tags": ["securities", "values", "investment recommendations", "MAR", "compliance", "portfolio holdings"],
+    "secondary_tags": ["buy", "sell", "valuation", "analysis", "price targets", "projections", "opinions"],
+    "use_cases": [
+      "Reviewing fund presentations for recommendation language",
+      "Validating portfolio manager interview transcripts",
+      "Checking marketing materials for securities mentions",
+      "Training investment teams on communication restrictions",
+      "Auditing client communications for compliance"
+    ],
+    "common_queries": [
+      "Can I mention specific stocks in the presentation?",
+      "How do I discuss portfolio holdings without recommendations?",
+      "What disclaimers are required for performance?",
+      "Can portfolio managers give opinions in interviews?",
+      "What language is prohibited for securities?",
+      "How many times can I mention the same stock?"
+    ]
+  }
+}

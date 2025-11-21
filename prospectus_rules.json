@@ -1,0 +1,136 @@
+{
+  "rules": [
+    {
+      "rule_id": "PROSP_001",
+      "rule_text": "Investment strategy must be presented in conformity with legal documentation",
+      "section": "1 - General Rules",
+      "severity": "critical",
+      "validation_type": "semantic_match",
+      "fields_to_check": [
+        "investment_strategy",
+        "investment_thresholds",
+        "asset_allocation",
+        "geographic_allocation",
+        "minimum_investment"
+      ],
+      "detailed_description": "Strategy presentation must match prospectus including: investment thresholds by asset class, strategy description, geographic allocation, minimum investment amount"
+    },
+    {
+      "rule_id": "PROSP_002",
+      "rule_text": "Risk profile must be exhaustive and conform to prospectus",
+      "section": "3 - Slide 2",
+      "severity": "critical",
+      "validation_type": "exact_match",
+      "fields_to_check": ["risk_profile", "sri"],
+      "detailed_description": "Complete risk profile mention must match prospectus exactly, including SRI indicator"
+    },
+    {
+      "rule_id": "PROSP_003",
+      "rule_text": "SRI must match prospectus exactly with disclaimer on same slide",
+      "section": "1 - General Rules (GEN_004)",
+      "severity": "critical",
+      "validation_type": "exact_match",
+      "fields_to_check": ["sri"],
+      "detailed_description": "Synthetic Risk Indicator (SRI X/7) must be displayed exactly as in prospectus with associated disclaimer"
+    },
+    {
+      "rule_id": "PROSP_004",
+      "rule_text": "Performance benchmark must be the official one from prospectus",
+      "section": "4.3 - Performance",
+      "severity": "critical",
+      "validation_type": "exact_match",
+      "fields_to_check": ["benchmark", "reference_indicator"],
+      "detailed_description": "Performance must be compared to prospectus benchmark. No other benchmark allowed, even for information"
+    },
+    {
+      "rule_id": "PROSP_005",
+      "rule_text": "Benchmark specifications must match prospectus terms",
+      "section": "4.3 - Performance",
+      "severity": "major",
+      "validation_type": "exact_match",
+      "fields_to_check": ["benchmark_specification"],
+      "detailed_description": "Benchmark details (e.g., dividends included/reinvested for equity funds) must match prospectus exactly"
+    },
+    {
+      "rule_id": "PROSP_006",
+      "rule_text": "Performance target must match if defined in prospectus objective",
+      "section": "4.3 - Performance",
+      "severity": "critical",
+      "validation_type": "conditional_match",
+      "fields_to_check": ["performance_target", "investment_objective"],
+      "detailed_description": "If fund has a target (e.g., outperformance objective, target + X%), performance must be compared to this target as stated in prospectus"
+    },
+    {
+      "rule_id": "PROSP_007",
+      "rule_text": "Portfolio holdings count must be in prospectus if mentioned in presentation",
+      "section": "4 - Following Pages",
+      "severity": "major",
+      "validation_type": "conditional_check",
+      "fields_to_check": ["portfolio_holdings", "number_of_lines"],
+      "detailed_description": "Number of portfolio lines/holdings can only be mentioned if this objective is stated in the prospectus"
+    },
+    {
+      "rule_id": "PROSP_008",
+      "rule_text": "All data must be consistent with legal documentation (KID, Prospectus, SFDR Annex)",
+      "section": "4 - Following Pages",
+      "severity": "critical",
+      "validation_type": "comprehensive_check",
+      "fields_to_check": ["all_data_points"],
+      "detailed_description": "Verify conformity of ALL data with legal documentation (KID, Prospectus, SFDR Annex). Data must be coherent across all documents"
+    },
+    {
+      "rule_id": "PROSP_009",
+      "rule_text": "Asset allocation ranges must match prospectus thresholds",
+      "section": "1 - General Rules",
+      "severity": "critical",
+      "validation_type": "range_check",
+      "fields_to_check": ["asset_allocation", "equity_percentage", "bond_percentage", "cash_percentage"],
+      "detailed_description": "Investment thresholds by asset class must match prospectus ranges (e.g., 60-100% equities)"
+    },
+    {
+      "rule_id": "PROSP_010",
+      "rule_text": "Geographic allocation must match prospectus specifications",
+      "section": "1 - General Rules",
+      "severity": "critical",
+      "validation_type": "range_check",
+      "fields_to_check": ["geographic_allocation", "regional_exposure"],
+      "detailed_description": "Geographic allocation ranges must conform to prospectus (e.g., minimum 60% Europe)"
+    },
+    {
+      "rule_id": "PROSP_011",
+      "rule_text": "Investment objective must match prospectus exactly",
+      "section": "1 - General Rules",
+      "severity": "critical",
+      "validation_type": "semantic_match",
+      "fields_to_check": ["investment_objective", "fund_objective"],
+      "detailed_description": "Fund's investment objective statement must align with prospectus wording"
+    },
+    {
+      "rule_id": "PROSP_012",
+      "rule_text": "Minimum investment amount must match prospectus",
+      "section": "1 - General Rules",
+      "severity": "major",
+      "validation_type": "exact_match",
+      "fields_to_check": ["minimum_investment", "minimum_subscription"],
+      "detailed_description": "Minimum ticket/subscription amount must be stated as in prospectus"
+    },
+    {
+      "rule_id": "PROSP_013",
+      "rule_text": "Management fees must match prospectus",
+      "section": "4 - Following Pages",
+      "severity": "critical",
+      "validation_type": "exact_match",
+      "fields_to_check": ["management_fees", "ongoing_charges"],
+      "detailed_description": "Fee structure must match prospectus exactly (fixed fees, variable fees, performance fees)"
+    },
+    {
+      "rule_id": "PROSP_014",
+      "rule_text": "Fund characteristics at end must be detailed and accurate",
+      "section": "4 - Following Pages",
+      "severity": "major",
+      "validation_type": "completeness_check",
+      "fields_to_check": ["fund_characteristics"],
+      "detailed_description": "End of presentation must include detailed fund characteristics conforming to prospectus"
+    }
+  ]
+}

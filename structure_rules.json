@@ -1,0 +1,286 @@
+{
+  "agent_name": "Document Structure Validator Agent",
+  "version": "1.0.0",
+  "description": "Validates document structure and compliance: cover page, slide 2, and back page",
+  "last_updated": "2025-11-11",
+  "metadata": {
+    "total_rules": 11,
+    "severity_levels": ["critical", "major", "minor"],
+    "validation_types": ["presence_check", "presence_check_with_format", "conditional_presence_check", "presence_check_with_customization", "conformity_check", "data_conformity_check"],
+    "supported_client_types": ["retail", "professional"],
+    "supported_document_types": ["fund", "strategy"],
+    "supported_fund_statuses": ["all", "pre-commercialisation", "active"]
+  },
+  "glossaries": {
+    "disclaimer_retail": "Standard retail disclaimer text",
+    "disclaimer_professional": "Professional disclaimer text",
+    "risk_profile": "Risk profile description conforming to prospectus",
+    "sgp_legal_mention": "Legal mention of SGP"
+  },
+  "reference_data": {
+    "registration_abroad_file": "registration_abroad.xlsx",
+    "prospectus_reference": "fund_prospectus.pdf"
+  },
+  "rules": [
+    {
+      "rule_id": "STRUCT_001",
+      "section": "Cover Page",
+      "subsection": "Required Information",
+      "rule_text": "Must indicate the fund name",
+      "description": "The cover page must clearly display the name of the fund",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Fund identification is essential for document clarity",
+      "cross_references": [],
+      "validation_type": "presence_check",
+      "error_message": "Fund name is missing from the cover page",
+      "remediation": "Add the fund name to the cover page"
+    },
+    {
+      "rule_id": "STRUCT_002",
+      "section": "Cover Page",
+      "subsection": "Required Information",
+      "rule_text": "Must indicate the month and year",
+      "description": "The cover page must display the publication date (month and year)",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Date is crucial for document version tracking",
+      "cross_references": [],
+      "validation_type": "presence_check",
+      "error_message": "Publication date (month and year) is missing from the cover page",
+      "remediation": "Add the current month and year to the cover page",
+      "date_format": "MM/YYYY or Month YYYY"
+    },
+    {
+      "rule_id": "STRUCT_003",
+      "section": "Cover Page",
+      "subsection": "Required Information",
+      "rule_text": "Must indicate the mention 'promotional document'",
+      "description": "The cover page must include a clear designation that this is promotional material",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Regulatory requirement for transparency",
+      "cross_references": [],
+      "validation_type": "presence_check",
+      "error_message": "The mention 'promotional document' is missing",
+      "remediation": "Add 'Promotional Document' designation to the cover page"
+    },
+    {
+      "rule_id": "STRUCT_004",
+      "section": "Cover Page",
+      "subsection": "Required Information",
+      "rule_text": "Must indicate the target audience: retail or professional",
+      "description": "The cover page must specify whether the document is intended for retail or professional clients",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Essential for regulatory compliance and target audience identification",
+      "cross_references": [],
+      "validation_type": "presence_check",
+      "error_message": "Target audience (retail/professional) is not indicated",
+      "remediation": "Clearly specify whether the document is for retail or professional clients",
+      "allowed_values": ["Retail", "Professional"]
+    },
+    {
+      "rule_id": "STRUCT_005",
+      "section": "Cover Page",
+      "subsection": "Pre-Commercialisation Warning",
+      "rule_text": "For pre-commercialisation funds: display in red and bold on the cover page a disclaimer warning",
+      "description": "Pre-commercialisation funds must include a prominent disclaimer indicating the fund has not yet been approved by regulators",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["pre-commercialisation"]
+      },
+      "severity": "critical",
+      "impact": "Legal requirement for unapproved funds",
+      "cross_references": [],
+      "validation_type": "presence_check_with_format",
+      "error_message": "Pre-commercialisation disclaimer is missing or not properly formatted",
+      "remediation": "Add the required disclaimer in red and bold text",
+      "required_content": "PLEASE NOTE THAT THIS FUND HAS NOT YET BEEN APPROVED BY THE FINANCIAL MARKET AUTHORITY (to be adapted according to regulator) AND HAS NOT BEEN AUTHORIZED FOR MARKETING IN FRANCE OR IN OTHER MEMBER STATES OF THE EUROPEAN UNION OR IN ANY OTHER JURISDICTION. INVESTORS DECLARE AND ACKNOWLEDGE THAT NO OFFER OR PLACEMENT OR DIRECT OR INDIRECT SOLICITATION HAS BEEN MADE AT THE INITIATIVE OF THE MANAGEMENT COMPANY. THIS PRESENTATION IS SUBMITTED TO YOU ON A CONFIDENTIAL BASIS AND SOLELY FOR DISCUSSION PURPOSES. IT DOES NOT CONSTITUTE AN OFFER OR AN INVITATION TO SUBSCRIBE FOR UNITS OF THE FUND. THE INFORMATION PRESENTED HEREIN SHOULD NOT BE USED TO SUBSCRIBE FOR UNITS OF THE FUND AND MAY BE SUBJECT TO MODIFICATION.",
+      "formatting": {
+        "color": "red",
+        "weight": "bold",
+        "visibility": "prominent"
+      }
+    },
+    {
+      "rule_id": "STRUCT_006",
+      "section": "Cover Page",
+      "subsection": "Confidentiality",
+      "rule_text": "Mention 'do not disclose' if professional document",
+      "description": "Professional documents must include a confidentiality notice stating that the document should not be disclosed",
+      "applies_to": {
+        "client_type": ["professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"]
+      },
+      "severity": "major",
+      "impact": "Protects confidential information sharing",
+      "cross_references": [],
+      "validation_type": "presence_check",
+      "error_message": "Confidentiality notice 'do not disclose' is missing from professional document",
+      "remediation": "Add a 'Do Not Disclose' or 'Confidential' notice to the cover page"
+    },
+    {
+      "rule_id": "STRUCT_007",
+      "section": "Cover Page",
+      "subsection": "Customization",
+      "rule_text": "For client-specific documents: indicate the client name",
+      "description": "If the document is prepared for a specific client, the client's name must be displayed on the cover page",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"]
+      },
+      "severity": "major",
+      "impact": "Ensures correct document routing and personalization",
+      "cross_references": [],
+      "validation_type": "conditional_presence_check",
+      "error_message": "Client name is missing from a client-specific document",
+      "remediation": "Add the client name to the cover page if this is a customized document",
+      "condition": "Only applies if document is client-specific"
+    },
+    {
+      "rule_id": "STRUCT_008",
+      "section": "Disclaimer Slide (Slide 2)",
+      "subsection": "Mandatory Disclaimers",
+      "rule_text": "Standard disclaimer (retail or professional) must be present - adapt fund name and eligible clients",
+      "description": "Slide 2 must contain the appropriate standard disclaimer based on target audience, with customization for fund name and eligibility",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Required for regulatory compliance and investor protection",
+      "cross_references": [
+        {
+          "type": "glossary",
+          "reference": "disclaimer_retail",
+          "note": "Use retail disclaimer for retail clients"
+        },
+        {
+          "type": "glossary",
+          "reference": "disclaimer_professional",
+          "note": "Use professional disclaimer for professional clients"
+        }
+      ],
+      "validation_type": "presence_check_with_customization",
+      "error_message": "Standard disclaimer is missing or not properly customized",
+      "remediation": "Add the appropriate disclaimer from glossary and customize for fund and eligible clients",
+      "customization_fields": ["fund_name", "eligible_clients"]
+    },
+    {
+      "rule_id": "STRUCT_009",
+      "section": "Disclaimer Slide (Slide 2)",
+      "subsection": "Risk Information",
+      "rule_text": "Complete list of risk profile conforming to prospectus",
+      "description": "Slide 2 must exhaustively list the risk profile as defined in the fund prospectus",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Essential for investor risk awareness and regulatory compliance",
+      "cross_references": [
+        {
+          "type": "legal_document",
+          "reference": "prospectus_reference",
+          "note": "Must conform exactly to prospectus"
+        }
+      ],
+      "validation_type": "conformity_check",
+      "error_message": "Risk profile is incomplete or does not match prospectus",
+      "remediation": "Review prospectus and ensure all risk factors are listed",
+      "verification_steps": [
+        "Compare with fund prospectus",
+        "Ensure no omissions",
+        "Verify accurate terminology"
+      ]
+    },
+    {
+      "rule_id": "STRUCT_010",
+      "section": "Disclaimer Slide (Slide 2)",
+      "subsection": "Registration Information",
+      "rule_text": "List of commercialisation countries (registration abroad)",
+      "description": "Slide 2 must list all countries where the fund is registered or approved for commercialisation",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Ensures regulatory compliance across jurisdictions",
+      "cross_references": [
+        {
+          "type": "reference_data",
+          "reference": "registration_abroad_file",
+          "note": "Must conform to registration_abroad.xlsx"
+        }
+      ],
+      "validation_type": "data_conformity_check",
+      "error_message": "Commercialisation countries list is missing or does not match reference data",
+      "remediation": "Update countries list based on registration_abroad.xlsx file",
+      "data_source": "registration_abroad.xlsx"
+    },
+    {
+      "rule_id": "STRUCT_011",
+      "section": "Back Page",
+      "subsection": "Legal Information",
+      "rule_text": "Legal mention of the management company (SGP)",
+      "description": "The back page must include the required legal mention of the management company",
+      "applies_to": {
+        "client_type": ["retail", "professional"],
+        "document_type": ["fund", "strategy"],
+        "fund_status": ["all"]
+      },
+      "severity": "critical",
+      "impact": "Required legal attribution and transparency",
+      "cross_references": [
+        {
+          "type": "glossary",
+          "reference": "sgp_legal_mention",
+          "note": "Use standardized legal mention from glossary"
+        }
+      ],
+      "validation_type": "presence_check",
+      "error_message": "Legal mention of management company is missing",
+      "remediation": "Add the required legal mention from glossary to the back page"
+    }
+  ],
+  "severity_scale": {
+    "critical": {
+      "level": 1,
+      "description": "Must be corrected immediately - regulatory or legal requirement",
+      "action": "Block document publication"
+    },
+    "major": {
+      "level": 2,
+      "description": "Should be corrected - important compliance requirement",
+      "action": "Warn before publication"
+    },
+    "minor": {
+      "level": 3,
+      "description": "Nice to have - best practice recommendation",
+      "action": "Suggest improvement"
+    }
+  }
+}
