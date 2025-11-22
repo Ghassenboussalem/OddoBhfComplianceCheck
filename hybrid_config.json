@@ -45,5 +45,20 @@
   "backward_compatible": true,
   "use_legacy_format": false,
   "batch_size": 5,
-  "fallback_to_rules": true
+  "fallback_to_rules": true,
+  "hitl": {
+    "enabled": true,
+    "review_threshold": 70,
+    "auto_queue_low_confidence": true,
+    "queue_max_size": 10000,
+    "batch_similarity_threshold": 0.85,
+    "interactive_mode_default": false,
+    "audit_log_path": "./audit_logs/",
+    "export_formats": ["json", "csv"]
+  },
+  "review_priorities": {
+    "critical_severity_boost": 20,
+    "low_confidence_boost": 10,
+    "age_penalty_per_hour": 0.5
+  }
 }

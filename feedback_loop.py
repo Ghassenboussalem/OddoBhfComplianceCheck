@@ -206,7 +206,28 @@ class FeedbackInterface:
         self._save_data()
         
         logger.info(f"Correction recorded: {feedback_id} ({record.correction_type.value})")
+        
+        # Trigger immediate learning callbacks if registered
+        if hasattr(self, '_learning_callbacks') and self._learning_callbacks:
+            for callback in self._learning_callbacks:
+                try:
+                    callback(record)
+                except Exception as e:
+                    logger.error(f"Learning callback failed: {e}")
+        
         return True
+    
+    def register_learning_callback(self, callback):
+        """
+        Register a callback to be triggered when corrections are provided
+        
+        Args:
+            callback: Function that takes a FeedbackRecord as argument
+        """
+        if not hasattr(self, '_learning_callbacks'):
+            self._learning_callbacks = []
+        self._learning_callbacks.append(callback)
+        logger.info(f"Registered learning callback: {callback.__name__}")
     
     def approve_prediction(self, feedback_id: str, reviewer_id: Optional[str] = None) -> bool:
         """

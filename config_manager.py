@@ -79,6 +79,32 @@ class FeatureFlags:
 
 
 @dataclass
+class HITLConfig:
+    """Configuration for Human-in-the-Loop system"""
+    enabled: bool = False
+    review_threshold: int = 70
+    auto_queue_low_confidence: bool = True
+    queue_max_size: int = 10000
+    batch_similarity_threshold: float = 0.85
+    interactive_mode_default: bool = False
+    audit_log_path: str = "./audit_logs/"
+    export_formats: list = None
+    
+    def __post_init__(self):
+        """Initialize default export formats if not provided"""
+        if self.export_formats is None:
+            self.export_formats = ["json", "csv"]
+
+
+@dataclass
+class ReviewPriorities:
+    """Configuration for review queue prioritization"""
+    critical_severity_boost: int = 20
+    low_confidence_boost: int = 10
+    age_penalty_per_hour: float = 0.5
+
+
+@dataclass
 class ComplianceConfig:
     """Complete compliance checker configuration"""
     # Core settings
@@ -98,6 +124,10 @@ class ComplianceConfig:
     # Feature flags
     features: FeatureFlags = None
     
+    # HITL system
+    hitl: HITLConfig = None
+    review_priorities: ReviewPriorities = None
+    
     # Backward compatibility
     backward_compatible: bool = True
     use_legacy_format: bool = False
@@ -116,6 +146,10 @@ class ComplianceConfig:
             self.confidence = ConfidenceConfig()
         if self.features is None:
             self.features = FeatureFlags()
+        if self.hitl is None:
+            self.hitl = HITLConfig()
+        if self.review_priorities is None:
+            self.review_priorities = ReviewPriorities()
 
 
 class ConfigManager:
@@ -174,6 +208,8 @@ class ConfigManager:
             'cache': asdict(config.cache),
             'confidence': asdict(config.confidence),
             'features': asdict(config.features),
+            'hitl': asdict(config.hitl),
+            'review_priorities': asdict(config.review_priorities),
             'backward_compatible': config.backward_compatible,
             'use_legacy_format': config.use_legacy_format,
             'batch_size': config.batch_size,
@@ -187,6 +223,8 @@ class ConfigManager:
         cache_dict = config_dict.get('cache', {})
         confidence_dict = config_dict.get('confidence', {})
         features_dict = config_dict.get('features', {})
+        hitl_dict = config_dict.get('hitl', {})
+        review_priorities_dict = config_dict.get('review_priorities', {})
         
         return ComplianceConfig(
             ai_enabled=config_dict.get('ai_enabled', True),
@@ -196,6 +234,8 @@ class ConfigManager:
             cache=CacheConfig(**cache_dict) if cache_dict else CacheConfig(),
             confidence=ConfidenceConfig(**confidence_dict) if confidence_dict else ConfidenceConfig(),
             features=FeatureFlags(**features_dict) if features_dict else FeatureFlags(),
+            hitl=HITLConfig(**hitl_dict) if hitl_dict else HITLConfig(),
+            review_priorities=ReviewPriorities(**review_priorities_dict) if review_priorities_dict else ReviewPriorities(),
             backward_compatible=config_dict.get('backward_compatible', True),
             use_legacy_format=config_dict.get('use_legacy_format', False),
             batch_size=config_dict.get('batch_size', 5),
@@ -223,6 +263,18 @@ class ConfigManager:
             if 'cache' not in config_dict:
                 config_dict['cache'] = {}
             config_dict['cache']['enabled'] = os.getenv('HYBRID_CACHE_ENABLED').lower() == 'true'
+        
+        # HITL enabled
+        if os.getenv('HITL_ENABLED'):
+            if 'hitl' not in config_dict:
+                config_dict['hitl'] = {}
+            config_dict['hitl']['enabled'] = os.getenv('HITL_ENABLED').lower() == 'true'
+        
+        # HITL review threshold
+        if os.getenv('HITL_REVIEW_THRESHOLD'):
+            if 'hitl' not in config_dict:
+                config_dict['hitl'] = {}
+            config_dict['hitl']['review_threshold'] = int(os.getenv('HITL_REVIEW_THRESHOLD'))
         
         logger.info("Applied environment variable overrides")
     
@@ -253,6 +305,26 @@ class ConfigManager:
         # Validate AI service timeout
         if self.config.ai_service.timeout < 1:
             errors.append(f"ai_service.timeout must be >= 1, got {self.config.ai_service.timeout}")
+        
+        # Validate HITL configuration
+        if not 0 <= self.config.hitl.review_threshold <= 100:
+            errors.append(f"hitl.review_threshold must be 0-100, got {self.config.hitl.review_threshold}")
+        
+        if self.config.hitl.queue_max_size < 1:
+            errors.append(f"hitl.queue_max_size must be >= 1, got {self.config.hitl.queue_max_size}")
+        
+        if not 0 <= self.config.hitl.batch_similarity_threshold <= 1:
+            errors.append(f"hitl.batch_similarity_threshold must be 0-1, got {self.config.hitl.batch_similarity_threshold}")
+        
+        # Validate review priorities
+        if self.config.review_priorities.critical_severity_boost < 0:
+            errors.append(f"review_priorities.critical_severity_boost must be >= 0, got {self.config.review_priorities.critical_severity_boost}")
+        
+        if self.config.review_priorities.low_confidence_boost < 0:
+            errors.append(f"review_priorities.low_confidence_boost must be >= 0, got {self.config.review_priorities.low_confidence_boost}")
+        
+        if self.config.review_priorities.age_penalty_per_hour < 0:
+            errors.append(f"review_priorities.age_penalty_per_hour must be >= 0, got {self.config.review_priorities.age_penalty_per_hour}")
         
         if errors:
             error_msg = "Configuration validation failed:\n" + "\n".join(f"  - {e}" for e in errors)
@@ -378,6 +450,32 @@ class ConfigManager:
         feature_name = f"enable_{check_type.lower()}_ai"
         return getattr(self.config.features, feature_name, False)
     
+    def is_hitl_enabled(self) -> bool:
+        """Check if HITL system is enabled"""
+        return self.config.hitl.enabled
+    
+    def should_queue_for_review(self, confidence: int) -> bool:
+        """
+        Check if a violation should be queued for human review
+        
+        Args:
+            confidence: Confidence score (0-100)
+            
+        Returns:
+            True if should be queued for review
+        """
+        return (self.config.hitl.enabled and 
+                self.config.hitl.auto_queue_low_confidence and 
+                confidence < self.config.hitl.review_threshold)
+    
+    def get_hitl_config(self) -> HITLConfig:
+        """Get HITL configuration"""
+        return self.config.hitl
+    
+    def get_review_priorities(self) -> ReviewPriorities:
+        """Get review priorities configuration"""
+        return self.config.review_priorities
+    
     def get_summary(self) -> Dict[str, Any]:
         """Get configuration summary"""
         return {
@@ -391,7 +489,10 @@ class ConfigManager:
             'backward_compatible': self.config.backward_compatible,
             'ai_checks_enabled': sum(1 for attr in dir(self.config.features) 
                                     if attr.startswith('enable_') and attr.endswith('_ai') 
-                                    and getattr(self.config.features, attr))
+                                    and getattr(self.config.features, attr)),
+            'hitl_enabled': self.config.hitl.enabled,
+            'hitl_review_threshold': self.config.hitl.review_threshold,
+            'hitl_queue_max_size': self.config.hitl.queue_max_size
         }
     
     def print_summary(self):
@@ -408,6 +509,10 @@ class ConfigManager:
         print(f"Fallback to Rules: {'Yes' if summary['fallback_to_rules'] else 'No'}")
         print(f"Backward Compatible: {'Yes' if summary['backward_compatible'] else 'No'}")
         print(f"AI Checks Enabled: {summary['ai_checks_enabled']}/8")
+        print(f"\nHITL System: {'Enabled' if summary['hitl_enabled'] else 'Disabled'}")
+        if summary['hitl_enabled']:
+            print(f"  Review Threshold: {summary['hitl_review_threshold']}%")
+            print(f"  Queue Max Size: {summary['hitl_queue_max_size']}")
         print("="*70)
 
 

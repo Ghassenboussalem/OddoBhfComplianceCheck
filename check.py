@@ -10,6 +10,25 @@ import os
 import io
 import json
 
+
+class TeeOutput:
+    """Captures output to both console and file"""
+    def __init__(self, file_path, original_stream):
+        self.file = open(file_path, 'w', encoding='utf-8', errors='replace')
+        self.original = original_stream
+        
+    def write(self, data):
+        self.original.write(data)
+        self.file.write(data)
+        self.file.flush()
+        
+    def flush(self):
+        self.original.flush()
+        self.file.flush()
+        
+    def close(self):
+        self.file.close()
+
 # Fix encoding for ALL output streams
 if sys.platform == 'win32':
     import locale
@@ -32,6 +51,8 @@ else:
 os.environ['PYTHONIOENCODING'] = 'utf-8'
 
 from dotenv import load_dotenv
+from datetime import datetime
+import uuid
 
 # Load environment
 load_dotenv()
@@ -42,6 +63,15 @@ if not os.path.exists('.env'):
 
 # Load the agent
 print("Loading agent...")
+
+# Import HITL components
+try:
+    from review_manager import ReviewManager, ReviewItem, ReviewStatus
+    from audit_logger import AuditLogger
+    HITL_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️  HITL components not available: {e}")
+    HITL_AVAILABLE = False
 
 # Try to load hybrid integration first
 hybrid_integration = None
@@ -310,6 +340,101 @@ def check_document_compliance(json_file_path):
                     print(f"   {sev}: {severity_counts[sev]}")
 
         # ====================================================================
+        # HITL: QUEUE LOW-CONFIDENCE VIOLATIONS FOR REVIEW
+        # ====================================================================
+        queued_count = 0
+        if HITL_AVAILABLE and violations:
+            try:
+                # Get HITL configuration
+                hitl_enabled = False
+                review_threshold = 70
+                auto_queue = True
+                
+                if hybrid_integration:
+                    from config_manager import get_config_manager
+                    config_mgr = get_config_manager()
+                    hitl_config = config_mgr.get_hitl_config()
+                    hitl_enabled = hitl_config.enabled
+                    review_threshold = hitl_config.review_threshold
+                    auto_queue = hitl_config.auto_queue_low_confidence
+                
+                if hitl_enabled and auto_queue:
+                    # Initialize review manager and audit logger
+                    review_mgr = ReviewManager()
+                    audit_logger = AuditLogger()
+                    
+                    # Generate check session ID
+                    check_id = f"check_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{str(uuid.uuid4())[:8]}"
+                    
+                    # Filter violations that need review (exclude 0 confidence as those are rule-based)
+                    violations_for_review = [
+                        v for v in violations 
+                        if 0 < v.get('confidence', 100) < review_threshold
+                    ]
+                    
+                    if violations_for_review:
+                        print(f"\n{'='*70}")
+                        print(f"👤 QUEUEING VIOLATIONS FOR HUMAN REVIEW")
+                        print(f"{'='*70}")
+                        print(f"\nFound {len(violations_for_review)} violation(s) below confidence threshold ({review_threshold}%)")
+                        print(f"Adding to review queue...\n")
+                        
+                        # Queue each violation
+                        for idx, v in enumerate(violations_for_review, 1):
+                            # Create ReviewItem
+                            review_id = f"{check_id}_item_{idx}"
+                            
+                            review_item = ReviewItem(
+                                review_id=review_id,
+                                document_id=json_file_path,
+                                check_type=v['type'],
+                                slide=v['slide'],
+                                location=v['location'],
+                                predicted_violation=True,
+                                confidence=v.get('confidence', 0),
+                                ai_reasoning=v.get('ai_reasoning', ''),
+                                evidence=v['evidence'],
+                                rule=v['rule'],
+                                severity=v['severity'],
+                                created_at=datetime.now().isoformat(),
+                                priority_score=100 - v.get('confidence', 0),  # Lower confidence = higher priority
+                                status=ReviewStatus.PENDING
+                            )
+                            
+                            # Add to queue
+                            review_mgr.add_to_queue(review_item)
+                            queued_count += 1
+                            
+                            print(f"  ✓ Queued: {v['type']} - {v['message'][:60]}... (confidence: {v.get('confidence', 0)}%)")
+                        
+                        # Log check operation to audit
+                        audit_logger.log_queue_action(
+                            action='check_completed',
+                            details={
+                                'check_id': check_id,
+                                'document_id': json_file_path,
+                                'check_type': 'full_compliance',
+                                'total_violations': len(violations),
+                                'queued_for_review': queued_count,
+                                'fund_isin': fund_isin,
+                                'client_type': client_type,
+                                'ai_enabled': hybrid_integration.config.get('ai_enabled', False) if hybrid_integration else False,
+                                'review_threshold': review_threshold
+                            }
+                        )
+                        
+                        print(f"\n✓ Successfully queued {queued_count} violation(s) for review")
+                        print(f"  Run 'python review.py' to start reviewing")
+                        print(f"{'='*70}\n")
+                    else:
+                        print(f"\n✓ All violations have sufficient confidence (≥{review_threshold}%)")
+                        print(f"  No items queued for human review\n")
+                        
+            except Exception as e:
+                print(f"\n⚠️  Error queueing violations for review: {e}")
+                print(f"  Violations saved to JSON but not queued for interactive review\n")
+
+        # ====================================================================
         # GENERATE JSON OUTPUT
         # ====================================================================
         
@@ -408,7 +533,8 @@ def check_document_compliance(json_file_path):
             'violations': violations,
             'fund_isin': fund_isin,
             'client_type': client_type,
-            'json_output': output
+            'json_output': output,
+            'queued_for_review': queued_count
         }
 
     except FileNotFoundError:
@@ -436,14 +562,20 @@ def main():
         print("  --hybrid-mode=on|off    Enable/disable AI+Rules hybrid mode")
         print("  --rules-only            Use only rule-based checking (no AI)")
         print("  --ai-confidence=N       Set AI confidence threshold (default: 70)")
+        print("  --review-mode           Enter interactive review mode after checking")
+        print("  --review-threshold=N    Set review threshold for low-confidence items (default: 70)")
         print("  --show-metrics          Display performance metrics after check")
         print("\nExamples:")
         print("  python check.py exemple.json")
         print("  python check.py exemple.json --hybrid-mode=on")
         print("  python check.py exemple.json --rules-only")
         print("  python check.py exemple.json --ai-confidence=80 --show-metrics")
+        print("  python check.py exemple.json --review-mode")
+        print("  python check.py exemple.json --review-threshold=60 --review-mode")
         print("\nFeatures:")
         print("  - AI-enhanced semantic understanding (hybrid mode)")
+        print("  - Human-in-the-loop review for low-confidence violations")
+        print("  - Interactive review mode with CLI interface")
         print("  - Fixed promotional document detection")
         print("  - Fixed target audience detection")
         print("  - Enhanced performance violation detection")
@@ -458,8 +590,26 @@ def main():
 
     json_file = sys.argv[1]
     
+    # Set up terminal output logging
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    terminal_log_file = f"terminal_output_{timestamp}.txt"
+    
+    # Redirect stdout and stderr to both console and file
+    original_stdout = sys.stdout
+    original_stderr = sys.stderr
+    
+    sys.stdout = TeeOutput(terminal_log_file, original_stdout)
+    sys.stderr = TeeOutput(terminal_log_file, original_stderr)
+    
+    print(f"{'='*70}")
+    print(f"Terminal output will be saved to: {terminal_log_file}")
+    print(f"{'='*70}\n")
+    
     # Parse command-line options
     show_metrics = False
+    review_mode = False
+    review_threshold = None
+    
     for arg in sys.argv[2:]:
         if arg.startswith('--hybrid-mode='):
             mode = arg.split('=')[1].lower()
@@ -477,6 +627,12 @@ def main():
             if hybrid_integration:
                 hybrid_integration.update_config(confidence_threshold=threshold)
                 print(f"✓ AI confidence threshold set to {threshold}%")
+        elif arg == '--review-mode':
+            review_mode = True
+            print("✓ Interactive review mode enabled")
+        elif arg.startswith('--review-threshold='):
+            review_threshold = int(arg.split('=')[1])
+            print(f"✓ Review threshold set to {review_threshold}%")
         elif arg == '--show-metrics':
             show_metrics = True
     
@@ -530,13 +686,58 @@ def main():
             
             print(f"{'='*70}")
         
+        # Display review mode option if items were queued
+        if HITL_AVAILABLE and result.get('queued_for_review', 0) > 0:
+            # Enter review mode if requested
+            if review_mode:
+                print("\n🔍 Entering interactive review mode...")
+                print("   Press Ctrl+C to exit\n")
+                
+                try:
+                    # Try to import and start review CLI
+                    from review import ReviewCLI
+                    
+                    cli = ReviewCLI()
+                    cli.start_interactive_session(reviewer_id="cli_user")
+                    
+                except ImportError:
+                    print("⚠️  Review CLI not available. Please run 'python review.py' separately.")
+                except KeyboardInterrupt:
+                    print("\n\n✓ Review mode cancelled by user")
+                except Exception as e:
+                    print(f"\n⚠️  Error starting review mode: {e}")
+                    print("   Please run 'python review.py' separately.")
+        
+        # Close terminal log files
+        if hasattr(sys.stdout, 'close'):
+            print(f"\n{'='*70}")
+            print(f"📄 Terminal output saved to: {terminal_log_file}")
+            print(f"{'='*70}")
+            sys.stdout.close()
+            sys.stderr.close()
+            sys.stdout = original_stdout
+            sys.stderr = original_stderr
+        
         if result['total_violations'] == 0:
             sys.exit(0)
         else:
             sys.exit(1)
     else:
+        # Close terminal log files on error
+        if hasattr(sys.stdout, 'close'):
+            sys.stdout.close()
+            sys.stderr.close()
+            sys.stdout = original_stdout
+            sys.stderr = original_stderr
         sys.exit(1)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        # Ensure terminal log is closed even on unexpected errors
+        if hasattr(sys.stdout, 'close'):
+            sys.stdout.close()
+            sys.stderr.close()
+        raise

@@ -7,6 +7,8 @@ Three-layer hybrid approach: Rules → AI → Validation
 
 import json
 import logging
+import uuid
+from datetime import datetime
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from enum import Enum
@@ -25,6 +27,14 @@ try:
 except ImportError:
     PerformanceMonitor = None
     ProcessingLayer = None
+
+# Import review manager for HITL
+try:
+    from review_manager import ReviewManager, ReviewItem, ReviewStatus
+except ImportError:
+    ReviewManager = None
+    ReviewItem = None
+    ReviewStatus = None
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -94,7 +104,7 @@ class HybridComplianceChecker:
     """
     
     def __init__(self, ai_engine=None, confidence_scorer=None, config: HybridConfig = None,
-                 error_handler=None, performance_monitor=None, feedback_interface=None):
+                 error_handler=None, performance_monitor=None, feedback_interface=None, review_manager=None):
         """
         Initialize the hybrid compliance checker
         
@@ -105,6 +115,7 @@ class HybridComplianceChecker:
             error_handler: ErrorHandler instance for error handling and fallback
             performance_monitor: PerformanceMonitor instance for metrics tracking
             feedback_interface: FeedbackInterface instance for human corrections
+            review_manager: ReviewManager instance for HITL queue management
         """
         self.ai_engine = ai_engine
         self.confidence_scorer = confidence_scorer
@@ -135,6 +146,9 @@ class HybridComplianceChecker:
         # Initialize feedback interface
         self.feedback_interface = feedback_interface
         
+        # Initialize review manager for HITL
+        self.review_manager = review_manager
+        
         # Initialize rule engines for each check type
         self._rule_engines = {}
         
@@ -144,6 +158,7 @@ class HybridComplianceChecker:
         logger.info(f"Error handling: {'enabled' if self.error_handler else 'disabled'}")
         logger.info(f"Performance monitoring: {'enabled' if self.performance_monitor else 'disabled'}")
         logger.info(f"Feedback loop: {'enabled' if self.feedback_interface else 'disabled'}")
+        logger.info(f"Review manager: {'enabled' if self.review_manager else 'disabled'}")
     
     def check_compliance(self, document: Dict, check_type: CheckType, **kwargs) -> Optional[ComplianceResult]:
         """
@@ -209,21 +224,56 @@ class HybridComplianceChecker:
                     human_review=(final_result and final_result.confidence < 70) if final_result else False
                 )
             
-            # Submit for human review if confidence is below threshold
-            if self.feedback_interface and final_result and final_result.confidence < 70:
-                document_id = document.get('document_id', 'unknown')
-                self.feedback_interface.submit_for_review(
-                    check_type=check_type.value,
-                    document_id=document_id,
-                    slide=final_result.slide,
-                    predicted_violation=final_result.violation,
-                    predicted_confidence=final_result.confidence,
-                    predicted_reasoning=final_result.reasoning,
-                    predicted_evidence=final_result.evidence,
-                    processing_time_ms=self.performance_monitor.get_last_timing() if self.performance_monitor else None,
-                    ai_provider=ai_result.get('provider') if ai_result else None
-                )
-                logger.info(f"Submitted for human review: {check_type.value} (confidence: {final_result.confidence}%)")
+            # Queue for human review if confidence is below threshold
+            if final_result and final_result.confidence < self.config.confidence_threshold:
+                # Add to review queue if ReviewManager is available
+                if self.review_manager and ReviewItem and ReviewStatus:
+                    document_id = document.get('document_id', kwargs.get('document_id', 'unknown'))
+                    
+                    # Calculate priority score
+                    priority_score = self.review_manager.calculate_priority_score(
+                        confidence=final_result.confidence,
+                        severity=final_result.severity,
+                        age_hours=0.0
+                    )
+                    
+                    # Create review item
+                    review_item = ReviewItem(
+                        review_id=str(uuid.uuid4()),
+                        document_id=document_id,
+                        check_type=check_type.value,
+                        slide=final_result.slide,
+                        location=final_result.location,
+                        predicted_violation=final_result.violation,
+                        confidence=final_result.confidence,
+                        ai_reasoning=final_result.ai_reasoning or final_result.reasoning,
+                        evidence=final_result.evidence,
+                        rule=final_result.rule,
+                        severity=final_result.severity,
+                        created_at=datetime.now().isoformat(),
+                        priority_score=priority_score,
+                        status=ReviewStatus.PENDING
+                    )
+                    
+                    # Add to queue
+                    self.review_manager.add_to_queue(review_item)
+                    logger.info(f"Queued for human review: {check_type.value} (confidence: {final_result.confidence}%)")
+                
+                # Also submit to feedback interface if available (backward compatibility)
+                elif self.feedback_interface:
+                    document_id = document.get('document_id', kwargs.get('document_id', 'unknown'))
+                    self.feedback_interface.submit_for_review(
+                        check_type=check_type.value,
+                        document_id=document_id,
+                        slide=final_result.slide,
+                        predicted_violation=final_result.violation,
+                        predicted_confidence=final_result.confidence,
+                        predicted_reasoning=final_result.reasoning,
+                        predicted_evidence=final_result.evidence,
+                        processing_time_ms=self.performance_monitor.get_last_timing() if self.performance_monitor else None,
+                        ai_provider=ai_result.get('provider') if ai_result else None
+                    )
+                    logger.info(f"Submitted for human review: {check_type.value} (confidence: {final_result.confidence}%)")
             
             if final_result and final_result.confidence >= self.config.confidence_threshold:
                 logger.info(f"Violation detected: {final_result.message} (confidence: {final_result.confidence}%)")
@@ -697,6 +747,17 @@ class HybridComplianceChecker:
         """Set or update feedback interface"""
         self.feedback_interface = feedback_interface
         logger.info("Feedback interface updated")
+    
+    def set_review_manager(self, review_manager):
+        """Set or update review manager"""
+        self.review_manager = review_manager
+        logger.info("Review manager updated")
+    
+    def get_review_queue_stats(self):
+        """Get review queue statistics"""
+        if self.review_manager:
+            return self.review_manager.get_queue_stats()
+        return None
     
     def provide_feedback(self, feedback_id: str, actual_violation: bool,
                         reviewer_notes: str, corrected_confidence: Optional[int] = None,

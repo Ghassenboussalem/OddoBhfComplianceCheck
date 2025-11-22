@@ -62,7 +62,8 @@ class HybridCheckIntegration:
                 'use_legacy_format': compliance_config.use_legacy_format,
                 'enable_performance_monitoring': compliance_config.features.enable_performance_monitoring,
                 'enable_error_handling': compliance_config.features.enable_error_handling,
-                'enable_feedback_loop': compliance_config.features.enable_feedback_loop
+                'enable_feedback_loop': compliance_config.features.enable_feedback_loop,
+                'hitl': getattr(compliance_config, 'hitl', {})
             }
             
             logger.info(f"Loaded configuration from {config_path}")
@@ -130,13 +131,28 @@ class HybridCheckIntegration:
                 except ImportError:
                     logger.warning("Performance monitor not available")
             
+            # Initialize review manager if HITL is enabled
+            review_manager = None
+            hitl_config = self.config.get('hitl', {})
+            if hitl_config.get('enabled', False):
+                try:
+                    from review_manager import ReviewManager
+                    review_manager = ReviewManager(
+                        queue_file="review_queue.json",
+                        max_queue_size=hitl_config.get('queue_max_size', 10000)
+                    )
+                    logger.info("Review manager initialized for HITL")
+                except ImportError:
+                    logger.warning("Review manager not available")
+            
             # Create hybrid checker
             self.hybrid_checker = HybridComplianceChecker(
                 ai_engine=self.ai_engine,
                 confidence_scorer=self.confidence_scorer,
                 config=hybrid_config,
                 error_handler=error_handler,
-                performance_monitor=performance_monitor
+                performance_monitor=performance_monitor,
+                review_manager=review_manager
             )
             
             logger.info("Hybrid components initialized successfully")
