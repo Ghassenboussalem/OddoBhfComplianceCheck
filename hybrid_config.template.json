@@ -1,166 +1,158 @@
 {
-  "_comment": "AI-Enhanced Compliance Checker Configuration Template",
-  "_description": "This file contains all available configuration options with their default values and descriptions",
-  
   "ai_enabled": true,
-  "_ai_enabled_description": "Enable AI-based compliance checking (true/false)",
-  
   "rule_enabled": true,
-  "_rule_enabled_description": "Enable rule-based compliance checking (true/false)",
-  
   "enhancement_level": "full",
-  "_enhancement_level_description": "AI enhancement level: disabled, minimal, standard, full, aggressive",
-  
   "ai_service": {
     "provider": "auto",
-    "_provider_description": "AI provider: auto, token_factory, gemini",
-    
     "model_name": "auto",
-    "_model_name_description": "AI model name (auto for default)",
-    
     "api_key_env_var": "",
-    "_api_key_env_var_description": "Environment variable name containing API key",
-    
     "timeout": 30,
-    "_timeout_description": "API request timeout in seconds",
-    
     "max_tokens": 2000,
-    "_max_tokens_description": "Maximum tokens for AI response",
-    
     "temperature": 0.1,
-    "_temperature_description": "AI temperature (0.0-1.0, lower = more deterministic)",
-    
     "retry_attempts": 3,
-    "_retry_attempts_description": "Number of retry attempts on failure",
-    
-    "retry_delay": 1.0,
-    "_retry_delay_description": "Delay between retries in seconds"
+    "retry_delay": 1.0
   },
-  
   "cache": {
     "enabled": true,
-    "_enabled_description": "Enable result caching",
-    
     "max_size": 1000,
-    "_max_size_description": "Maximum number of cached results",
-    
     "ttl_seconds": null,
-    "_ttl_seconds_description": "Cache time-to-live in seconds (null = no expiration)",
-    
-    "invalidate_on_rule_update": true,
-    "_invalidate_on_rule_update_description": "Clear cache when rules are updated"
+    "invalidate_on_rule_update": true
   },
-  
   "confidence": {
     "threshold": 70,
-    "_threshold_description": "Minimum confidence score to report violation (0-100)",
-    
     "high_confidence": 85,
-    "_high_confidence_description": "Threshold for high confidence classification",
-    
     "medium_confidence": 70,
-    "_medium_confidence_description": "Threshold for medium confidence classification",
-    
     "review_threshold": 60,
-    "_review_threshold_description": "Threshold below which results need review",
-    
     "agreement_boost": 15,
-    "_agreement_boost_description": "Confidence boost when AI and rules agree",
-    
-    "disagreement_penalty": 20,
-    "_disagreement_penalty_description": "Confidence penalty when AI and rules disagree"
+    "disagreement_penalty": 20
   },
-  
   "features": {
     "enable_promotional_ai": true,
-    "_enable_promotional_ai_description": "Enable AI for promotional content checks",
-    
     "enable_performance_ai": true,
-    "_enable_performance_ai_description": "Enable AI for performance data checks",
-    
     "enable_prospectus_ai": true,
-    "_enable_prospectus_ai_description": "Enable AI for prospectus checks",
-    
     "enable_registration_ai": true,
-    "_enable_registration_ai_description": "Enable AI for registration checks",
-    
     "enable_general_ai": true,
-    "_enable_general_ai_description": "Enable AI for general compliance checks",
-    
     "enable_values_ai": true,
-    "_enable_values_ai_description": "Enable AI for values checks",
-    
     "enable_esg_ai": true,
-    "_enable_esg_ai_description": "Enable AI for ESG checks",
-    
     "enable_disclaimers_ai": true,
-    "_enable_disclaimers_ai_description": "Enable AI for disclaimer checks",
-    
+    "enable_context_aware_ai": true,
     "enable_caching": true,
-    "_enable_caching_description": "Enable caching feature",
-    
     "enable_batch_processing": true,
-    "_enable_batch_processing_description": "Enable batch processing feature",
-    
     "enable_async_processing": false,
-    "_enable_async_processing_description": "Enable asynchronous processing",
-    
     "enable_performance_monitoring": true,
-    "_enable_performance_monitoring_description": "Enable performance monitoring",
-    
     "enable_error_handling": true,
-    "_enable_error_handling_description": "Enable enhanced error handling",
-    
-    "enable_feedback_loop": false,
-    "_enable_feedback_loop_description": "Enable feedback loop for continuous learning"
+    "enable_feedback_loop": false
   },
-  
+  "context_analysis": {
+    "enabled": true,
+    "min_confidence": 60,
+    "use_fallback_rules": true,
+    "intent_classification_enabled": true,
+    "semantic_validation_enabled": true,
+    "evidence_extraction_enabled": true,
+    "max_context_length": 2000,
+    "context_window_chars": 500
+  },
+  "whitelist": {
+    "auto_extract_fund_name": true,
+    "include_strategy_terms": true,
+    "include_regulatory_terms": true,
+    "include_benchmark_terms": true,
+    "include_generic_financial_terms": true,
+    "custom_terms": [],
+    "strategy_terms": [
+      "momentum",
+      "quantitative",
+      "quantitatif",
+      "systematic",
+      "systématique",
+      "algorithmic",
+      "algorithmique",
+      "smart",
+      "trend",
+      "behavioral",
+      "value",
+      "growth",
+      "blend",
+      "core",
+      "satellite"
+    ],
+    "regulatory_terms": [
+      "sri",
+      "srri",
+      "sfdr",
+      "ucits",
+      "mifid",
+      "amf",
+      "esma",
+      "kiid",
+      "kid",
+      "priips",
+      "esg",
+      "article",
+      "regulation"
+    ],
+    "benchmark_terms": [
+      "s&p",
+      "500",
+      "msci",
+      "stoxx",
+      "eurostoxx",
+      "cac",
+      "dax",
+      "ftse",
+      "russell",
+      "dow",
+      "jones",
+      "nasdaq",
+      "index",
+      "indice"
+    ],
+    "generic_financial_terms": [
+      "actions",
+      "equities",
+      "bonds",
+      "obligations",
+      "fund",
+      "fonds",
+      "portfolio",
+      "portefeuille",
+      "investment",
+      "investissement",
+      "asset",
+      "actif",
+      "allocation",
+      "diversification"
+    ]
+  },
+  "performance_optimization": {
+    "batch_slides": true,
+    "max_batch_size": 5,
+    "timeout_seconds": 30,
+    "parallel_processing": false,
+    "cache_ai_responses": true,
+    "cache_ttl_hours": 24,
+    "max_retries": 2,
+    "retry_delay_seconds": 1.0,
+    "enable_early_termination": true
+  },
+  "backward_compatible": true,
+  "use_legacy_format": false,
+  "batch_size": 5,
+  "fallback_to_rules": true,
   "hitl": {
-    "enabled": false,
-    "_enabled_description": "Enable Human-in-the-Loop review system",
-    
+    "enabled": true,
     "review_threshold": 70,
-    "_review_threshold_description": "Confidence threshold below which violations are queued for human review (0-100)",
-    
     "auto_queue_low_confidence": true,
-    "_auto_queue_low_confidence_description": "Automatically queue low-confidence violations for review",
-    
     "queue_max_size": 10000,
-    "_queue_max_size_description": "Maximum number of items in review queue (oldest items evicted when full)",
-    
     "batch_similarity_threshold": 0.85,
-    "_batch_similarity_threshold_description": "Similarity threshold for grouping violations in batch operations (0.0-1.0)",
-    
     "interactive_mode_default": false,
-    "_interactive_mode_default_description": "Start in interactive review mode by default",
-    
     "audit_log_path": "./audit_logs/",
-    "_audit_log_path_description": "Directory path for storing audit logs",
-    
-    "export_formats": ["json", "csv"],
-    "_export_formats_description": "Supported export formats for audit logs and reports"
+    "export_formats": ["json", "csv"]
   },
-  
   "review_priorities": {
     "critical_severity_boost": 20,
-    "_critical_severity_boost_description": "Priority boost for critical severity violations",
-    
     "low_confidence_boost": 10,
-    "_low_confidence_boost_description": "Priority boost for low confidence violations",
-    
-    "age_penalty_per_hour": 0.5,
-    "_age_penalty_per_hour_description": "Priority penalty per hour that item has been in queue"
-  },
-  
-  "backward_compatible": true,
-  "_backward_compatible_description": "Maintain backward compatibility with legacy systems",
-  
-  "use_legacy_format": false,
-  "_use_legacy_format_description": "Use legacy output format",
-  
-  "batch_size": 5,
-  "_batch_size_description": "Number of items to process in each batch",
-  
-  "fallback_to_rules": true,
-  "_fallback_to_rules_description": "Fall back to rule-based checking if AI fails"
+    "age_penalty_per_hour": 0.5
+  }
 }

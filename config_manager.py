@@ -70,6 +70,7 @@ class FeatureFlags:
     enable_values_ai: bool = True
     enable_esg_ai: bool = True
     enable_disclaimers_ai: bool = True
+    enable_context_aware_ai: bool = True
     enable_caching: bool = True
     enable_batch_processing: bool = True
     enable_async_processing: bool = False

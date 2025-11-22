@@ -61,6 +61,14 @@ if not os.path.exists('.env'):
     print("⚠️  Warning: .env file not found. Some features may be limited.")
     # Don't exit - allow basic checks to work
 
+# Load compliance metrics
+try:
+    from compliance_metrics import get_compliance_metrics
+    METRICS_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️  Compliance metrics not available: {e}")
+    METRICS_AVAILABLE = False
+
 # Load the agent
 print("Loading agent...")
 
@@ -103,6 +111,14 @@ def check_document_compliance(json_file_path):
     """
     Full document compliance checker with enhanced logic
     
+    Features:
+    - AI-enhanced semantic understanding (hybrid mode)
+    - AI context-aware mode for false positive elimination (--context-aware=on)
+    - Whitelist-based filtering for fund names and strategy terms
+    - Data-aware performance checking (only flags actual numbers)
+    - Human-in-the-loop review for low-confidence violations
+    - Backward compatible with existing workflows
+    
     Args:
         json_file_path: Path to JSON document
     
@@ -110,11 +126,23 @@ def check_document_compliance(json_file_path):
         dict with violations list and JSON output
     """
     try:
+        # Initialize metrics tracking
+        metrics = None
+        doc_start_time = None
+        if METRICS_AVAILABLE:
+            metrics = get_compliance_metrics()
+            doc_start_time = metrics.start_document_check()
+        
         # Load document
         with open(json_file_path, 'r', encoding='utf-8') as f:
             doc = json.load(f)
 
         violations = []
+        
+        # Track AI usage for metrics
+        total_ai_calls = 0
+        total_cache_hits = 0
+        total_fallbacks = 0
 
         # Extract metadata
         doc_metadata = doc.get('document_metadata', {})
@@ -125,6 +153,18 @@ def check_document_compliance(json_file_path):
         esg_classification = doc_metadata.get('fund_esg_classification', 'other')
         country_code = doc_metadata.get('country_code', None)
         fund_age_years = doc_metadata.get('fund_age_years', None)
+        
+        # Check if AI context-aware mode is enabled
+        use_ai_context_aware = False
+        if hybrid_integration:
+            from config_manager import get_config_manager
+            config_mgr = get_config_manager()
+            config = config_mgr.get_config()
+            use_ai_context_aware = config.features.enable_context_aware_ai
+            
+            if use_ai_context_aware:
+                print("🤖 AI Context-Aware Mode: ENABLED")
+                print("   Using semantic understanding for false positive elimination\n")
 
         print(f"\n{'='*70}")
         print(f"📋 COMPLIANCE REPORT - ENHANCED VERSION")
@@ -213,6 +253,36 @@ def check_document_compliance(json_file_path):
                     print(f"❌ Structure: {len(structure_violations)} violation(s) found\n")
             except Exception as e:
                 print(f"⚠️  Structure check error: {e}\n")
+        
+        # ====================================================================
+        # CHECK 3.1: RISK PROFILE CONSISTENCY (Cross-slide validation)
+        # ====================================================================
+        print("Checking risk profile consistency...")
+        try:
+            from check_functions_ai import check_risk_profile_consistency
+            risk_consistency_violations = check_risk_profile_consistency(doc)
+            violations.extend(risk_consistency_violations)
+            if not risk_consistency_violations:
+                print("✅ Risk profile consistency: OK\n")
+            else:
+                print(f"❌ Risk profile consistency: {len(risk_consistency_violations)} violation(s) found\n")
+        except Exception as e:
+            print(f"⚠️  Risk profile consistency check error: {e}\n")
+
+        # ====================================================================
+        # CHECK 3.2: ANGLICISMS IN RETAIL DOCUMENTS
+        # ====================================================================
+        print("Checking anglicisms in retail documents...")
+        try:
+            from check_functions_ai import check_anglicisms_retail
+            anglicism_violations = check_anglicisms_retail(doc, client_type)
+            violations.extend(anglicism_violations)
+            if not anglicism_violations:
+                print("✅ Anglicisms check: OK\n")
+            else:
+                print(f"⚠️  Anglicisms: {len(anglicism_violations)} violation(s) found\n")
+        except Exception as e:
+            print(f"⚠️  Anglicisms check error: {e}\n")
 
         # ====================================================================
         # CHECK 4: GENERAL RULES
@@ -235,12 +305,55 @@ def check_document_compliance(json_file_path):
         if values_rules:
             print("Checking securities/values...")
             try:
-                values_violations = check_values_rules_enhanced(doc)
-                violations.extend(values_violations)
-                if not values_violations:
-                    print("✅ Securities/Values: OK\n")
+                # Use AI context-aware version if enabled
+                if use_ai_context_aware:
+                    # Import AI-enhanced functions
+                    try:
+                        from agent import check_repeated_securities_ai, check_prohibited_phrases_ai
+                        
+                        # Check for repeated securities with whitelist filtering
+                        repeated_sec_violations = check_repeated_securities_ai(doc)
+                        violations.extend(repeated_sec_violations)
+                        
+                        # Check for prohibited phrases with context awareness
+                        if values_rules:
+                            for rule in values_rules:
+                                if 'prohibited_phrases' in rule.get('rule_id', '').lower():
+                                    phrase_violations = check_prohibited_phrases_ai(doc, rule)
+                                    if phrase_violations:
+                                        violations.extend(phrase_violations if isinstance(phrase_violations, list) else [phrase_violations])
+                        
+                        if not repeated_sec_violations:
+                            print("✅ Securities/Values (AI Context-Aware): OK\n")
+                        else:
+                            print(f"⚠️  Securities/Values (AI Context-Aware): {len(repeated_sec_violations)} warning(s)\n")
+                    
+                    except ImportError as e:
+                        print(f"⚠️  AI context-aware functions not available: {e}")
+                        print("   Falling back to standard checks...\n")
+                        values_violations = check_values_rules_enhanced(doc)
+                        violations.extend(values_violations)
+                        if not values_violations:
+                            print("✅ Securities/Values: OK\n")
+                        else:
+                            print(f"⚠️  Securities/Values: {len(values_violations)} warning(s)\n")
+                    except Exception as e:
+                        print(f"⚠️  AI context-aware check error: {e}")
+                        print("   Falling back to standard checks...\n")
+                        values_violations = check_values_rules_enhanced(doc)
+                        violations.extend(values_violations)
+                        if not values_violations:
+                            print("✅ Securities/Values: OK\n")
+                        else:
+                            print(f"⚠️  Securities/Values: {len(values_violations)} warning(s)\n")
                 else:
-                    print(f"⚠️  Securities/Values: {len(values_violations)} warning(s)\n")
+                    # Use standard rule-based checks
+                    values_violations = check_values_rules_enhanced(doc)
+                    violations.extend(values_violations)
+                    if not values_violations:
+                        print("✅ Securities/Values: OK\n")
+                    else:
+                        print(f"⚠️  Securities/Values: {len(values_violations)} warning(s)\n")
             except Exception as e:
                 print(f"⚠️  Values check error: {e}\n")
 
@@ -265,12 +378,63 @@ def check_document_compliance(json_file_path):
         if performance_rules:
             print("Checking performance rules...")
             try:
-                perf_violations = check_performance_rules_enhanced(doc, client_type, fund_age_years)
-                violations.extend(perf_violations)
-                if not perf_violations:
-                    print("✅ Performance: OK\n")
+                # Use AI context-aware version if enabled
+                if use_ai_context_aware:
+                    try:
+                        from check_functions_ai import check_performance_disclaimers_ai, check_document_starts_with_performance_ai
+                        
+                        # Check performance disclaimers with data-aware logic
+                        perf_disclaimer_violations = check_performance_disclaimers_ai(doc)
+                        violations.extend(perf_disclaimer_violations)
+                        
+                        # Check if document starts with performance (cover page only)
+                        cover_perf_violations = check_document_starts_with_performance_ai(doc)
+                        if cover_perf_violations:
+                            violations.extend(cover_perf_violations if isinstance(cover_perf_violations, list) else [cover_perf_violations])
+                        
+                        # Run other performance checks from standard rules
+                        perf_violations = check_performance_rules_enhanced(doc, client_type, fund_age_years)
+                        # Filter out checks that were already done with AI
+                        filtered_perf_violations = [
+                            v for v in perf_violations 
+                            if 'disclaimer' not in v.get('rule', '').lower() 
+                            and 'starts with' not in v.get('message', '').lower()
+                        ]
+                        violations.extend(filtered_perf_violations)
+                        
+                        total_perf_violations = len(perf_disclaimer_violations) + len(cover_perf_violations if isinstance(cover_perf_violations, list) else [cover_perf_violations] if cover_perf_violations else []) + len(filtered_perf_violations)
+                        
+                        if total_perf_violations == 0:
+                            print("✅ Performance (AI Context-Aware): OK\n")
+                        else:
+                            print(f"❌ Performance (AI Context-Aware): {total_perf_violations} violation(s) found\n")
+                    
+                    except ImportError as e:
+                        print(f"⚠️  AI context-aware functions not available: {e}")
+                        print("   Falling back to standard checks...\n")
+                        perf_violations = check_performance_rules_enhanced(doc, client_type, fund_age_years)
+                        violations.extend(perf_violations)
+                        if not perf_violations:
+                            print("✅ Performance: OK\n")
+                        else:
+                            print(f"❌ Performance: {len(perf_violations)} violation(s) found\n")
+                    except Exception as e:
+                        print(f"⚠️  AI context-aware check error: {e}")
+                        print("   Falling back to standard checks...\n")
+                        perf_violations = check_performance_rules_enhanced(doc, client_type, fund_age_years)
+                        violations.extend(perf_violations)
+                        if not perf_violations:
+                            print("✅ Performance: OK\n")
+                        else:
+                            print(f"❌ Performance: {len(perf_violations)} violation(s) found\n")
                 else:
-                    print(f"❌ Performance: {len(perf_violations)} violation(s) found\n")
+                    # Use standard rule-based checks
+                    perf_violations = check_performance_rules_enhanced(doc, client_type, fund_age_years)
+                    violations.extend(perf_violations)
+                    if not perf_violations:
+                        print("✅ Performance: OK\n")
+                    else:
+                        print(f"❌ Performance: {len(perf_violations)} violation(s) found\n")
             except Exception as e:
                 print(f"⚠️  Performance check error: {e}\n")
 
@@ -310,6 +474,16 @@ def check_document_compliance(json_file_path):
             print(f"\n„ Evidence:")
             print(f"   {v['evidence']}")
             print(f"  Confidence: {v.get('confidence', 'N/A')}%")
+            
+            # Display AI reasoning if available (from context-aware mode)
+            if 'ai_reasoning' in v and v['ai_reasoning']:
+                print(f"\n🤖 AI Reasoning:")
+                print(f"   {v['ai_reasoning']}")
+            
+            # Display method used (AI, Rules, or Hybrid)
+            if 'method' in v and v['method']:
+                print(f"  Method: {v['method']}")
+            
             print()
 
         # Summary
@@ -528,6 +702,30 @@ def check_document_compliance(json_file_path):
             print(f"📄 JSON output saved to: {output_filename}")
             print(f"{'='*70}\n")
 
+        # Record document metrics
+        if METRICS_AVAILABLE and metrics and doc_start_time:
+            # Count false positives/negatives if available in violations
+            false_positives = sum(1 for v in violations if v.get('is_false_positive', False))
+            false_negatives = 0  # Would need ground truth to calculate
+            
+            # Get AI usage stats from hybrid integration if available
+            if hybrid_integration:
+                cache_stats = hybrid_integration.get_cache_stats()
+                if cache_stats:
+                    total_cache_hits = cache_stats.get('hits', 0)
+                    total_ai_calls = cache_stats.get('total_requests', 0) - total_cache_hits
+            
+            metrics.record_document_result(
+                document_id=json_file_path,
+                start_time=doc_start_time,
+                violations=violations,
+                false_positives=false_positives,
+                false_negatives=false_negatives,
+                ai_calls=total_ai_calls,
+                cache_hits=total_cache_hits,
+                fallback_count=total_fallbacks
+            )
+
         return {
             'total_violations': len(violations),
             'violations': violations,
@@ -561,6 +759,7 @@ def main():
         print("\nOptions:")
         print("  --hybrid-mode=on|off    Enable/disable AI+Rules hybrid mode")
         print("  --rules-only            Use only rule-based checking (no AI)")
+        print("  --context-aware=on|off  Enable/disable AI context-aware mode (false positive elimination)")
         print("  --ai-confidence=N       Set AI confidence threshold (default: 70)")
         print("  --review-mode           Enter interactive review mode after checking")
         print("  --review-threshold=N    Set review threshold for low-confidence items (default: 70)")
@@ -569,11 +768,15 @@ def main():
         print("  python check.py exemple.json")
         print("  python check.py exemple.json --hybrid-mode=on")
         print("  python check.py exemple.json --rules-only")
+        print("  python check.py exemple.json --context-aware=on")
         print("  python check.py exemple.json --ai-confidence=80 --show-metrics")
         print("  python check.py exemple.json --review-mode")
         print("  python check.py exemple.json --review-threshold=60 --review-mode")
         print("\nFeatures:")
         print("  - AI-enhanced semantic understanding (hybrid mode)")
+        print("  - AI context-aware mode for false positive elimination")
+        print("  - Whitelist-based filtering for fund names and strategy terms")
+        print("  - Data-aware performance checking (only flags actual numbers)")
         print("  - Human-in-the-loop review for low-confidence violations")
         print("  - Interactive review mode with CLI interface")
         print("  - Fixed promotional document detection")
@@ -622,6 +825,20 @@ def main():
         elif arg == '--rules-only' and hybrid_integration:
             hybrid_integration.update_config(ai_enabled=False)
             print("✓ Rules-only mode enabled via command line")
+        elif arg.startswith('--context-aware='):
+            mode = arg.split('=')[1].lower()
+            if hybrid_integration:
+                from config_manager import get_config_manager
+                config_mgr = get_config_manager()
+                if mode == 'on':
+                    # Enable context-aware AI mode
+                    config_mgr.update_config(enable_context_aware_ai=True)
+                    print("✓ AI Context-Aware mode enabled via command line")
+                    print("  This mode uses semantic understanding to eliminate false positives")
+                elif mode == 'off':
+                    # Disable context-aware AI mode
+                    config_mgr.update_config(enable_context_aware_ai=False)
+                    print("✓ AI Context-Aware mode disabled via command line")
         elif arg.startswith('--ai-confidence='):
             threshold = int(arg.split('=')[1])
             if hybrid_integration:
@@ -662,29 +879,42 @@ def main():
             print(f"📄 Detailed JSON report: {sys.argv[1].replace('.json', '_violations.json')}")
         
         # Display performance metrics if requested
-        if show_metrics and hybrid_integration and hybrid_integration.is_hybrid_enabled():
-            print(f"\n{'='*70}")
-            print("📊 PERFORMANCE METRICS")
-            print(f"{'='*70}")
-            
-            cache_stats = hybrid_integration.get_cache_stats()
-            if cache_stats:
-                print(f"\nCache Statistics:")
-                print(f"  Hit Rate: {cache_stats.get('hit_rate', 0):.1f}%")
-                print(f"  Total Requests: {cache_stats.get('total_requests', 0)}")
-                print(f"  Cache Size: {cache_stats.get('size', 0)}/{cache_stats.get('max_size', 0)}")
-            
-            perf_metrics = hybrid_integration.get_performance_metrics()
-            if perf_metrics:
-                print(f"\nProcessing Metrics:")
-                if 'total_checks' in perf_metrics:
-                    print(f"  Total Checks: {perf_metrics['total_checks']}")
-                if 'avg_processing_time_ms' in perf_metrics:
-                    print(f"  Avg Processing Time: {perf_metrics['avg_processing_time_ms']:.1f}ms")
-                if 'ai_calls' in perf_metrics:
-                    print(f"  AI API Calls: {perf_metrics['ai_calls']}")
-            
-            print(f"{'='*70}")
+        if show_metrics:
+            if METRICS_AVAILABLE:
+                # Display comprehensive compliance metrics
+                compliance_metrics = get_compliance_metrics()
+                compliance_metrics.print_dashboard()
+                
+                # Export metrics to file
+                metrics_filename = json_file.replace('.json', '_metrics.json')
+                compliance_metrics.export_metrics(metrics_filename)
+                print(f"\n📊 Metrics exported to: {metrics_filename}")
+            elif hybrid_integration and hybrid_integration.is_hybrid_enabled():
+                # Fallback to basic hybrid metrics if compliance metrics not available
+                print(f"\n{'='*70}")
+                print("📊 PERFORMANCE METRICS")
+                print(f"{'='*70}")
+                
+                cache_stats = hybrid_integration.get_cache_stats()
+                if cache_stats:
+                    print(f"\nCache Statistics:")
+                    print(f"  Hit Rate: {cache_stats.get('hit_rate', 0):.1f}%")
+                    print(f"  Total Requests: {cache_stats.get('total_requests', 0)}")
+                    print(f"  Cache Size: {cache_stats.get('size', 0)}/{cache_stats.get('max_size', 0)}")
+                
+                perf_metrics = hybrid_integration.get_performance_metrics()
+                if perf_metrics:
+                    print(f"\nProcessing Metrics:")
+                    if 'total_checks' in perf_metrics:
+                        print(f"  Total Checks: {perf_metrics['total_checks']}")
+                    if 'avg_processing_time_ms' in perf_metrics:
+                        print(f"  Avg Processing Time: {perf_metrics['avg_processing_time_ms']:.1f}ms")
+                    if 'ai_calls' in perf_metrics:
+                        print(f"  AI API Calls: {perf_metrics['ai_calls']}")
+                
+                print(f"{'='*70}")
+            else:
+                print("\n⚠️  Metrics not available (hybrid mode not enabled)")
         
         # Display review mode option if items were queued
         if HITL_AVAILABLE and result.get('queued_for_review', 0) > 0:

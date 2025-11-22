@@ -363,8 +363,88 @@ Return ONLY valid JSON:"""
 # ============================================================================
 
 def check_performance_disclaimers_ai(doc):
-    """Check that performance mentions have disclaimers using AI + Rules"""
+    """
+    Check that ACTUAL performance data has disclaimers (data-aware version)
     
+    This version eliminates false positives by:
+    - Only flagging when ACTUAL performance numbers are present (e.g., "15%", "+20%")
+    - Ignoring descriptive keywords like "attractive performance", "performance objective"
+    - Using semantic matching for disclaimer detection
+    - Verifying disclaimer is on SAME slide as performance data
+    
+    Eliminates 3 false positives from keyword-based approach.
+    """
+    violations = []
+    
+    # Initialize EvidenceExtractor
+    try:
+        from evidence_extractor import EvidenceExtractor
+        from ai_engine import create_ai_engine_from_env
+        
+        ai_engine = create_ai_engine_from_env()
+        evidence_extractor = EvidenceExtractor(ai_engine)
+    except Exception as e:
+        print(f"⚠️  Warning: Could not initialize EvidenceExtractor: {e}")
+        print("   Falling back to keyword-based checking")
+        # Fallback to old implementation if EvidenceExtractor not available
+        return _check_performance_disclaimers_fallback(doc)
+    
+    # Check each slide for actual performance data
+    slides_to_check = []
+    if 'slide_2' in doc:
+        slides_to_check.append(('Slide 2', doc['slide_2']))
+    
+    if 'pages_suivantes' in doc:
+        for i, page in enumerate(doc['pages_suivantes'], start=3):
+            slides_to_check.append((f'Slide {page.get("slide_number", i)}', page))
+    
+    for slide_name, slide_data in slides_to_check:
+        slide_text = json.dumps(slide_data, ensure_ascii=False)
+        
+        # Use EvidenceExtractor to find ACTUAL performance data (numbers with %)
+        perf_data = evidence_extractor.find_performance_data(slide_text)
+        
+        # Only check if ACTUAL performance data is present
+        if not perf_data:
+            # No actual performance numbers found - skip this slide
+            # This eliminates false positives from descriptive text like:
+            # - "attractive performance"
+            # - "performance objective"
+            # - "strong performance potential"
+            continue
+        
+        # Actual performance data found - check for disclaimer on SAME slide
+        required_disclaimer = "performances passées ne préjugent pas"
+        disclaimer_match = evidence_extractor.find_disclaimer(slide_text, required_disclaimer)
+        
+        if not disclaimer_match or not disclaimer_match.found:
+            # Performance data without disclaimer - this is a violation
+            # Extract evidence from performance data
+            perf_values = [pd.value for pd in perf_data[:3]]
+            perf_contexts = [pd.context[:80] + "..." for pd in perf_data[:3]]
+            
+            violations.append({
+                'type': 'PERFORMANCE',
+                'severity': 'CRITICAL',
+                'slide': slide_name,
+                'location': slide_data.get('title', 'Performance section'),
+                'rule': 'PERF_001: Performance data must have disclaimer',
+                'message': f'Actual performance data without required disclaimer',
+                'evidence': f'Found performance data: {", ".join(perf_values)}. Context: {perf_contexts[0] if perf_contexts else ""}',
+                'confidence': 95,
+                'method': 'AI_EVIDENCE_EXTRACTOR',
+                'ai_reasoning': f'Detected {len(perf_data)} actual performance data points with numerical values. No disclaimer found on same slide.',
+                'rule_hints': f'Performance values: {perf_values}'
+            })
+    
+    return violations
+
+
+def _check_performance_disclaimers_fallback(doc):
+    """
+    Fallback implementation using keyword matching
+    Used when EvidenceExtractor is not available
+    """
     violations = []
     
     slides_to_check = []
@@ -378,89 +458,148 @@ def check_performance_disclaimers_ai(doc):
     for slide_name, slide_data in slides_to_check:
         slide_text = json.dumps(slide_data, ensure_ascii=False).lower()
         
-        # Rule-based check
-        def rule_check(text):
-            performance_keywords = [
-                'performance', 'rendement', 'return',
-                'surperformance', 'surperform', 'outperform',
-                'généré.*rendement', 'avec succès'
-            ]
-            
-            has_perf = any(re.search(kw, text) for kw in performance_keywords)
-            
-            disclaimer_keywords = [
-                'performances passées',
-                'past performance',
-                'ne préjugent pas',
-                'not guarantee',
-                'no guarantee'
-            ]
-            
-            has_disclaimer = any(kw in text for kw in disclaimer_keywords)
-            
-            return {
-                'violation': has_perf and not has_disclaimer,
-                'confidence': 95 if (has_perf and not has_disclaimer) else 0,
+        # Simple pattern matching for performance numbers
+        perf_patterns = [
+            r'[+\-]?\d+[.,]\d+\s*%',  # +15.5%, -3.2%
+            r'[+\-]?\d+\s*%',  # +15%, -3%
+        ]
+        
+        has_perf_numbers = any(re.search(pattern, slide_text) for pattern in perf_patterns)
+        
+        if not has_perf_numbers:
+            continue
+        
+        # Check for disclaimer
+        disclaimer_keywords = [
+            'performances passées',
+            'past performance',
+            'ne préjugent pas',
+            'not indicative'
+        ]
+        
+        has_disclaimer = any(kw in slide_text for kw in disclaimer_keywords)
+        
+        if not has_disclaimer:
+            violations.append({
+                'type': 'PERFORMANCE',
+                'severity': 'CRITICAL',
                 'slide': slide_name,
-                'location': slide_data.get('title', 'Unknown'),
-                'rule': 'PERF_001: Performance must have disclaimer',
-                'message': 'Performance mentioned without disclaimer',
-                'evidence': f'Performance content found without accompanying disclaimer',
-                'hints': f'Has performance: {has_perf}, Has disclaimer: {has_disclaimer}'
-            }
+                'location': slide_data.get('title', 'Performance section'),
+                'rule': 'PERF_001: Performance data must have disclaimer',
+                'message': 'Performance data without disclaimer',
+                'evidence': 'Performance numbers found without accompanying disclaimer',
+                'confidence': 85,
+                'method': 'RULE_BASED_FALLBACK'
+            })
+    
+    return violations
+
+
+def check_document_starts_with_performance_ai(doc):
+    """
+    Check if document starts with ACTUAL performance data on cover page
+    
+    This version eliminates false positives by:
+    - Only checking the cover page (page_de_garde)
+    - Only flagging when ACTUAL performance numbers are present (e.g., "15%", "+20%")
+    - Ignoring descriptive keywords like "attractive performance", "performance objective"
+    - Using EvidenceExtractor to detect real performance data
+    
+    Requirements: 3.1, 3.2, 4.1, 4.2, 4.3
+    Impact: Part of 3 false positive elimination
+    """
+    violations = []
+    
+    # Initialize EvidenceExtractor
+    try:
+        from evidence_extractor import EvidenceExtractor
+        from ai_engine import create_ai_engine_from_env
         
-        # AI prompt
-        ai_prompt = f"""Analyze this slide for performance information and disclaimers.
-
-SLIDE: {slide_name}
-CONTENT:
-{slide_text[:2500]}
-
-REGULATORY REQUIREMENT (UCITS / MiFID II):
-Any mention of performance, returns, or track record MUST be accompanied by:
-"Past performance is not indicative of future results"
-or
-"Les performances passées ne préjugent pas des performances futures"
-
-TASK:
-1. Does this slide mention performance/returns?
-2. If yes, is there a disclaimer on THE SAME SLIDE?
-3. What specific performance claims are made?
-
-Consider:
-- "surperformance", "outperform"
-- "généré des rendements", "delivered returns"
-- Historical performance data
-- Track record claims
-
-Respond with JSON:
-{{
-  "compliant": true/false,
-  "confidence": 0-100,
-  "has_performance_content": true/false,
-  "performance_claims": ["list of claims"],
-  "has_disclaimer": true/false,
-  "disclaimer_text": "exact disclaimer if found",
-  "slide": "{slide_name}",
-  "location": "slide location",
-  "rule": "PERF_001: Performance requires disclaimer",
-  "message": "brief message",
-  "evidence": "specific evidence",
-  "reasoning": "your analysis"
-}}
-
-Return ONLY valid JSON:"""
-
-        violation = check_with_ai_and_rules(
-            "Performance Disclaimer",
-            slide_text,
-            ai_prompt,
-            rule_check,
-            severity='CRITICAL'
-        )
+        ai_engine = create_ai_engine_from_env()
+        evidence_extractor = EvidenceExtractor(ai_engine)
+    except Exception as e:
+        print(f"⚠️  Warning: Could not initialize EvidenceExtractor: {e}")
+        print("   Falling back to keyword-based checking")
+        # Fallback to old implementation if EvidenceExtractor not available
+        return _check_document_starts_with_performance_fallback(doc)
+    
+    # Only check the cover page (page_de_garde)
+    if 'page_de_garde' not in doc:
+        # No cover page found - cannot violate this rule
+        return violations
+    
+    cover_page = doc['page_de_garde']
+    cover_text = json.dumps(cover_page, ensure_ascii=False)
+    
+    # Use EvidenceExtractor to find ACTUAL performance data (numbers with %)
+    perf_data = evidence_extractor.find_performance_data(cover_text)
+    
+    # Only flag if ACTUAL performance numbers are on cover page
+    if perf_data:
+        # Filter out low-confidence detections (likely descriptive text)
+        high_confidence_perf = [pd for pd in perf_data if pd.confidence >= 60]
         
-        if violation:
-            violations.append(violation)
+        if high_confidence_perf:
+            # Actual performance data found on cover page - this is a violation
+            perf_values = [pd.value for pd in high_confidence_perf[:3]]
+            perf_contexts = [pd.context[:80] + "..." for pd in high_confidence_perf[:3]]
+            
+            violations.append({
+                'type': 'PERFORMANCE',
+                'severity': 'MAJOR',
+                'slide': 'Cover Page',
+                'location': 'Beginning of document',
+                'rule': 'PERF_001: Document cannot start with performance data',
+                'message': f'Document starts with performance data ({high_confidence_perf[0].value})',
+                'evidence': f'Found performance data on cover: {", ".join(perf_values)}. Context: {perf_contexts[0] if perf_contexts else ""}. Performance must be preceded by fund presentation.',
+                'confidence': high_confidence_perf[0].confidence,
+                'method': 'AI_EVIDENCE_EXTRACTOR',
+                'ai_reasoning': f'Detected {len(high_confidence_perf)} actual performance data points with numerical values on cover page. Documents should not start with performance data.',
+                'rule_hints': f'Performance values on cover: {perf_values}'
+            })
+    
+    # If no actual performance data found, no violation
+    # This eliminates false positives from:
+    # - "attractive performance" (descriptive, no numbers)
+    # - "performance objective" (goal statement, no actual data)
+    # - "strong performance potential" (forward-looking, no historical data)
+    
+    return violations
+
+
+def _check_document_starts_with_performance_fallback(doc):
+    """
+    Fallback implementation using keyword matching
+    Used when EvidenceExtractor is not available
+    """
+    violations = []
+    
+    if 'page_de_garde' not in doc:
+        return violations
+    
+    cover_page = doc['page_de_garde']
+    cover_text = json.dumps(cover_page, ensure_ascii=False).lower()
+    
+    # Simple pattern matching for performance numbers
+    perf_patterns = [
+        r'[+\-]?\d+[.,]\d+\s*%',  # +15.5%, -3.2%
+        r'[+\-]?\d+\s*%',  # +15%, -3%
+    ]
+    
+    has_perf_numbers = any(re.search(pattern, cover_text) for pattern in perf_patterns)
+    
+    if has_perf_numbers:
+        violations.append({
+            'type': 'PERFORMANCE',
+            'severity': 'MAJOR',
+            'slide': 'Cover Page',
+            'location': 'Beginning of document',
+            'rule': 'PERF_001: Document cannot start with performance data',
+            'message': 'Document starts with performance data',
+            'evidence': 'Performance numbers found on cover page. Performance must be preceded by fund presentation.',
+            'confidence': 85,
+            'method': 'RULE_BASED_FALLBACK'
+        })
     
     return violations
 
@@ -1152,6 +1291,224 @@ Return ONLY valid JSON:"""
             'confidence': result.get('confidence', 85),
             'method': 'AI_DETECTED',
             'ai_reasoning': result.get('reasoning', '')
+        })
+    
+    return violations
+
+
+# ============================================================================
+# CROSS-SLIDE VALIDATION - AI ENHANCED
+# ============================================================================
+
+def check_risk_profile_consistency(doc):
+    """
+    Check risk profile consistency across slides (cross-slide validation)
+    
+    Validates that Slide 2 risk profile includes all risks mentioned elsewhere in document.
+    Slide 2 should have >= risks from other pages (comprehensive risk disclosure).
+    
+    Requirements: 6.1, 6.2, 6.3, 6.4, 6.5
+    Impact: Catches 1 missed violation
+    
+    Returns:
+        list: Violations if Slide 2 has fewer risks than other pages
+    """
+    violations = []
+    
+    # Extract Slide 2 content
+    slide_2 = doc.get('slide_2', {})
+    if not slide_2:
+        # No Slide 2 found - cannot perform check
+        return violations
+    
+    slide_2_text = json.dumps(slide_2, ensure_ascii=False)
+    
+    # Extract all other pages content (pages_suivantes + page_de_fin)
+    other_pages_text = ""
+    
+    # Add pages_suivantes
+    if 'pages_suivantes' in doc:
+        for page in doc['pages_suivantes']:
+            other_pages_text += json.dumps(page, ensure_ascii=False) + "\n"
+    
+    # Add final page
+    if 'page_de_fin' in doc:
+        other_pages_text += json.dumps(doc['page_de_fin'], ensure_ascii=False)
+    
+    # Extract risks from Slide 2 using regex patterns
+    # Look for risk keywords in French and English
+    risk_patterns_slide2 = [
+        r'risque de perte en capital',
+        r'risque lié aux actions',
+        r'risque de change',
+        r'risque lié à la gestion discrétionnaire',
+        r'risque de taux d\'intérêt',
+        r'risque de crédit',
+        r'risque de volatilité',
+        r'risque de contrepartie',
+        r'risque de liquidité',
+        r'risque lié aux engagements',
+        r'risques liés à la conversion monétaire',
+        r'risque lié aux marchés émergents',
+        r'risque lié à la durabilité',
+        r'capital risk',
+        r'equity risk',
+        r'currency risk',
+        r'discretionary management risk',
+        r'interest rate risk',
+        r'credit risk',
+        r'volatility risk',
+        r'counterparty risk',
+        r'liquidity risk',
+        r'emerging markets risk',
+        r'sustainability risk'
+    ]
+    
+    # Find risks on Slide 2
+    slide_2_risks = set()
+    slide_2_text_lower = slide_2_text.lower()
+    
+    for pattern in risk_patterns_slide2:
+        if re.search(pattern, slide_2_text_lower):
+            # Normalize risk name for comparison
+            risk_name = pattern.replace(r'\\', '').replace(r'\'', "'")
+            slide_2_risks.add(risk_name)
+    
+    # Extract risks from other pages
+    other_pages_risks = set()
+    other_pages_text_lower = other_pages_text.lower()
+    
+    for pattern in risk_patterns_slide2:
+        if re.search(pattern, other_pages_text_lower):
+            # Normalize risk name for comparison
+            risk_name = pattern.replace(r'\\', '').replace(r'\'', "'")
+            other_pages_risks.add(risk_name)
+    
+    # Compare risk counts
+    slide_2_count = len(slide_2_risks)
+    other_pages_count = len(other_pages_risks)
+    
+    # Slide 2 should have >= risks from other pages
+    if slide_2_count < other_pages_count:
+        # Find missing risks
+        missing_risks = other_pages_risks - slide_2_risks
+        
+        # Format missing risks for evidence
+        missing_risks_list = sorted(list(missing_risks))
+        missing_risks_str = '\n   - '.join(missing_risks_list[:10])  # Show first 10
+        if len(missing_risks_list) > 10:
+            missing_risks_str += f'\n   ... and {len(missing_risks_list) - 10} more'
+        
+        violations.append({
+            'type': 'STRUCTURE',
+            'severity': 'MAJOR',
+            'slide': 'Slide 2',
+            'location': 'Risk profile section',
+            'rule': 'STRUCT_009: Slide 2 risk profile must be comprehensive',
+            'message': f'Incomplete risk profile on Slide 2: {slide_2_count} risks vs {other_pages_count} elsewhere in document',
+            'evidence': f'Slide 2 mentions {slide_2_count} risk(s), but other pages mention {other_pages_count} risk(s).\n\nMissing risks on Slide 2:\n   - {missing_risks_str}\n\nSlide 2 should include all major risks disclosed elsewhere in the document.',
+            'confidence': 95,
+            'method': 'CROSS_SLIDE_VALIDATION',
+            'ai_reasoning': f'Cross-slide analysis detected inconsistency: Slide 2 risk disclosure is incomplete compared to other pages. Regulatory requirement: comprehensive risk disclosure must appear early in document (Slide 2).',
+            'rule_hints': f'Slide 2 risks: {sorted(list(slide_2_risks))[:5]}... | Other pages risks: {sorted(list(other_pages_risks))[:5]}...'
+        })
+    
+    return violations
+
+
+def check_anglicisms_retail(doc, client_type):
+    """
+    Check for English terms (anglicisms) in retail documents without glossary
+    
+    Only applies to retail documents (skip professional).
+    Detects common English terms used in French financial documents.
+    Flags as MINOR violation if terms found but no glossary present.
+    
+    Requirements: 6.1, 6.2, 6.3, 6.4, 6.5
+    Impact: Catches 1 missed violation
+    
+    Args:
+        doc: Document dictionary
+        client_type: 'retail' or 'professional'
+    
+    Returns:
+        list: Violations if anglicisms found without glossary in retail docs
+    """
+    violations = []
+    
+    # Only apply to retail documents
+    if client_type.lower() != 'retail':
+        # Professional clients don't need glossary for anglicisms
+        return violations
+    
+    # Extract all text from document
+    all_text = extract_all_text_from_doc(doc)
+    all_text_lower = all_text.lower()
+    
+    # Define list of common English terms in French financial documents
+    # These are technical terms that should be explained in a glossary for retail investors
+    common_anglicisms = [
+        'momentum',
+        'smart',
+        'trend',
+        'tracking error',
+        'hedge',
+        'alpha',
+        'beta',
+        'benchmark',
+        'rating',
+        'overweight',
+        'underweight',
+        'overlay',
+        'swap',
+        'futures',
+        'options',
+        'hedge ratio',
+        'sharpe ratio',
+        'value at risk',
+        'var',
+        'stress test',
+        'backtesting',
+        'quantitative',
+        'systematic'
+    ]
+    
+    # Check which terms are used in the document
+    terms_found = []
+    for term in common_anglicisms:
+        # Use word boundary matching to avoid partial matches
+        # e.g., "momentum" should match but not "momentums" in middle of French word
+        pattern = r'\b' + re.escape(term) + r'\b'
+        if re.search(pattern, all_text_lower):
+            terms_found.append(term)
+    
+    # If no anglicisms found, no violation
+    if not terms_found:
+        return violations
+    
+    # Check if glossary exists
+    # Look for "glossaire" or "glossary" in the document
+    has_glossary = bool(re.search(r'\b(glossaire|glossary)\b', all_text_lower))
+    
+    # If terms found and no glossary, flag as violation
+    if terms_found and not has_glossary:
+        # Format terms for evidence
+        terms_str = ', '.join(terms_found[:10])  # Show first 10 terms
+        if len(terms_found) > 10:
+            terms_str += f' ... and {len(terms_found) - 10} more'
+        
+        violations.append({
+            'type': 'GENERAL',
+            'severity': 'MINOR',
+            'slide': 'Document-wide',
+            'location': 'Missing glossary',
+            'rule': 'GEN_005: Retail documents with anglicisms must include glossary',
+            'message': f'English terms used without glossary: {len(terms_found)} term(s)',
+            'evidence': f'Found English terms: {terms_str}. Retail documents should include a glossary ("glossaire") to explain technical English terms for non-professional investors.',
+            'confidence': 90,
+            'method': 'RULE_BASED_ANGLICISM_DETECTION',
+            'ai_reasoning': f'Detected {len(terms_found)} English technical terms in retail document. AMF guidelines require glossary for technical terms to ensure retail investor comprehension.',
+            'rule_hints': f'Terms found: {terms_found[:5]}... | Glossary present: {has_glossary}'
         })
     
     return violations

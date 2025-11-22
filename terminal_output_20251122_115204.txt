@@ -1,0 +1,58 @@
+======================================================================
+Terminal output will be saved to: terminal_output_20251122_115204.txt
+======================================================================
+
+
+======================================================================
+📋 COMPLIANCE REPORT - ENHANCED VERSION
+======================================================================
+File: exemple.json
+Fund ISIN: LU1833929729
+Client Type: RETAIL
+Document Type: fund_presentation
+Fund Status: active
+ESG Classification: other
+======================================================================
+
+Checking registration...
+  Fund: ODDO BHF Algo Trend US
+  Authorized in 6 countries
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_country_context (France)
+======================================================================
+SYSTEM: You are a financial compliance expert. Analyze context carefully. Respond ONLY with valid JSON, no m...
+
+PROMPT (first 500 chars):
+You are a financial compliance expert. Analyze if this country mention represents a DISTRIBUTION/MARKETING claim.
+
+COUNTRY: France
+
+CONTEXT AROUND MENTION:
+rperformance du Compartiment par rapport à l'indice de référence, une fois que la sous-performance passée enregistrée au cours des cinq années précédentes a été compensée. Structure et informations techniques. Statut juridique: Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS). Société de gestion: ODDO BHF AM SAS. Dépositaire: CACEIS Bank, Luxembourg Branch. Souscriptions / Rachats: Tous les jours à 12:00 p.m. Fréquence de valorisation: Tous les jours à 12:00 p.m. Autorisé à la distribution: France, Allemagne, Suisse, Luxembourg, Espagne, Belgique. Source: ODDO BHF AM LU1833929729 LU1833929307 LU1833929992 LU1833929216 ODDO BHF Algo Trend US S&P 500 EUR Net Total Return 16/07/2018 5 ans EUR Luxembourg Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS) ODDO BHF AM SAS CACEIS Bank, Luxembourg Branch Non France Allemagne Suisse Luxembourg Espagne Belgique 1.20% 0.60% 0.70% 0.75% 100 EUR 250,000 EUR 250,000 EUR 100 EUR ODDO BHF AM est la branche de gestion d'actifs du Groupe ODDO BHF. Elle 
+
+AUTHORIZED COUNTRIES: Germany, Belgium, Spain, France, Luxembourg, Switzerland
+
+QUESTION: Is "France" mentioned in a DISTRIBUTION/AUTHORIZATION context?
+
+Consider these contexts:
+- âœ… DISTRIBUTION: "authorized in", "distributed in", "available in", "marketed in", "registered in", "autorisÃ© en", "distribuÃ© en", "commercialisÃ© en"
+- âŒ NOT DISTRIBUTION: "invests in [country] equities", "exposure to [country] markets", "risk related to [country]", "domiciled in [country]", "NOT authorized in", "non autorisÃ© en"
+
+Also consider:
+- Negations: "NOT authorized" or "non autorisÃ©" = NOT a distribution claim
+- Investment universe: "invests in German stocks" = NOT a distribution claim
+- Risk exposure: "US market risk" = NOT a distribution claim
+- Legal domicile: "company established in France" = NOT a distribution claim
+
+Respond ONLY with valid JSON:
+{
+  "is_distribution_claim": true or false,
+  "context_type": "authorized_distribution" or "investment_universe" or "risk_exposure" or "legal_domicile" or "negation" or "example",
+  "evidence": "exact phrase from context",
+  "confidence": 0-100,
+  "reasoning": "brief explanation"
+}
+======================================================================
+

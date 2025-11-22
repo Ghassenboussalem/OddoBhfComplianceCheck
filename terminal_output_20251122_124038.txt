@@ -1,0 +1,1068 @@
+======================================================================
+Terminal output will be saved to: terminal_output_20251122_124038.txt
+======================================================================
+
+✓ AI Context-Aware mode enabled via command line
+  This mode uses semantic understanding to eliminate false positives
+🤖 AI Context-Aware Mode: ENABLED
+   Using semantic understanding for false positive elimination
+
+
+======================================================================
+📋 COMPLIANCE REPORT - ENHANCED VERSION
+======================================================================
+File: exemple.json
+Fund ISIN: LU1833929729
+Client Type: RETAIL
+Document Type: fund_presentation
+Fund Status: active
+ESG Classification: other
+======================================================================
+
+Checking registration...
+  Fund: ODDO BHF Algo Trend US
+  Authorized in 6 countries
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_country_context (France)
+======================================================================
+SYSTEM: You are a financial compliance expert. Analyze context carefully. Respond ONLY with valid JSON, no m...
+
+PROMPT (first 500 chars):
+You are a financial compliance expert. Analyze if this country mention represents a DISTRIBUTION/MARKETING claim.
+
+COUNTRY: France
+
+CONTEXT AROUND MENTION:
+rperformance du Compartiment par rapport à l'indice de référence, une fois que la sous-performance passée enregistrée au cours des cinq années précédentes a été compensée. Structure et informations techniques. Statut juridique: Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS). Société de gestion: ODDO BHF AM SAS. Dépositaire: CACEIS Bank, Luxembourg Branch. Souscriptions / Rachats: Tous les jours à 12:00 p.m. Fréquence de valorisation: Tous les jours à 12:00 p.m. Autorisé à la distribution: France, Allemagne, Suisse, Luxembourg, Espagne, Belgique. Source: ODDO BHF AM LU1833929729 LU1833929307 LU1833929992 LU1833929216 ODDO BHF Algo Trend US S&P 500 EUR Net Total Return 16/07/2018 5 ans EUR Luxembourg Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS) ODDO BHF AM SAS CACEIS Bank, Luxembourg Branch Non France Allemagne Suisse Luxembourg Espagne Belgique 1.20% 0.60% 0.70% 0.75% 100 EUR 250,000 EUR 250,000 EUR 100 EUR ODDO BHF AM est la branche de gestion d'actifs du Groupe ODDO BHF. Elle 
+
+AUTHORIZED COUNTRIES: Germany, Belgium, Spain, France, Luxembourg, Switzerland
+
+QUESTION: Is "France" mentioned in a DISTRIBUTION/AUTHORIZATION context?
+
+Consider these contexts:
+- âœ… DISTRIBUTION: "authorized in", "distributed in", "available in", "marketed in", "registered in", "autorisÃ© en", "distribuÃ© en", "commercialisÃ© en"
+- âŒ NOT DISTRIBUTION: "invests in [country] equities", "exposure to [country] markets", "risk related to [country]", "domiciled in [country]", "NOT authorized in", "non autorisÃ© en"
+
+Also consider:
+- Negations: "NOT authorized" or "non autorisÃ©" = NOT a distribution claim
+- Investment universe: "invests in German stocks" = NOT a distribution claim
+- Risk exposure: "US market risk" = NOT a distribution claim
+- Legal domicile: "company established in France" = NOT a distribution claim
+
+Respond ONLY with valid JSON:
+{
+  "is_distribution_claim": true or false,
+  "context_type": "authorized_distribution" or "investment_universe" or "risk_exposure" or "legal_domicile" or "negation" or "example",
+  "evidence": "exact phrase from context",
+  "confidence": 0-100,
+  "reasoning": "brief explanation"
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "is_distribution_claim": true,
+  "context_type": "authorized_distribution",
+  "evidence": "Autoris\u00e9 \u00e0 la distribution: France, Allemagne, Suisse, Luxembourg, Espagne, Belgique.",
+  "confidence": 100,
+  "reasoning": "The mention of France is in a list of countries where the fund is authorized for distribution, which matches the context of an authorized distribution claim."
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_country_context (Luxembourg)
+======================================================================
+SYSTEM: You are a financial compliance expert. Analyze context carefully. Respond ONLY with valid JSON, no m...
+
+PROMPT (first 500 chars):
+You are a financial compliance expert. Analyze if this country mention represents a DISTRIBUTION/MARKETING claim.
+
+COUNTRY: Luxembourg
+
+CONTEXT AROUND MENTION:
+formance passée enregistrée au cours des cinq années précédentes, et sous réserve que la performance absolue soit positive. CN-EUR: Au maximum 10% de la surperformance du Compartiment par rapport à l'indice de référence, une fois que la sous-performance passée enregistrée au cours des cinq années précédentes a été compensée. Structure et informations techniques. Statut juridique: Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS). Société de gestion: ODDO BHF AM SAS. Dépositaire: CACEIS Bank, Luxembourg Branch. Souscriptions / Rachats: Tous les jours à 12:00 p.m. Fréquence de valorisation: Tous les jours à 12:00 p.m. Autorisé à la distribution: France, Allemagne, Suisse, Luxembourg, Espagne, Belgique. Source: ODDO BHF AM LU1833929729 LU1833929307 LU1833929992 LU1833929216 ODDO BHF Algo Trend US S&P 500 EUR Net Total Return 16/07/2018 5 ans EUR Luxembourg Compartiment du ODDO BHF SICAV Lux. Umbrella (UCITS) ODDO BHF AM SAS CACEIS Bank, Luxembourg Branch Non France Allemagne Suisse Luxembourg Es
+
+AUTHORIZED COUNTRIES: Germany, Belgium, Spain, France, Luxembourg, Switzerland
+
+QUESTION: Is "Luxembourg" mentioned in a DISTRIBUTION/AUTHORIZATION context?
+
+Consider these contexts:
+- âœ… DISTRIBUTION: "authorized in", "distributed in", "available in", "marketed in", "registered in", "autorisÃ© en", "distribuÃ© en", "commercialisÃ© en"
+- âŒ NOT DISTRIBUTION: "invests in [country] equities", "exposure to [country] markets", "risk related to [country]", "domiciled in [country]", "NOT authorized in", "non autorisÃ© en"
+
+Also consider:
+- Negations: "NOT authorized" or "non autorisÃ©" = NOT a distribution claim
+- Investment universe: "invests in German stocks" = NOT a distribution claim
+- Risk exposure: "US market risk" = NOT a distribution claim
+- Legal domicile: "company established in France" = NOT a distribution claim
+
+Respond ONLY with valid JSON:
+{
+  "is_distribution_claim": true or false,
+  "context_type": "authorized_distribution" or "investment_universe" or "risk_exposure" or "legal_domicile" or "negation" or "example",
+  "evidence": "exact phrase from context",
+  "confidence": 0-100,
+  "reasoning": "brief explanation"
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "is_distribution_claim": true,
+  "context_type": "authorized_distribution",
+  "evidence": "Autoris\u00e9 \u00e0 la distribution: France, Allemagne, Suisse, Luxembourg, Espagne, Belgique.",
+  "confidence": 100,
+  "reasoning": "The mention of Luxembourg is in the context of authorized distribution countries, which matches the defined context for a distribution claim."
+}
+
+ðŸ” LLM-analyzed countries: 2
+   Distribution claims detected: France, Luxembourg
+
+✅ Registration compliance: OK
+
+Checking structure...
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_structural_element (fund_name)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand context and semantic meaning, not jus...
+
+PROMPT (first 500 chars):
+Does this section contain the FULL fund name?
+
+SECTION TEXT:
+{"slide_number": 1, "title": "ODDO BHF Algo Trend US", "subtitle": "Tirer parti du momentum des actions am\u00e9ricaines", "date": "SEPTEMBRE 2025", "fund_name": "ODDO BHF Algo Trend US", "inception_date": "2018", "aum": "228M\u20ac", "text_content": "ODDO BHF Algo Trend US. Tirer parti du momentum des actions am\u00e9ricaines. Date de cr\u00e9ation: 2018. Actifs sous gestion: 228M\u20ac. Le fonds offre aux investisseurs un acc\u00e8s au potentiel de croissance des actions am\u00e9ricaines gr\u00e2ce \u00e0 une strat\u00e9gie quantitative rigoureuse fond\u00e9e sur le momentum. SEPTEMBRE 2025"}
+
+EXPECTED FUND NAME: Unknown
+
+Look for:
+- Full fund name (e.g., "ODDO BHF Algo Trend US")
+- Compartment/sub-fund name
+- SICAV/FCP name
+- Any variation in English or French
+
+IGNORE:
+- Just the word "fund" or "fonds" without actual name
+- Company name only (e.g., just "ODDO BHF")
+
+Respond JSON:
+{
+  "found": true/false,
+  "found_name": "exact text found or null",
+  "is_complete_name": true/false,
+  "confidence": 0-100,
+  "evidence": "where/how found"
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": true,
+  "found_name": "ODDO BHF Algo Trend US",
+  "is_complete_name": true,
+  "confidence": 100,
+  "evidence": "Found in title, subtitle, and text_content sections, matching exactly and consistently across the text."
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_structural_element (date)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand context and semantic meaning, not jus...
+
+PROMPT (first 500 chars):
+Does this section contain a valid date in acceptable format?
+
+SECTION TEXT:
+{"slide_number": 1, "title": "ODDO BHF Algo Trend US", "subtitle": "Tirer parti du momentum des actions am\u00e9ricaines", "date": "SEPTEMBRE 2025", "fund_name": "ODDO BHF Algo Trend US", "inception_date": "2018", "aum": "228M\u20ac", "text_content": "ODDO BHF Algo Trend US. Tirer parti du momentum des actions am\u00e9ricaines. Date de cr\u00e9ation: 2018. Actifs sous gestion: 228M\u20ac. Le fonds offre aux investisseurs un acc\u00e8s au potentiel de croissance des actions am\u00e9ricaines gr\u00e2ce \u00e0 une strat\u00e9gie quantitative rigoureuse fond\u00e9e sur le momentum. SEPTEMBRE 2025"}
+
+ACCEPTABLE FORMATS:
+- MM/YYYY or MM-YYYY (e.g., "01/2025", "01-2025")
+- Month YYYY in English (e.g., "January 2025", "Jan 2025")
+- Month YYYY in French (e.g., "Janvier 2025", "janv. 2025")
+- YYYY/MM or YYYY-MM (e.g., "2025/01", "2025-01")
+- Quarter format (e.g., "Q1 2025", "1er trimestre 2025")
+- DD.MM.YYYY European format (e.g., "31.01.2025")
+
+Respond JSON:
+{
+  "found": true/false,
+  "date_found": "exact date text",
+  "format": "MM/YYYY or other",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": true,
+  "date_found": "SEPTEMBRE 2025",
+  "format": "Month YYYY in French",
+  "confidence": 100
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_structural_element (promotional_mention)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand context and semantic meaning, not jus...
+
+PROMPT (first 500 chars):
+Does this section indicate this is a PROMOTIONAL/MARKETING document?
+
+SECTION TEXT:
+{"slide_number": 1, "title": "ODDO BHF Algo Trend US", "subtitle": "Tirer parti du momentum des actions am\u00e9ricaines", "date": "SEPTEMBRE 2025", "fund_name": "ODDO BHF Algo Trend US", "inception_date": "2018", "aum": "228M\u20ac", "text_content": "ODDO BHF Algo Trend US. Tirer parti du momentum des actions am\u00e9ricaines. Date de cr\u00e9ation: 2018. Actifs sous gestion: 228M\u20ac. Le fonds offre aux investisseurs un acc\u00e8s au potentiel de croissance des actions am\u00e9ricaines gr\u00e2ce \u00e0 une strat\u00e9gie quantitative rigoureuse fond\u00e9e sur le momentum. SEPTEMBRE 2025"}
+
+Look for expressions like:
+- English: "promotional document", "marketing material", "commercial document", "advertising material"
+- French: "document promotionnel", "document Ã  caractÃ¨re commercial", "matÃ©riel de marketing", "communication commerciale", "document publicitaire", "support de vente"
+
+Respond JSON:
+{
+  "found": true/false,
+  "expression_found": "exact phrase",
+  "language": "en/fr",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": false,
+  "expression_found": "",
+  "language": "",
+  "confidence": 0
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_structural_element (target_audience)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand context and semantic meaning, not jus...
+
+PROMPT (first 500 chars):
+Does this section specify the TARGET AUDIENCE (retail vs professional investors)?
+
+SECTION TEXT:
+{"slide_number": 1, "title": "ODDO BHF Algo Trend US", "subtitle": "Tirer parti du momentum des actions am\u00e9ricaines", "date": "SEPTEMBRE 2025", "fund_name": "ODDO BHF Algo Trend US", "inception_date": "2018", "aum": "228M\u20ac", "text_content": "ODDO BHF Algo Trend US. Tirer parti du momentum des actions am\u00e9ricaines. Date de cr\u00e9ation: 2018. Actifs sous gestion: 228M\u20ac. Le fonds offre aux investisseurs un acc\u00e8s au potentiel de croissance des actions am\u00e9ricaines gr\u00e2ce \u00e0 une strat\u00e9gie quantitative rigoureuse fond\u00e9e sur le momentum. SEPTEMBRE 2025"}
+
+Look for:
+- English: "retail investors", "professional investors", "qualified investors", "institutional investors", "eligible counterparties"
+- French: "investisseurs non-professionnels", "investisseurs professionnels", "clientÃ¨le de dÃ©tail", "investisseurs qualifiÃ©s", "clients qualifiÃ©s", "investisseurs avertis"
+
+Respond JSON:
+{
+  "found": true/false,
+  "audience_type": "retail" or "professional" or "both" or null,
+  "expression_found": "exact phrase",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": false,
+  "audience_type": null,
+  "expression_found": "",
+  "confidence": 0
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_structural_element (fund_name)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand context and semantic meaning, not jus...
+
+PROMPT (first 500 chars):
+Does this section contain the FULL fund name?
+
+SECTION TEXT:
+{"slide_number": 1, "title": "Caract\u00e9ristiques principales et du fonds", "text_content": "CARACT\u00c9RISTIQUES PRINCIPALES: Focus sur les actions am\u00e9ricaines: Le fonds investit syst\u00e9matiquement dans un univers dynamique d'entreprises am\u00e9ricaines issues du S&P 500, dans divers secteurs et industries. Mod\u00e8le quantitatif propri\u00e9taire: Le processus d'investissement repose sur une strat\u00e9gie smart momentum, qui analyse des donn\u00e9es historiques exhaustives afin de d\u00e9tecter les tendances stables du march\u00e9. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un mod\u00e8le fond\u00e9 sur des r\u00e8gles plut\u00f4t que sur des jugements discr\u00e9tionnaires, le fonds \u00e9vite les biais \u00e9motionnels et garantit une coh\u00e9rence \u00e0 travers les diff\u00e9rents cycles de march\u00e9. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et \u00e0 la gestion des risques en appliquant diverses contraintes. CARACT\u00c9RISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Cat\u00e9gorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement expos\u00e9 aux risques suivants: Risque de perte en capital, risque li\u00e9 aux actions, risque de change, risque li\u00e9 \u00e0 la gestion discr\u00e9tionnaire. L'indicateur synth\u00e9tique de risque (SRI) permet d'appr\
+
+EXPECTED FUND NAME: Unknown
+
+Look for:
+- Full fund name (e.g., "ODDO BHF Algo Trend US")
+- Compartment/sub-fund name
+- SICAV/FCP name
+- Any variation in English or French
+
+IGNORE:
+- Just the word "fund" or "fonds" without actual name
+- Company name only (e.g., just "ODDO BHF")
+
+Respond JSON:
+{
+  "found": true/false,
+  "found_name": "exact text found or null",
+  "is_complete_name": true/false,
+  "confidence": 0-100,
+  "evidence": "where/how found"
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": true,
+  "found_name": "ODDO BHF Algo Trend US",
+  "is_complete_name": true,
+  "confidence": 100,
+  "evidence": "Found in the 'CARACT\u00c9RISTIQUES DU FONDS' section, listed as 'ODDO BHF Algo Trend US est principalement expos\u00e9 aux risques suivants:'"
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_structural_element (risk_profile)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand context and semantic meaning, not jus...
+
+PROMPT (first 500 chars):
+Does this section contain adequate RISK PROFILE information?
+
+SECTION TEXT:
+{"slide_number": 1, "title": "Caract\u00e9ristiques principales et du fonds", "text_content": "CARACT\u00c9RISTIQUES PRINCIPALES: Focus sur les actions am\u00e9ricaines: Le fonds investit syst\u00e9matiquement dans un univers dynamique d'entreprises am\u00e9ricaines issues du S&P 500, dans divers secteurs et industries. Mod\u00e8le quantitatif propri\u00e9taire: Le processus d'investissement repose sur une strat\u00e9gie smart momentum, qui analyse des donn\u00e9es historiques exhaustives afin de d\u00e9tecter les tendances stables du march\u00e9. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un mod\u00e8le fond\u00e9 sur des r\u00e8gles plut\u00f4t que sur des jugements discr\u00e9tionnaires, le fonds \u00e9vite les biais \u00e9motionnels et garantit une coh\u00e9rence \u00e0 travers les diff\u00e9rents cycles de march\u00e9. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et \u00e0 la gestion des risques en appliquant diverses contraintes. CARACT\u00c9RISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Cat\u00e9gorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement expos\u00e9 aux risques suivants: Risque de perte en capital, risque li\u00e9 aux actions, risque de change, risque li\u00e9 \u00e0 la gestion discr\u00e9tionnaire. L'indicateur synth\u00e9tique de risque (SRI) permet d'appr\
+
+Look for risk-related content:
+- Risk keywords: "risk", "risque", "volatility", "volatilitÃ©", "loss", "perte", "capital"
+- Risk types: market risk, liquidity risk, currency risk, etc.
+- Risk warnings: capital at risk, risk of loss, etc.
+
+Respond JSON:
+{
+  "found": true/false,
+  "risk_elements_found": ["list of risk mentions"],
+  "appears_comprehensive": true/false,
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": true,
+  "risk_elements_found": [
+    "Indicateur de risque",
+    "Principaux risques",
+    "Risque de perte en capital",
+    "Risque li\u00e9 aux actions",
+    "Risque de change",
+    "Risque li\u00e9 \u00e0 la gestion discr\u00e9tionnaire",
+    "Diversification et gestion des risques"
+  ],
+  "appears_comprehensive": true,
+  "confidence": 80
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_structural_element (legal_mention)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand context and semantic meaning, not jus...
+
+PROMPT (first 500 chars):
+Does this section contain the LEGAL MENTION of the management company?
+
+SECTION TEXT:
+{"slide_number": 6, "title": "Caract\u00e9ristiques", "text_content": "D\u00e9nomination: ODDO BHF Algo Trend US. Indicateur de r\u00e9f\u00e9rence: S&P 500 EUR Net Total Return. Objectif de gestion: Le Compartiment est g\u00e9r\u00e9 de mani\u00e8re active et vise \u00e0 g\u00e9n\u00e9rer un rendement durable \u00e0 partir des revenus provenant de la croissance des investissements en titres, tout en maintenant un risque financier faible. L'indice de r\u00e9f\u00e9rence du Compartiment est le S&P 500 NR (rendement net) en EUR, dividendes r\u00e9investis. Le Compartiment ne suit pas pr\u00e9cis\u00e9ment cet indice, mais vise \u00e0 le surperformer. Dur\u00e9e d'investissement conseill\u00e9e: 5 ans. Date de cr\u00e9ation: 16/07/2018. Admissibilit\u00e9 au plan d'\u00e9pargne en actions PEA: Non. Classes de part: CR-EUR (LU1833929729), CI-EUR (LU1833929307), CIw-EUR (LU1833929992), CN-EUR (LU1833929216). Devise: EUR. Affectation des r\u00e9sultats: Accumulation. Souscription minimale initiale: CR-EUR: 100 EUR, CI-EUR: 250.000 EUR, CIw-EUR: 250.000 EUR, CN-EUR: 100 EUR. Commission de souscription: CR-EUR: 5% (maximum), CI-EUR: 2% (maximum), CIw-EUR: 2% (maximum), CN-EUR: 5% (maximum). Frais de gestion fixes: CR-EUR: maximum de 1.20%, CI-EUR: maximum de 0.60%, CIw-EUR: maximum de 0.70%, CN-EUR: maximum de 0.75%. Frais de rachat: N\u00e9ant. Commission de performance: CI-EUR et CIw-EUR: Au maximum 10% de la surperformance du Compartiment par rapport \u00e0 l'indice de r\u00e9f\u0
+
+Look for mentions of:
+- Management company name (e.g., "ODDO BHF Asset Management", "ODDO BHF AM")
+- English: "management company", "asset management", "investment manager", "portfolio manager", "managed by"
+- French: "sociÃ©tÃ© de gestion", "sociÃ©tÃ© de gestion de portefeuille", "SGP", "gÃ©rÃ© par", "gestionnaire"
+
+Must include both: company name AND role/status
+
+Respond JSON:
+{
+  "found": true/false,
+  "company_name": "name found",
+  "expression_found": "full legal mention",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": false,
+  "company_name": "",
+  "expression_found": "",
+  "confidence": 0
+}
+
+❌ Structure: 3 violation(s) found
+
+Checking risk profile consistency...
+All AI-enhanced check functions loaded (including remaining checks)
+❌ Risk profile consistency: 1 violation(s) found
+
+Checking anglicisms in retail documents...
+⚠️  Anglicisms: 1 violation(s) found
+
+Checking general rules...
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (retail_disclaimers)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+Does this document contain the REQUIRED RETAIL DISCLAIMERS?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données historiques, telles que celles utilisées pour calculer le SRI, pourraient ne pas constituer une indication fiable du profil de risque futur du Fonds. Source: ODDO BHF AM. Données au 31/08/2025 Risque de perte en capital Risque lié aux actions Risque de change Risque lié à la gestion discrétionnaire Les données historiques ne constituent pas une indication fiable du profil de risque futur Article 6 5/7 Actions Etats-Unis Gdes Cap. Mixte 31/08/2025 Pourquoi investir dans le marché américain ? market_con
+
+REQUIRED ELEMENTS:
+1. Capital at risk warning
+   - English: "capital at risk", "risk of capital loss", "capital not guaranteed", "you may lose your capital"
+   - French: "risque de perte en capital", "capital non garanti", "perte en capital", "risque de perte"
+
+2. Past performance warning
+   - English: "past performance is not indicative of future results", "past performance not guaranteed", "historical performance"
+   - French: "les performances passÃ©es ne prÃ©jugent pas des performances futures", "performances passÃ©es ne garantissent pas"
+
+Check SEMANTIC meaning, not exact wording. Both elements must be present.
+
+Respond JSON:
+{
+  "capital_risk_found": true/false,
+  "capital_risk_text": "exact phrase or null",
+  "past_performance_found": true/false,
+  "past_performance_text": "exact phrase or null",
+  "both_present": true/false,
+  "confidence": 0-100,
+  "language_detected": "en/fr/both"
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "capital_risk_found": true,
+  "capital_risk_text": "Risque de perte en capital",
+  "past_performance_found": true,
+  "past_performance_text": "Les données historiques ne constituent pas une indication fiable du profil de risque futur",
+  "both_present": true,
+  "confidence": 100,
+  "language_detected": "fr"
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (sources_dates)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+Does numerical data in this document have proper SOURCE and DATE citations?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données historiques, telles que celles utilisées pour calculer le SRI, pourraient ne pas constituer une indication fiable du profil de risque futur du Fonds. Source: ODDO BHF AM. Données au 31/08/2025 Risque de perte en capital Risque lié aux actions Risque de change Risque lié à la gestion discrétionnaire Les données historiques ne constituent pas une indication fiable du profil de risque futur Article 6 5/7 Actions Etats-Unis Gdes Cap. Mixte 31/08/2025 Pourquoi investir dans le marché américain ? market_context UN ÉLÉMENT CLÉ DE TOUT PORTEFEUILLE D'ACTIONS. LA PLUS GRANDE ÉCONOMIE MONDIALE. L'AMPLEUR DU PAYS. UNE PERFORMANCE HISTORIQUEMENT ATTRACTIVE. UN MARCHÉ FINANCIER MAJEUR. INNOVATION ET DIVERSIFICATION: Siège de nombreuses entreprises technologiques de renommée mondiale et de start-ups innovantes. Accès aux grandes réussites de la nouvelle et de l'ancienne économie. LES 7 MAGNIFIQUES: Les 7 plus grandes compagnies tech américaines, qui dominent le marché boursier américain et le secteur tech
+
+RULES:
+1. Market data, statistics, index values â†’ NEED source + date
+2. Fund's OWN data (AUM, NAV, fees from prospectus) â†’ NO source needed
+3. Prospectus data (SRI, allocation) â†’ NO source needed
+
+Look for:
+- English: "Source:", "as of", "as at", "data from", "Bloomberg", "Morningstar"
+- French: "Source :", "au", "Ã  la date du", "donnÃ©es au", "arrÃªtÃ© au", "chiffres au"
+
+Analyze if data points requiring sources actually have them.
+
+Respond JSON:
+{
+  "has_external_data": true/false,
+  "has_source_citations": true/false,
+  "missing_sources": ["list of data without sources"],
+  "confidence": 0-100,
+  "reasoning": "explanation"
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "has_external_data": true,
+  "has_source_citations": false,
+  "missing_sources": [
+    "2018 (year of creation, but no source for the fact that it is the year of creation)",
+    "228M€ (AUM, but no source, although it might be exempt according to rule 2)",
+    "S&P 500 (index, no source)",
+    "Les 7 plus grandes compagnies tech américaines (market data, no source)",
+    "UN ÉLÉMENT CLÉ DE TOUT PORTEFEUILLE D'ACTIONS. LA PLUS GRANDE ÉCONOMIE MONDIALE. (market data, no source)",
+    "UNE PERFORMANCE HISTORIQUEMENT ATTRACTIVE. (market data, no source)",
+    "UN MARCHÉ FINANCIER MAJEUR. (market data, no source)",
+    "INNOVATION ET DIVERSIFICATION: (market data, no source)"
+  ],
+  "confidence": 60,
+  "reasoning": "The document contains several data points that require sources according to the rules, but most of them are missing. Although some data points might be exempt according to the rules (e.g. AUM), the majority of market data and statistics lack proper source citations. The only source mentioned is 'Source: ODDO BHF AM' for the data 'au 31/08/2025', but it is not clear what specific data this source refers to."
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (sri_indicator)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+Does this document contain the SRI (Synthetic Risk Indicator)?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données historiques, telles que celles utilisées pour calculer le SRI, pourraient ne pas constituer une indication fiable du profil de risque futur du Fonds. Source: ODDO BHF AM. Données au 31/08/2025 Risque de perte en capital Risque lié aux actions Risque de change Risque lié à la gestion discrétionnaire Les données historiques ne constituent pas une indication fiable du profil de risque futur Article 6 5/7 Actions Etats-Unis Gdes Cap. Mixte 31/08/2025 Pourquoi investir dans le marché américain ? market_con
+
+Look for:
+- "SRI", "SRRI", "Synthetic Risk Indicator", "Synthetic Risk and Reward Indicator"
+- French: "Indicateur de risque", "SRRI", "Indicateur synthÃ©tique de risque"
+- Format: "X/7" or "X sur 7" where X is 1-7
+- Risk level mentions with scale
+
+Respond JSON:
+{
+  "found": true/false,
+  "sri_value": "X/7 or null",
+  "expression_found": "exact text",
+  "has_disclaimer_nearby": true/false,
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found": true,
+  "sri_value": "5/7",
+  "expression_found": "Indicateur de risque: 1 2 3 4 5 6 7. ... L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres.",
+  "has_disclaimer_nearby": true,
+  "confidence": 100
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (glossary)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+Does this RETAIL document have a GLOSSARY for technical terms?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données histor ...  potentiel doit consulter un conseiller en investissement avant de souscrire dans le fonds. L'investisseur est informé que le fonds présente un risque de perte en capital. En cas de souscription, l'investisseur doit obligatoirement prendre connaissance du Document d'information clé (DIC) ou du prospectus de l'OPC pour une présentation exacte des risques encourus et de l'ensemble des frais. Un résumé des droits des investisseurs est disponible gratuitement sous forme électronique en anglais sur le site web à l'adresse suivante: https://am.oddo-bhf.com/france/fr/investisseur_non_professionnel/infos_reglementaire. Le DIC (FR, ENG, DEU, ESP) et le prospectus (FR, ENG, DEU) sont disponibles gratuitement auprès de ODDO BHF ASSET MANAGEMENT SAS sur am.oddo-bhf.com. ODDO BHF Asset Management SAS (France). Société de Gestion de Portefeuille agréée par l'Autorité des Marchés Financiers sous le n° d'agrément GP 99011. 12 boulevard de la Madeleine - 75440 Paris Cedex 09 France. www.am.oddo-bhf.com
+
+TECHNICAL TERMS TO CHECK: alpha, beta, volatility, duration, derivatives, tracking error, sharpe ratio
+
+Look for:
+- English: "Glossary", "Definitions", "Terms Used", "Key Concepts"
+- French: "Glossaire", "Lexique", "DÃ©finitions", "Terminologie"
+
+Usually at end of document.
+
+Respond JSON:
+{
+  "has_technical_terms": true/false,
+  "terms_found": ["list"],
+  "has_glossary": true/false,
+  "glossary_location": "description or null",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "has_technical_terms": true,
+  "terms_found": ["risque de perte en capital", "risque lié aux actions", "risque de change", "risque lié à la gestion discrétionnaire", "indicateur synthétique de risque", "classification SFDR"],
+  "has_glossary": false,
+  "glossary_location": null,
+  "confidence": 80
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (internal_limits)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+Does this document mention INTERNAL LIMITS (which is PROHIBITED)?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données historiques, telles que celles utilisées pour calculer le SRI, pourraient ne pas constituer une indication fiable du profil de risque futur du Fonds. Source: ODDO BHF AM. Données au 31/08/2025 Risque de perte en capital Risque lié aux actions Risque de change Risque lié à la gestion discrétionnaire Les données historiques ne constituent pas une indication fiable du profil de risque futur Article 6 5/7 Actions Etats-Unis Gdes Cap. Mixte 31/08/2025 Pourquoi investir dans le marché américain ? market_con
+
+PROHIBITED MENTIONS:
+- English: "internal limit", "internal threshold", "risk committee decision", "internal VaR", "internal constraint", "proprietary limit"
+- French: "limite interne", "seuil interne", "contrainte interne", "dÃ©cision du comitÃ© des risques", "VaR interne"
+
+These are non-contractual and must NOT appear in client documents.
+
+Respond JSON:
+{
+  "found_prohibited": true/false,
+  "prohibited_phrases": ["list of found phrases"],
+  "locations": ["where found"],
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "found_prohibited": false,
+  "prohibited_phrases": [],
+  "locations": [],
+  "confidence": 100
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (etf_liquidity)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+Does this document make PROHIBITED liquidity claims about ETFs?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données histor
+
+PROHIBITED CLAIMS:
+- English: "liquid ETF", "high liquidity", "guaranteed liquidity", "easily sellable", "highly tradable", "liquid investment"
+- French: "ETF liquide", "forte liquiditÃ©", "liquiditÃ© garantie", "facilement nÃ©gociable", "trÃ¨s liquide", "liquiditÃ© Ã©levÃ©e"
+
+Cannot state ETFs are liquid or have guaranteed liquidity.
+
+Respond JSON:
+{
+  "document_mentions_etf": true/false,
+  "has_liquidity_claims": true/false,
+  "prohibited_phrases": ["list"],
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "document_mentions_etf": true,
+  "has_liquidity_claims": false,
+  "prohibited_phrases": [],
+  "confidence": 100
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (morningstar_date)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+If document shows Morningstar rating, does it include calculation DATE?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données histor
+
+Check for:
+1. Morningstar mention or stars (â˜…)
+2. Date nearby with formats:
+   - English: "as of DD/MM/YYYY", "as at Month YYYY"
+   - French: "au DD/MM/YYYY", "Ã  la date du", "arrÃªtÃ© au"
+
+Respond JSON:
+{
+  "has_morningstar_rating": true/false,
+  "has_date": true/false,
+  "date_found": "exact text or null",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "has_morningstar_rating": true,
+  "has_date": false,
+  "date_found": null,
+  "confidence": 80
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (morningstar_category)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+If document shows Morningstar rating, does it include reference CATEGORY?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données histor
+
+Check for:
+- English: "category", "EAA Fund", "peer group", "in the [Category Name] category"
+- French: "catÃ©gorie", "univers", "dans la catÃ©gorie"
+
+Must specify which Morningstar category the rating is from.
+
+Respond JSON:
+{
+  "has_morningstar_rating": true/false,
+  "has_category": true/false,
+  "category_found": "exact text or null",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "has_morningstar_rating": true,
+  "has_category": true,
+  "category_found": "Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte",
+  "confidence": 100
+}
+
+
+======================================================================
+ðŸ¤– TOKEN FACTORY CALL: check_general_requirement (team_disclaimer)
+======================================================================
+SYSTEM: You are a multilingual financial compliance expert. Understand semantic meaning, context, and differ...
+
+PROMPT (first 500 chars):
+If document presents management team, does it have "subject to change" disclaimer?
+
+DOCUMENT TEXT (excerpt):
+LU1833929729 ODDO BHF Algo Trend US retail fund_presentation active FR other Septembre 2025 French ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines SEPTEMBRE 2025 ODDO BHF Algo Trend US 2018 228M€ ODDO BHF Algo Trend US. Tirer parti du momentum des actions américaines. Date de création: 2018. Actifs sous gestion: 228M€. Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. SEPTEMBRE 2025 Caractéristiques principales et du fonds CARACTÉRISTIQUES PRINCIPALES: Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries. Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie smart momentum, qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché. Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché. Diversification et gestion des risques: Le processus de construction du portefeuille met l'accent sur la diversification et à la gestion des risques en appliquant diverses contraintes. CARACTÉRISTIQUES DU FONDS: Classification SFDR: Article 6. Indicateur de risque: 1 2 3 4 5 6 7. Catégorie Morningstar: Actions Etats-Unis Gdes Cap. Mixte. Principaux risques: ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire. L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés. Les données historiques, telles que celles utilisées pour calculer le SRI, pourraient ne pas constituer une indication fiable du profil de risque futur du Fonds. Source: ODDO BHF AM. Données au 31/08/2025 Risque de perte en capital Risque lié aux actions Risque de change Risque lié à la gestion discrétionnaire Les données historiques ne constituent pas une indication fiable du profil de risque futur Article 6 5/7 Actions Etats-Unis Gdes Cap. Mixte 31/08/2025 Pourquoi investir dans le marché américain ? market_con
+
+Check for:
+1. Team presentation (managers, team members)
+2. Disclaimer nearby:
+   - English: "subject to change", "may change", "composition may evolve", "not guaranteed"
+   - French: "susceptible d'Ã©voluer", "peut changer", "composition non garantie", "peut Ãªtre modifiÃ©e"
+
+Respond JSON:
+{
+  "presents_team": true/false,
+  "has_disclaimer": true/false,
+  "disclaimer_text": "exact phrase or null",
+  "confidence": 0-100
+}
+======================================================================
+
+ðŸ“¥ RESPONSE:
+{
+  "presents_team": false,
+  "has_disclaimer": false,
+  "disclaimer_text": null,
+  "confidence": 100
+}
+
+❌ General rules: 3 violation(s) found
+
+Checking securities/values...
+======================================================================
+AI-POWERED FUND COMPLIANCE AGENT
+Checking: Registration + Disclaimers + Structure + Securities/Values
+======================================================================
+
+âœ“ Gemini API configured successfully
+âœ“ Loaded metadata.json
+  - Management Company: N/A
+  - Client Type: Retail
+  - New Product: No
+âœ“ Loaded structure_rules.json (11 rules)
+âœ“ Loaded values_rules.json (18 rules)
+âœ“ Loaded esg_rules.json (5 rules, skipping ESG_001)
+âœ“ Loaded registration.csv
+  - Total rows: 459
+  - Columns: ['fund_family', 'fund_name', 'share_class', 'isin', 'num_countries', 'authorized_countries_list']
+âœ“ Loaded performance_rules.json (40 rules)
+âœ“ Loaded general_rules.json (24 rules)
+âœ“ Loaded GLOSSAIRE DISCLAIMERS 20231122.xlsx (English)
+âœ“ Token Factory API configured successfully
+  Using model: hosted_vllm/Llama-3.1-70B-Instruct
+âœ“ Parsed 29 disclaimer types
+âœ“ Loaded prospectus.docx (205,154 characters, ~51,288 tokens)
+ðŸ¤– Parsing prospectus with Token Factory (Llama-3.1-70B)...
+   Document is large. Splitting into chunks...
+   Split into 3 chunks.
+
+   Chunk 1: ~19,978 tokens
+  Processing chunk 1/3... [Token Factory]
+      âœ“ Chunk 1 parsed successfully
+
+   Chunk 2: ~19,976 tokens
+  Processing chunk 2/3... [Token Factory]
+      âœ“ Chunk 2 parsed successfully
+
+   Chunk 3: ~11,332 tokens
+  Processing chunk 3/3... [Token Factory]
+      âœ“ Chunk 3 parsed successfully
+
+   Merging results from all chunks...
+
+âœ“ Parsed prospectus with AI (10/13 fields extracted)
+  - Fund: ODDO BHF US Equity Active UCITS ETF
+  - Benchmark: S&P 500 Index (USD, NR)
+  - Management Fees: Up to 0.35% per annum
+  - Objective: To achieve long-term capital growth by investing in a portfolio of US equity sec...
+âœ“ Loaded prospectus_rules.json (14 rules)
+âœ“ Parsed 459 fund share classes
+âœ“ Found 19 unique countries
+
+======================================================================
+INITIALIZATION COMPLETE
+======================================================================
+
+To use this agent:
+1. Ensure all required JSON/CSV files are in the same directory
+2. Set API keys in .env file:
+   GEMINI_API_KEY=your_key_here
+   TOKENFACTORY_API_KEY=your_key_here (optional)
+3. Import and use the checking functions
+======================================================================
+✅ Securities/Values (AI Context-Aware): OK
+
+Checking ESG rules...
+
+ðŸ” Analyzing ESG content distribution with LLM...
+ðŸ“Š ESG Content Analysis:
+   â€¢ Total document: 15,388 characters
+   â€¢ ESG content: ~0 characters (0.0%)
+   â€¢ ESG slides: 0
+
+✅ ESG: OK
+
+Checking performance rules...
+
+ðŸ” Analyzing slides for performance content with LLM...
+    âš ï¸  LLM error detecting performance on slide 3: Expecting value: line 6 column 21 (char 315)
+    âš ï¸  LLM error detecting performance on slide 4: Expecting value: line 6 column 21 (char 191)
+    âš ï¸  LLM error detecting performance on slide 5: Expecting value: line 6 column 21 (char 191)
+ðŸ“Š Performance detected on 1 slide(s):
+   â€¢ Slide 2: explicit (confidence: 80%)
+
+❌ Performance (AI Context-Aware): 1 violation(s) found
+
+Checking prospectus compliance...
+⚠️  Prospectus: 5 item(s) need verification
+
+
+======================================================================
+❌ 15 VIOLATION(S) FOUND
+======================================================================
+
+======================================================================
+[CRITICAL] DISCLAIMER Violation #1
+======================================================================
+› Rule: Required retail disclaimer
+¸  Issue: Required disclaimer not found
+  Location: Document-wide - Missing
+
+„ Evidence:
+   The majority of the required disclaimer's key points and their underlying meaning are not present in the document excerpt. Specifically, details regarding the identity and legal structure of ODDO BHF AM, the explicit origin and responsibility for the document, investor communication responsibilities, advice to consult an investment advisor, global product authorization caveats, investment suitability, limitation of liability, and the indicative/volatile nature of the information/opinions are entirely absent. While 'risk of capital loss' is mentioned as one of the principal risks, the broader statement about the investment value varying and not being returned in full is missing.
+  Confidence: 95%
+
+======================================================================
+[CRITICAL] STRUCTURE Violation #2
+======================================================================
+› Rule: STRUCT_003: Must indicate the mention 'promotional document'
+¸  Issue: Promotional document mention missing (confidence: 0%)
+  Location: Cover Page - page_de_garde
+
+„ Evidence:
+   Add 'Promotional Document' designation to the cover page
+  Confidence: N/A%
+
+======================================================================
+[CRITICAL] STRUCTURE Violation #3
+======================================================================
+› Rule: STRUCT_004: Must indicate the target audience: retail or professional
+¸  Issue: Target audience not specified (confidence: 0%)
+  Location: Cover Page - page_de_garde
+
+„ Evidence:
+   Must specify: retail/professional/qualified investors
+  Confidence: N/A%
+
+======================================================================
+[CRITICAL] STRUCTURE Violation #4
+======================================================================
+› Rule: STRUCT_011: Legal mention of the management company (SGP)
+¸  Issue: Legal mention of management company missing (confidence: 0%)
+  Location: Back Page - page_de_fin
+
+„ Evidence:
+   Must mention management company name and status
+  Confidence: N/A%
+
+======================================================================
+[MAJOR] STRUCTURE Violation #5
+======================================================================
+› Rule: STRUCT_009: Slide 2 risk profile must be comprehensive
+¸  Issue: Incomplete risk profile on Slide 2: 4 risks vs 12 elsewhere in document
+  Location: Slide 2 - Risk profile section
+
+„ Evidence:
+   Slide 2 mentions 4 risk(s), but other pages mention 12 risk(s).
+
+Missing risks on Slide 2:
+   - risque de contrepartie
+   - risque de crédit
+   - risque de liquidité
+   - risque de taux d'intérêt
+   - risque de volatilité
+   - risque lié aux engagements
+   - risque lié aux marchés émergents
+   - risque lié à la durabilité
+   - risques liés à la conversion monétaire
+
+Slide 2 should include all major risks disclosed elsewhere in the document.
+  Confidence: 95%
+
+🤖 AI Reasoning:
+   Cross-slide analysis detected inconsistency: Slide 2 risk disclosure is incomplete compared to other pages. Regulatory requirement: comprehensive risk disclosure must appear early in document (Slide 2).
+  Method: CROSS_SLIDE_VALIDATION
+
+======================================================================
+[MINOR] GENERAL Violation #6
+======================================================================
+› Rule: GEN_005: Retail documents with anglicisms must include glossary
+¸  Issue: English terms used without glossary: 6 term(s)
+  Location: Document-wide - Missing glossary
+
+„ Evidence:
+   Found English terms: momentum, smart, trend, benchmark, futures, quantitative. Retail documents should include a glossary ("glossaire") to explain technical English terms for non-professional investors.
+  Confidence: 90%
+
+🤖 AI Reasoning:
+   Detected 6 English technical terms in retail document. AMF guidelines require glossary for technical terms to ensure retail investor comprehension.
+  Method: RULE_BASED_ANGLICISM_DETECTION
+
+======================================================================
+[MAJOR] GENERAL Violation #7
+======================================================================
+› Rule: GEN_003: Studies/numerical data/graphics etc. must include a reference (footnote) specifying at minimum the source and the date
+¸  Issue: External data without proper source/date citations
+  Location: Data sections - Multiple locations
+
+„ Evidence:
+   Missing sources for: 2018 (year of creation, but no source for the fact that it is the year of creation), 228M€ (AUM, but no source, although it might be exempt according to rule 2), S&P 500 (index, no source). Confidence: 60%
+  Confidence: N/A%
+
+======================================================================
+[MAJOR] GENERAL Violation #8
+======================================================================
+› Rule: GEN_005: For retail presentations: include a Glossary of technical terms at the end of the presentation and ensure these terms appear in the document
+¸  Issue: Technical terms used without glossary: risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire, indicateur synthétique de risque
+  Location: End of document - Missing glossary
+
+„ Evidence:
+   Retail documents must include glossary. Confidence: 80%
+  Confidence: N/A%
+
+======================================================================
+[MAJOR] GENERAL Violation #9
+======================================================================
+› Rule: GEN_021: The Morningstar Rating must be accompanied (if it exists) by the calculation date
+¸  Issue: Morningstar rating without calculation date
+  Location: Morningstar section - Missing date
+
+„ Evidence:
+   Must include: 'as of DD/MM/YYYY'. Confidence: 80%
+  Confidence: N/A%
+
+======================================================================
+[CRITICAL] PERFORMANCE Violation #10
+======================================================================
+› Rule: PERF_014: Performance must be permanently and mandatorily compared to the fund's reference indicator if one exists
+¸  Issue: Performance shown without benchmark comparison
+  Location: Performance section - All performance data
+
+„ Evidence:
+   Must compare to official prospectus benchmark. Confidence: 100%
+  Confidence: N/A%
+
+======================================================================
+[CRITICAL] PROSPECTUS Violation #11
+======================================================================
+› Rule: PROSP_001: Investment strategy must match prospectus
+¸  Issue: Strategy presentation inconsistent with prospectus
+  Location: Strategy section - pages_suivantes
+
+„ Evidence:
+   The Prospectus states 'with a focus on ESG criteria and exclusions', while the Document specifies 'Classification SFDR: Article 6'. SFDR Article 6 funds do not typically have an explicit focus on ESG criteria or exclusions beyond basic sustainability risk integration, which contradicts the claim of a 'focus on ESG criteria and exclusions'.
+  Confidence: 95%
+
+======================================================================
+[CRITICAL] PROSPECTUS Violation #12
+======================================================================
+› Rule: PROSP_004: Must use official prospectus benchmark
+¸  Issue: Performance shown without prospectus benchmark or with wrong benchmark
+  Location: Performance section - pages_suivantes
+
+„ Evidence:
+   Required benchmark: S&P 500 Index (USD, NR). ONLY this benchmark allowed (PERF_016)
+  Confidence: N/A%
+
+======================================================================
+[MAJOR] PROSPECTUS Violation #13
+======================================================================
+› Rule: PROSP_007: Portfolio holdings count must be in prospectus if mentioned
+¸  Issue: Document mentions portfolio holdings count but prospectus does not specify this
+  Location: Portfolio section - pages_suivantes
+
+„ Evidence:
+   Remove holdings count OR ensure it is stated in prospectus (STRUCT_023)
+  Confidence: N/A%
+
+======================================================================
+[CRITICAL] PROSPECTUS Violation #14
+======================================================================
+› Rule: PROSP_011: Investment objective must match prospectus
+¸  Issue: Investment objective wording differs significantly from prospectus
+  Location: Objective section - pages_suivantes
+
+„ Evidence:
+   Prospectus objective: To achieve long-term capital growth by investing in a portfolio of US equity securities....
+  Confidence: N/A%
+
+======================================================================
+[WARNING] PROSPECTUS Violation #15
+======================================================================
+› Rule: PROSP_008: Verify ALL data consistency with legal docs
+¸  Issue: âš ï¸ MANUAL REVIEW REQUIRED: Verify all data matches KID, Prospectus, SFDR Annex
+  Location: Document-wide - All data points
+
+„ Evidence:
+   All numerical data, percentages, dates, and facts must be verified against legal documentation (STRUCT_024)
+  Confidence: N/A%
+
+
+======================================================================
+SUMMARY
+======================================================================
+
+Violations by type:
+   DISCLAIMER: 1
+   GENERAL: 4
+   PERFORMANCE: 1
+   PROSPECTUS: 5
+   STRUCTURE: 4
+
+Violations by severity:
+   CRITICAL: 8
+   MAJOR: 5
+   WARNING: 1
+
+✓ All violations have sufficient confidence (≥70%)
+  No items queued for human review
+
+
+======================================================================
+📄 JSON output saved to: exemple_violations.json
+   Format: Legacy (backward compatible)
+======================================================================
+
+
+======================================================================
+✅ CHECK COMPLETE
+======================================================================
+
+⚠️  Please review and fix 15 violation(s)
+📄 Detailed JSON report: exemple_violations.json
+
+======================================================================
+📄 Terminal output saved to: terminal_output_20251122_124038.txt
+======================================================================

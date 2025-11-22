@@ -1,0 +1,188 @@
+{
+  "timestamp": "2025-11-22T16:22:11.348843",
+  "overall": {
+    "uptime_seconds": 0.0,
+    "uptime_hours": 0.0,
+    "total_documents": 5,
+    "total_violations": 7,
+    "avg_violations_per_doc": 1.4,
+    "avg_processing_time_ms": 0.0,
+    "total_false_positives": 0,
+    "total_false_negatives": 0,
+    "accuracy_metrics": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "f1_score": 1.0
+    },
+    "ai_performance": {
+      "total_ai_calls": 4,
+      "total_cache_hits": 6,
+      "cache_hit_rate": 60.0,
+      "total_fallbacks": 2,
+      "fallback_rate": 40.0
+    }
+  },
+  "by_check_type": {
+    "prohibited_phrases": {
+      "check_type": "prohibited_phrases",
+      "total_checks": 5,
+      "true_positives": 2,
+      "false_positives": 0,
+      "true_negatives": 3,
+      "false_negatives": 0,
+      "ai_calls": 2,
+      "cache_hits": 3,
+      "fallback_count": 1,
+      "total_time_ms": 250.0,
+      "avg_time_ms": 50.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "cache_hit_rate": 60.0,
+      "fallback_rate": 20.0
+    },
+    "repeated_securities": {
+      "check_type": "repeated_securities",
+      "total_checks": 5,
+      "true_positives": 1,
+      "false_positives": 0,
+      "true_negatives": 4,
+      "false_negatives": 0,
+      "ai_calls": 2,
+      "cache_hits": 3,
+      "fallback_count": 1,
+      "total_time_ms": 250.0,
+      "avg_time_ms": 50.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "cache_hit_rate": 60.0,
+      "fallback_rate": 20.0
+    },
+    "performance_disclaimers": {
+      "check_type": "performance_disclaimers",
+      "total_checks": 5,
+      "true_positives": 2,
+      "false_positives": 0,
+      "true_negatives": 3,
+      "false_negatives": 0,
+      "ai_calls": 0,
+      "cache_hits": 0,
+      "fallback_count": 0,
+      "total_time_ms": 25.0,
+      "avg_time_ms": 5.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "fallback_rate": 0.0
+    },
+    "structure_validation": {
+      "check_type": "structure_validation",
+      "total_checks": 5,
+      "true_positives": 2,
+      "false_positives": 0,
+      "true_negatives": 3,
+      "false_negatives": 0,
+      "ai_calls": 0,
+      "cache_hits": 0,
+      "fallback_count": 0,
+      "total_time_ms": 25.0,
+      "avg_time_ms": 5.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "fallback_rate": 0.0
+    }
+  },
+  "recent_documents": [
+    {
+      "document_id": "doc_0.json",
+      "timestamp": "2025-11-22T16:22:11.344724",
+      "total_violations": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "processing_time_ms": 0.0,
+      "ai_calls": 0,
+      "cache_hits": 2,
+      "fallback_count": 2,
+      "violations_by_type": {
+        "prohibited_phrases": 1
+      }
+    },
+    {
+      "document_id": "doc_1.json",
+      "timestamp": "2025-11-22T16:22:11.344724",
+      "total_violations": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "processing_time_ms": 0.0,
+      "ai_calls": 2,
+      "cache_hits": 0,
+      "fallback_count": 0,
+      "violations_by_type": {
+        "performance_disclaimers": 1,
+        "structure_validation": 1
+      }
+    },
+    {
+      "document_id": "doc_2.json",
+      "timestamp": "2025-11-22T16:22:11.344724",
+      "total_violations": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "processing_time_ms": 0.0,
+      "ai_calls": 0,
+      "cache_hits": 2,
+      "fallback_count": 0,
+      "violations_by_type": {
+        "repeated_securities": 1
+      }
+    },
+    {
+      "document_id": "doc_3.json",
+      "timestamp": "2025-11-22T16:22:11.345733",
+      "total_violations": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "processing_time_ms": 0.0,
+      "ai_calls": 2,
+      "cache_hits": 0,
+      "fallback_count": 0,
+      "violations_by_type": {
+        "prohibited_phrases": 1
+      }
+    },
+    {
+      "document_id": "doc_4.json",
+      "timestamp": "2025-11-22T16:22:11.345733",
+      "total_violations": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "processing_time_ms": 0.0,
+      "ai_calls": 0,
+      "cache_hits": 2,
+      "fallback_count": 0,
+      "violations_by_type": {
+        "performance_disclaimers": 1,
+        "structure_validation": 1
+      }
+    }
+  ]
+}

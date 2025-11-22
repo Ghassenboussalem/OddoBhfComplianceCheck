@@ -36,6 +36,275 @@ logger.setLevel(logging.DEBUG)
 
 ## Common Issues and Solutions
 
+### 0. Context-Aware Component Issues (NEW)
+
+#### Symptom: Fund Descriptions Still Flagged as Investment Advice
+
+**Possible Causes and Solutions**
+
+**A. Context Analysis Not Enabled**
+
+```python
+# Check if context analysis is enabled
+from context_analyzer import ContextAnalyzer
+from ai_engine import AIEngine
+
+try:
+    analyzer = ContextAnalyzer(AIEngine())
+    print("✓ Context Analyzer initialized")
+except Exception as e:
+    print(f"✗ Context Analyzer error: {e}")
+
+# Solution: Enable in configuration
+config = {
+    "context_analysis": {
+        "enabled": true,
+        "min_confidence": 60,
+        "use_fallback_rules": true
+    }
+}
+```
+
+**B. Intent Classification Failing**
+
+```python
+# Test intent classifier
+from intent_classifier import IntentClassifier
+from ai_engine import AIEngine
+
+classifier = IntentClassifier(AIEngine())
+
+# Test with known fund description
+test_text = "Le fonds investit dans des stratégies momentum"
+intent = classifier.classify_intent(test_text)
+
+print(f"Intent type: {intent.intent_type}")  # Should be "DESCRIPTION"
+print(f"Subject: {intent.subject}")  # Should be "fund"
+print(f"Confidence: {intent.confidence}%")
+
+if intent.intent_type != "DESCRIPTION":
+    print("✗ Intent classifier not working correctly")
+    print("Check AI service connection and prompt templates")
+```
+
+**C. Prompt Template Issues**
+
+```python
+# Verify prompt templates are loaded
+analyzer = ContextAnalyzer(AIEngine())
+template = analyzer.get_prompt_template("investment_advice_detection")
+
+print(f"Template loaded: {template is not None}")
+print(f"Required vars: {template.get('required_vars', [])}")
+
+# Solution: Check prompt_templates.json exists and is valid
+```
+
+#### Symptom: Fund Name Repetitions Still Flagged
+
+**Possible Causes and Solutions**
+
+**A. Whitelist Not Building Correctly**
+
+```python
+# Debug whitelist building
+from whitelist_manager import WhitelistManager
+
+manager = WhitelistManager()
+document = load_document("example.json")
+
+# Check fund name extraction
+fund_name = document.get('metadata', {}).get('fund_name', '')
+print(f"Fund name from metadata: '{fund_name}'")
+
+# Build whitelist
+whitelist = manager.build_whitelist(document)
+print(f"Total whitelisted terms: {len(whitelist)}")
+print(f"Sample terms: {list(whitelist)[:20]}")
+
+# Check if fund name components are whitelisted
+fund_parts = fund_name.lower().split()
+for part in fund_parts:
+    if part in whitelist:
+        print(f"✓ '{part}' is whitelisted")
+    else:
+        print(f"✗ '{part}' NOT whitelisted")
+        print(f"  Reason: {manager.get_whitelist_reason(part)}")
+```
+
+**B. Whitelist Not Being Used in Checks**
+
+```python
+# Verify whitelist is passed to semantic validator
+from semantic_validator import SemanticValidator
+
+validator = SemanticValidator(ai_engine, context_analyzer, intent_classifier)
+
+# Test with whitelisted term
+result = validator.validate_securities_mention(
+    text="ODDO BHF appears multiple times",
+    whitelist={"oddo", "bhf"}
+)
+
+print(f"Is violation: {result.is_violation}")  # Should be False
+print(f"Reasoning: {result.reasoning}")
+
+if result.is_violation:
+    print("✗ Whitelist not being applied correctly")
+```
+
+**C. Custom Terms Not Added**
+
+```python
+# Add custom terms to whitelist
+config = {
+    "whitelist": {
+        "custom_terms": ["your", "custom", "terms"],
+        "auto_extract_fund_name": true,
+        "include_strategy_terms": true
+    }
+}
+
+# Or programmatically
+manager = WhitelistManager()
+manager.add_custom_terms(["proprietary", "alpha", "beta"])
+```
+
+#### Symptom: Performance Keywords Flagged Without Data
+
+**Possible Causes and Solutions**
+
+**A. Evidence Extraction Not Working**
+
+```python
+# Test evidence extractor
+from evidence_extractor import EvidenceExtractor
+from ai_engine import AIEngine
+
+extractor = EvidenceExtractor(AIEngine())
+
+# Test 1: No actual data (should return empty)
+text1 = "The fund seeks attractive performance"
+perf1 = extractor.find_performance_data(text1)
+print(f"Test 1 - Found {len(perf1)} performance data items")  # Should be 0
+
+# Test 2: Actual data (should detect)
+text2 = "The fund returned 15% in 2024"
+perf2 = extractor.find_performance_data(text2)
+print(f"Test 2 - Found {len(perf2)} performance data items")  # Should be > 0
+
+if len(perf1) > 0:
+    print("✗ Evidence extractor flagging keywords as data")
+    print("Check AI prompt templates for performance detection")
+```
+
+**B. Evidence Extraction Not Enabled**
+
+```python
+# Enable evidence extraction
+config = {
+    "evidence_extraction": {
+        "enabled": true,
+        "semantic_disclaimer_matching": true,
+        "include_context": true
+    }
+}
+```
+
+**C. Disclaimer Matching Too Strict**
+
+```python
+# Test semantic disclaimer matching
+extractor = EvidenceExtractor(AIEngine())
+
+slide_text = """
+Les performances passées ne sont pas un indicateur fiable 
+des performances futures.
+"""
+
+disclaimer = extractor.find_disclaimer(
+    text=slide_text,
+    required_disclaimer="performances passées ne préjugent pas"
+)
+
+print(f"Disclaimer found: {disclaimer is not None}")
+print(f"Match confidence: {disclaimer.confidence if disclaimer else 0}%")
+
+# Solution: Lower semantic matching threshold
+config = {
+    "evidence_extraction": {
+        "semantic_disclaimer_matching": true,
+        "disclaimer_match_threshold": 70  # Lower from 85
+    }
+}
+```
+
+#### Symptom: Low Confidence Scores on Context Analysis
+
+**Possible Causes and Solutions**
+
+**A. AI Service Latency or Errors**
+
+```python
+# Check AI service performance
+from ai_engine import AIEngine
+import time
+
+ai_engine = AIEngine()
+
+start = time.time()
+try:
+    result = ai_engine.analyze_text(
+        "Le fonds investit dans des actions",
+        analysis_type="intent_classification"
+    )
+    latency = time.time() - start
+    print(f"✓ AI service responding in {latency:.2f}s")
+    print(f"Result confidence: {result.get('confidence', 0)}%")
+except Exception as e:
+    print(f"✗ AI service error: {e}")
+```
+
+**B. Fallback to Rules Too Frequent**
+
+```python
+# Check fallback rate
+from performance_monitor import PerformanceMonitor
+
+monitor = PerformanceMonitor()
+metrics = monitor.get_metrics()
+
+print(f"AI calls: {metrics['ai_calls']}")
+print(f"Fallback calls: {metrics['fallback_calls']}")
+print(f"Fallback rate: {metrics['fallback_rate']}%")
+
+if metrics['fallback_rate'] > 20:
+    print("⚠ High fallback rate - check AI service reliability")
+```
+
+**C. Prompt Templates Need Tuning**
+
+```python
+# Review and customize prompt templates
+from context_analyzer import ContextAnalyzer
+
+analyzer = ContextAnalyzer(AIEngine())
+
+# Set custom prompt for better results
+analyzer.set_prompt_template(
+    "investment_advice_detection",
+    system_message="You are an expert at analyzing French financial documents...",
+    user_prompt="""
+    Analyze this text and determine if it's investment advice to clients or 
+    a description of the fund's strategy.
+    
+    TEXT: {text}
+    
+    Respond with JSON: {{"intent": "ADVICE|DESCRIPTION", "confidence": 0-100, "reasoning": "..."}}
+    """
+)
+```
+
 ### 1. AI Service Connection Errors
 
 #### Symptom
@@ -557,6 +826,62 @@ from confidence_scorer import ConfidenceScorer
 scorer = ConfidenceScorer()
 test_result = scorer.self_test()
 print(f"Confidence Scorer: {test_result['status']}")
+
+# Test Context-Aware Components (NEW)
+from context_analyzer import ContextAnalyzer
+from intent_classifier import IntentClassifier
+from semantic_validator import SemanticValidator
+from evidence_extractor import EvidenceExtractor
+from whitelist_manager import WhitelistManager
+
+ai_engine = AIEngine()
+
+# Test Context Analyzer
+print("\n=== Context Analyzer ===")
+analyzer = ContextAnalyzer(ai_engine)
+context = analyzer.analyze_context(
+    "Le fonds investit dans des stratégies momentum",
+    check_type="investment_advice"
+)
+print(f"✓ Subject: {context.subject}")
+print(f"✓ Intent: {context.intent}")
+print(f"✓ Is fund description: {context.is_fund_description}")
+print(f"✓ Confidence: {context.confidence}%")
+
+# Test Intent Classifier
+print("\n=== Intent Classifier ===")
+classifier = IntentClassifier(ai_engine)
+intent = classifier.classify_intent("Vous devriez investir maintenant")
+print(f"✓ Intent type: {intent.intent_type}")
+print(f"✓ Subject: {intent.subject}")
+print(f"✓ Confidence: {intent.confidence}%")
+
+# Test Whitelist Manager
+print("\n=== Whitelist Manager ===")
+manager = WhitelistManager()
+test_doc = {"metadata": {"fund_name": "ODDO BHF Algo Trend"}}
+whitelist = manager.build_whitelist(test_doc)
+print(f"✓ Whitelisted terms: {len(whitelist)}")
+print(f"✓ 'ODDO' whitelisted: {manager.is_whitelisted('oddo')}")
+print(f"✓ 'momentum' whitelisted: {manager.is_whitelisted('momentum')}")
+
+# Test Evidence Extractor
+print("\n=== Evidence Extractor ===")
+extractor = EvidenceExtractor(ai_engine)
+perf_data = extractor.find_performance_data("The fund returned 15% in 2024")
+print(f"✓ Performance data found: {len(perf_data) > 0}")
+if perf_data:
+    print(f"✓ Value: {perf_data[0].value}")
+
+# Test Semantic Validator
+print("\n=== Semantic Validator ===")
+validator = SemanticValidator(ai_engine, analyzer, classifier)
+result = validator.validate_securities_mention(
+    text="ODDO BHF momentum strategy",
+    whitelist={"oddo", "bhf", "momentum"}
+)
+print(f"✓ Is violation: {result.is_violation}")
+print(f"✓ Confidence: {result.confidence}%")
 ```
 
 ### Performance Profiling

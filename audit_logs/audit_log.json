@@ -1,0 +1,89 @@
+{
+  "schema_version": 2,
+  "last_updated": "2025-11-21T21:31:16.876568",
+  "total_entries": 4,
+  "entries": [
+    {
+      "audit_id": "audit_20251121_212959_273150",
+      "timestamp": "2025-11-21T21:29:59.273150",
+      "action": "check_completed",
+      "reviewer_id": null,
+      "review_id": null,
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "check_id": "check_20251121_212959_a949dbe2",
+        "document_id": "test_document.json",
+        "check_type": "full_compliance",
+        "total_violations": 4,
+        "queued_for_review": 3,
+        "fund_isin": "FR0013326246",
+        "client_type": "retail",
+        "ai_enabled": true,
+        "review_threshold": 70
+      },
+      "previous_hash": "genesis",
+      "entry_hash": "ba2acbd0adcaeeecd57fec88e986c2a8d07cde4559deb4bbd55c5e72f7fe123d"
+    },
+    {
+      "audit_id": "audit_20251121_213015_798972",
+      "timestamp": "2025-11-21T21:30:15.798972",
+      "action": "check_completed",
+      "reviewer_id": null,
+      "review_id": null,
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "check_id": "check_20251121_213015_ff1bab13",
+        "document_id": "test_document.json",
+        "check_type": "full_compliance",
+        "total_violations": 4,
+        "queued_for_review": 3,
+        "fund_isin": "FR0013326246",
+        "client_type": "retail",
+        "ai_enabled": true,
+        "review_threshold": 70
+      },
+      "previous_hash": "ba2acbd0adcaeeecd57fec88e986c2a8d07cde4559deb4bbd55c5e72f7fe123d",
+      "entry_hash": "a98f3de06c8fe3fae7aa980f7694c882744f089a7ca2aaf655e54ac7aab403fe"
+    },
+    {
+      "audit_id": "audit_20251121_213056_482865",
+      "timestamp": "2025-11-21T21:30:56.482865",
+      "action": "check_completed",
+      "reviewer_id": null,
+      "review_id": null,
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "check_id": "check_20251121_213056_0403793c",
+        "document_id": "test_document.json",
+        "check_type": "full_compliance",
+        "total_violations": 4,
+        "queued_for_review": 3,
+        "fund_isin": "FR0013326246",
+        "client_type": "retail",
+        "ai_enabled": true,
+        "review_threshold": 70
+      },
+      "previous_hash": "a98f3de06c8fe3fae7aa980f7694c882744f089a7ca2aaf655e54ac7aab403fe",
+      "entry_hash": "c14b9dce3cae8ca8ef01dc41f0893b92a9acc97f437d7e6ab3b0cc584312d9e3"
+    },
+    {
+      "audit_id": "audit_20251121_213116_876568",
+      "timestamp": "2025-11-21T21:31:16.876568",
+      "action": "ITEM_ASSIGNED",
+      "reviewer_id": "default_reviewer",
+      "review_id": "check_20251121_212910_d1e58486_item_3",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "check_20251121_212910_d1e58486_item_3",
+        "reviewer_id": "default_reviewer",
+        "check_type": "PROSPECTUS"
+      },
+      "previous_hash": "c14b9dce3cae8ca8ef01dc41f0893b92a9acc97f437d7e6ab3b0cc584312d9e3",
+      "entry_hash": "4b83f92d984d3a29aa9cec6c5cbc9b648c1e06e2bda76489ce0d4c597ce249e9"
+    }
+  ]
+}

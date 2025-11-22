@@ -1,0 +1,286 @@
+COMPLETE COMPLIANCE VIOLATIONS REPORT
+ODDO BHF Algo Trend US - Marketing Document Analysis
+VIOLATION TYPE 1: DOCUMENT STRUCTURE
+1.1 Missing "Promotional Document" Statement
+Rule ID: STRUCT_003
+Severity: CRITICAL
+Location: Cover Page (Slide 1)
+Rule: Cover page must indicate "Document promotionnel"
+Finding: Statement not found in cover page data
+Evidence:
+"page_de_garde": {
+  "title": "ODDO BHF Algo Trend US",
+  "date": "SEPTEMBRE 2025"
+  // Missing: "Document promotionnel"
+}
+Recommendation: Add "Document promotionnel" or "Document à caractère promotionnel" prominently on cover page
+1.2 Missing Target Audience Statement
+Rule ID: STRUCT_004
+Severity: CRITICAL
+Location: Cover Page (Slide 1)
+Rule: Cover page must indicate target audience (retail or professional)
+Finding: No explicit statement of "retail" or "non-professional clients"
+Evidence: Cover page lacks "Destiné aux clients non-professionnels" or equivalent
+Recommendation: Add "Destiné aux clients non-professionnels" or "Pour investisseurs retail" on cover page
+1.3 Incomplete Risk Profile
+Rule ID: STRUCT_009 + PROSP_002
+Severity: MAJOR
+Location: Slide 2 vs Slide 6 inconsistency
+Rule: Slide 2 must contain complete risk profile conforming to prospectus
+Finding: Risk list differs between slides
+Slide 2: Lists only 4 risks
+Risque de perte en capital
+Risque lié aux actions
+Risque de change
+Risque lié à la gestion discrétionnaire
+Slide 6: Lists 11+ risks (includes all above plus 7+ more)
+Evidence:
+"slide_2": {
+  "disclaimers": [4 risks only]
+},
+"page_de_fin": {
+  "text_content": "...risque de taux d'intérêt, risque de crédit, risque de volatilité..."
+}
+Recommendation: Ensure Slide 2 contains COMPLETE risk profile from prospectus (all 11+ risks)
+VIOLATION TYPE 2: GLOSSARY & TECHNICAL TERMS
+2.1 Missing Technical Terms Glossary
+Rule ID: GEN_005
+Severity: MAJOR
+Location: End of presentation (missing)
+Rule: Retail documents must contain glossary defining all technical terms
+Finding: No glossary section found in document structure
+Terms Requiring Definition:
+"momentum" (used multiple times throughout)
+"smart momentum"
+"SRI" / "SRRI" / "Indicateur synthétique de risque"
+"volatilité"
+"gestion discrétionnaire"
+"indicateur de référence"
+"S&P 500"
+"diversification"
+"optimisation quantitative"
+"rebalancement"
+Evidence: Document structure shows no glossary slide after final page
+Recommendation: Add glossary slide at end of presentation with French definitions of all technical terms
+2.2 Anglicisms Without Definition
+Rule ID: GEN_013
+Severity: MINOR
+Location: Multiple slides (1, 3, 4, 5)
+Rule: Retail presentations must define English terms or include in glossary
+Finding: English term "momentum" used extensively without French definition
+Evidence:
+Slide 1: "Tirer parti du momentum des actions américaines"
+Slide 3: "Le cas des investissements Momentum"
+Slide 3: "L'EFFET MOMENTUM"
+Slide 4: "smart momentum"
+Slide 5: "Exploitation de l'effet momentum"
+Recommendation: Either translate to French ("élan", "tendance") or add definition in glossary
+VIOLATION TYPE 3: PROSPECTUS CONFORMITY
+3.1 Investment Strategy Conformity (NEEDS VERIFICATION)
+Rule ID: PROSP_001 + GEN_010
+Severity: CRITICAL
+Location: Multiple slides
+Rule: Fund strategy must match prospectus exactly (thresholds, allocation, objectives)
+Finding: Cannot fully validate without prospectus comparison
+Elements Requiring Verification:
+Investment objective statement
+Asset allocation ranges (equity %, cash %, etc.)
+Geographic allocation (US focus)
+Investment universe (S&P 500 companies)
+Use of derivatives
+Minimum investment amounts
+Recommended investment horizon
+Evidence: Document states various characteristics but prospectus not provided for cross-check
+Recommendation: Perform detailed line-by-line comparison with official prospectus
+3.2 Benchmark Conformity (NEEDS VERIFICATION)
+Rule ID: PROSP_004 + PROSP_005
+Severity: CRITICAL
+Location: Slide 7 (Characteristics page)
+Rule: Benchmark must be official one from prospectus with correct specifications
+Finding: Document states "S&P 500 EUR Net Total Return"
+Evidence:
+"benchmark": "S&P 500 EUR Net Total Return"
+Verification Needed:
+Confirm this is the official prospectus benchmark
+Verify "Net Total Return" specification is correct
+Confirm EUR currency specification matches prospectus
+Recommendation: Cross-check with prospectus benchmark section
+3.3 Management Fees Conformity (NEEDS VERIFICATION)
+Rule ID: PROSP_013
+Severity: CRITICAL
+Location: Slide 7 (Characteristics page)
+Rule: Fee structure must match prospectus exactly
+Finding: Document lists fees for 4 share classes
+Evidence:
+"management_fees": {
+  "CR-EUR": "1.20%",
+  "CI-EUR": "0.60%",
+  "CIw-EUR": "0.70%",
+  "CN-EUR": "0.75%"
+}
+Verification Needed: Confirm these exact percentages match prospectus
+Recommendation: Verify against prospectus fee schedule
+VIOLATION TYPE 4: PERFORMANCE RULES
+4.1 Performance Display Period (COMPLIANT)
+Rule ID: PERF_004 + PERF_005 + PERF_011
+Severity: N/A
+Location: N/A
+Rule: Performance must be shown over minimum periods (10 years annualized, 5 years others)
+Finding: ✅ NO VIOLATION - Document does not display any performance data
+Fund Age: 7.2 years (inception 16/07/2018)
+Status: COMPLIANT - Fund too young for 10-year history; no performance shown is acceptable
+Note: If performance were shown, it should be "since inception" only
+4.2 Share Class Performance (COMPLIANT)
+Rule ID: PERF_003
+Severity: N/A
+Location: N/A
+Rule: Retail documents must only show retail share class performance (CR, DR, CN, DN, GC)
+Finding: ✅ NO VIOLATION - Document is for CR-EUR (retail class), no performance shown
+Evidence: Document correctly targets CR-EUR share class for retail audience
+4.3 Performance Not Leading Document (COMPLIANT)
+Rule ID: GEN_020 + PERF_001
+Severity: N/A
+Location: Document structure
+Rule: Document must not start with performance; fund presentation must come first
+Finding: ✅ COMPLIANT - Document starts with fund presentation
+Evidence:
+Slide 1: Fund name and description
+Slide 2: Fund characteristics
+Slide 3+: Strategy explanation
+No performance data shown
+VIOLATION TYPE 5: ESG COMPLIANCE
+5.1 ESG Communication (COMPLIANT)
+Rule ID: ESG_001 through ESG_006
+Severity: N/A
+Location: Throughout document
+Rule: ESG communication must follow fund's classification
+Finding: ✅ NO VIOLATION - Fund is Article 6 SFDR (minimal ESG)
+Evidence:
+"fund_esg_classification": "other",
+"sfdr_classification": "Article 6"
+ESG Content in Document: Only factual SFDR classification mentioned, no ESG claims
+Status: COMPLIANT - Article 6 funds have no ESG communication restrictions beyond factual classification
+VIOLATION TYPE 6: SECURITIES/VALUES MENTIONS
+6.1 Investment Recommendations (COMPLIANT)
+Rule ID: VAL_001 through VAL_012
+Severity: N/A
+Location: Throughout document
+Rule: No investment recommendations, valuations, or specific security analysis
+Finding: ✅ NO VIOLATIONS detected
+Evidence:
+✅ No specific securities mentioned by name
+✅ No buy/sell recommendations
+✅ No valuation opinions ("undervalued", "overvalued")
+✅ No forward-looking projections for specific securities
+✅ No comparative analysis between securities
+✅ Only general market trends discussed ("actions américaines", "S&P 500")
+Status: COMPLIANT - Document discusses strategy and market trends only, no security-specific recommendations
+VIOLATION TYPE 7: SOURCE CITATIONS
+7.1 Data Source Citations (COMPLIANT)
+Rule ID: GEN_003
+Severity: N/A
+Location: All slides with data
+Rule: All numerical data must include source and date
+Finding: ✅ NO VIOLATIONS - All data properly cited
+Evidence:
+Slide 2: "Source: ODDO BHF AM. Données au 31/08/2025" ✅
+Slide 3: "Source: ODDO BHF AM, Bloomberg... Données au 31/08/2025" ✅
+Slide 4: "Source: ODDO BHF AM, Bloomberg... Net Return en USD au 31/08/2025" ✅
+Slide 5: "Source: ODDO BHF AM. Equipe actuelle, susceptible de changer" ✅
+Slide 7: "Source: ODDO BHF AM" ✅
+Status: COMPLIANT - All sources include dates
+VIOLATION TYPE 8: REGISTRATION/DISTRIBUTION
+8.1 Distribution Countries (COMPLIANT)
+Rule ID: STRUCT_010
+Severity: N/A
+Location: Slide 7 (Back page)
+Rule: Must list all authorized commercialization countries
+Finding: ✅ NO VIOLATION - Countries match registration database
+Evidence:
+Registration CSV: Germany, Belgium, Spain, France, Luxembourg, Switzerland (6 countries)
+Document States: "France, Allemagne, Suisse, Luxembourg, Espagne, Belgique" (6 countries)
+Match: ✅ All 6 countries present and correct
+Status: COMPLIANT - Verified against registration.csv database
+VIOLATION TYPE 9: LANGUAGE & SOFTENING
+9.1 Opinion Softening (COMPLIANT)
+Rule ID: GEN_009
+Severity: N/A
+Location: Throughout document
+Rule: Opinions must be softened with conditional language
+Finding: ✅ NO VIOLATIONS - Language appropriately nuanced
+Evidence:
+Uses "vise à" (aims to) instead of "will"
+Uses "cherche à" (seeks to) instead of assertive claims
+No guaranteed performance promises
+No absolute statements like "will outperform"
+Status: COMPLIANT - Appropriate use of conditional language
+VIOLATION TYPE 10: FORMATTING (VERIFICATION NEEDED)
+10.1 Bold Formatting for Warnings
+Rule ID: GEN_006
+Severity: MAJOR
+Location: All risk warnings
+Rule: Risk warnings must be in bold
+Finding: ⚠️ CANNOT VERIFY from JSON data (formatting not included)
+Affected Text:
+"Risque de perte en capital"
+"Les performances passées ne préjugent pas..."
+All risk mentions
+Recommendation: Manual verification needed - check actual document formatting
+10.2 Font Size Consistency
+Rule ID: GEN_007
+Severity: MAJOR
+Location: All disclaimers
+Rule: Disclaimers must use same font and size as main text
+Finding: ⚠️ CANNOT VERIFY from JSON data (font info not included)
+Recommendation: Manual verification needed - ensure no small print
+10.3 Visibility of Warnings
+Rule ID: GEN_008
+Severity: MAJOR
+Location: All disclaimers
+Rule: Warnings must be visible (not in footnotes)
+Finding: ⚠️ CANNOT VERIFY from JSON data (layout not included)
+Recommendation: Manual verification needed - ensure prominent placement
+SUMMARY: VIOLATIONS BY SEVERITY
+CRITICAL (3 violations)
+❌ Missing "Document promotionnel" statement (STRUCT_003)
+❌ Missing target audience statement (STRUCT_004)
+⚠️ Prospectus conformity verification needed (PROSP_001, PROSP_004, PROSP_013)
+MAJOR (2 violations)
+❌ Incomplete risk profile on Slide 2 (STRUCT_009)
+❌ Missing technical terms glossary (GEN_005)
+MINOR (1 violation)
+❌ Anglicisms without definition (GEN_013)
+VERIFICATION NEEDED (3 items)
+⚠️ Bold formatting (GEN_006)
+⚠️ Font size consistency (GEN_007)
+⚠️ Warning visibility (GEN_008)
+COMPLIANT (8 categories)
+✅ Performance display rules
+✅ ESG communication
+✅ Securities/values mentions
+✅ Source citations
+✅ Distribution countries
+✅ Opinion softening
+✅ Document structure (starts with fund presentation)
+✅ Share class appropriateness
+COMPLIANCE SCORE: 78/100
+Breakdown:
+
+Critical violations: -15 points (3 × 5)
+Major violations: -7 points (2 × 3.5)
+Minor violations: 0 points (informational)
+Compliant categories: +0 bonus (baseline)
+PRIORITY REMEDIATION ACTIONS
+Immediate (Critical)
+Add "Document promotionnel" to cover page
+Add "Destiné aux clients non-professionnels" to cover page
+Verify all fund characteristics against prospectus
+High Priority (Major)
+Add all missing risks to Slide 2 risk profile
+Create glossary slide with technical term definitions
+Low Priority (Minor)
+Add French translation or glossary entry for "momentum"
+Manual Verification
+Check bold formatting on all warnings
+Verify font sizes are consistent
+Confirm warnings are prominently visible
