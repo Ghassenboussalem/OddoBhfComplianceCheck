@@ -10,9 +10,24 @@ from pathlib import Path
 
 # Files to remove
 FILES_TO_REMOVE = [
-    # Terminal Output Files
-    "terminal_output_20251121_213600.txt",
-    "terminal_output_20251122_084530.txt",
+    # Terminal Output Files - will be detected dynamically
+    "terminal_output_20251122_114645.txt",
+    "terminal_output_20251122_114929.txt",
+    "terminal_output_20251122_115204.txt",
+    "terminal_output_20251122_115251.txt",
+    "terminal_output_20251122_115638.txt",
+    "terminal_output_20251122_121627.txt",
+    "terminal_output_20251122_122811.txt",
+    "terminal_output_20251122_122920.txt",
+    "terminal_output_20251122_123016.txt",
+    "terminal_output_20251122_123102.txt",
+    "terminal_output_20251122_123408.txt",
+    "terminal_output_20251122_123711.txt",
+    "terminal_output_20251122_124038.txt",
+    "terminal_output_20251122_124340.txt",
+    "terminal_output_20251122_124646.txt",
+    "terminal_output_20251122_155657.txt",
+    "terminal_output_20251122_163224.txt",
     
     # Backup Files
     "review_queue.json.backup.20251121_212910",
