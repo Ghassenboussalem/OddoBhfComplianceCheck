@@ -10,69 +10,93 @@ from pathlib import Path
 
 # Files to remove
 FILES_TO_REMOVE = [
-    # Duplicate/Old Implementation Files
-    "agent_enhanced_ai.py",
-    "enhanced_checks.py",
+    # Terminal Output Files
+    "terminal_output_20251121_213600.txt",
+    "terminal_output_20251122_084530.txt",
     
-    # Example/Demo Files
-    "example_ai_engine_usage.py",
-    "example_async_usage.py",
-    "example_enhanced_usage.py",
-    "example_feedback_loop.py",
-    "example_pattern_detection.py",
-    "example_performance_monitoring.py",
-    "demo_testing_framework.py",
+    # Backup Files
+    "review_queue.json.backup.20251121_212910",
+    "review_queue.json.backup.20251121_212959",
+    "review_queue.json.backup.20251121_213015",
+    "review_queue.json.backup.20251121_213056",
+    "review_queue.json.backup.20251121_213116",
+    "test_review_queue.json.backup.20251121_202418",
+    "test_persistence.json.test.20251121_202201",
+    "audit_logs/audit_log.json.backup.20251121_213015",
+    "audit_logs/audit_log.json.backup.20251121_213056",
+    "audit_logs/audit_log.json.backup.20251121_213116",
+    "test_audit_logs/audit_log.json.backup.20251121_202520",
     
     # Old Test/Result Files
-    "exemple_violations_ai.json",
-    "example_calibration.json",
-    "example_checker_feedback.json",
-    "example_feedback.json",
-    "feedback_export_all.json",
-    "feedback_export_promotional.json",
-    "test_feedback_export.json",
-    "baseline_results.json",
-    "discovered_patterns.json",
-    "rule_recommendations.json",
-    "test_suite_comprehensive.json",
+    "test_audit_calibration.json",
+    "test_audit_export.csv",
+    "test_audit_export.json",
+    "test_audit_feedback.json",
+    "test_audit_integration_export.csv",
+    "test_audit_integration_export.json",
+    "test_audit_integration_report.json",
+    "test_audit_review_queue.json",
+    "test_calibration_integration.json",
+    "test_compliance_report.json",
+    "test_export.json",
+    "test_feedback_integration.json",
+    "test_integration_metrics.json",
+    "test_metrics.json",
+    "test_metrics_integration.json",
+    "test_metrics_report.json",
+    "test_performance_report.json",
+    "test_review_calibration.json",
+    "test_review_feedback.json",
+    "test_review_queue.json",
+    "test_review_queue_integration.json",
+    "test_task5_audit_export.json",
+    "test_task5_calibration.json",
+    "test_task5_feedback.json",
+    "verify_task6_metrics.json",
+    "verify_task6_report.json",
+    "compliance_report_20251121_171937.json",
+    "performance_report_20251121_170642.json",
+    "review_metrics.json",
+    "demo_review_queue.json",
     
     # Redundant Documentation
-    "IMPLEMENTATION_SUMMARY.md",
-    "TASK_2_IMPLEMENTATION_SUMMARY.md",
-    "TASK_3_IMPLEMENTATION_SUMMARY.md",
-    "TASK_4.3_IMPLEMENTATION_SUMMARY.md",
-    "TASK_4.4_IMPLEMENTATION_SUMMARY.md",
-    "TASK_5.2_IMPLEMENTATION_SUMMARY.md",
-    "TASK_5.3_IMPLEMENTATION_SUMMARY.md",
-    "TASK_5.4_IMPLEMENTATION_SUMMARY.md",
-    "TASK_6_IMPLEMENTATION_SUMMARY.md",
-    "TEST_TASK_2.5_SUMMARY.md",
-    "ASYNC_PROCESSING_README.md",
-    "ASYNC_QUICK_START.md",
-    "ENHANCED_CHECKS_README.md",
-    "PATTERN_DETECTION_README.md",
-    "PERFORMANCE_MONITORING_README.md",
-    "TESTING_FRAMEWORK_README.md",
-    "MIGRATION_CHECKLIST.md",
-
-    "test_ai_engine.py",
-    "test_async_processor.py",
-    "test_comprehensive_framework.py",
-    "test_comprehensive_unit.py",
-    "test_critical_checks_unit.py",
-    "test_enhanced_checks.py",
-    "test_exemple.py",
-    "test_feedback_loop.py",
-    "test_integration.py",
-    "test_pattern_detector.py",
-    "test_performance_monitor.py",
-    "test_remaining_checks_integration.py",
+    "TASK5_IMPLEMENTATION_SUMMARY.md",
+    "TASK6_IMPLEMENTATION_SUMMARY.md",
+    "TASK7_AUDIT_TRAIL_SUMMARY.md",
+    "TASK8_IMPLEMENTATION_SUMMARY.md",
+    "TASK9_IMPLEMENTATION_SUMMARY.md",
+    "BATCH_OPERATIONS_IMPLEMENTATION.md",
+    "BATCH_OPERATIONS_QUICK_REFERENCE.md",
+    "BATCH_REVIEW_GUIDE.md",
+    "HITL_CONFIGURATION_GUIDE.md",
+    "HITL_CONFIG_QUICK_REFERENCE.md",
+    "HITL_INTEGRATION.md",
+    "FEEDBACK_INTEGRATION_GUIDE.md",
+    "METRICS_USAGE_GUIDE.md",
+    "PERSISTENCE_DOCUMENTATION.md",
+    "REVIEW_MODE_USAGE.md",
+    
+    # Test Scripts (keep only essential ones)
+    "test_batch_operations.py",
+    "test_hitl_config.py",
+    "test_hitl_queueing.py",
+    "test_metrics_integration.py",
+    "test_persistence_integration.py",
+    "test_review_cli.py",
+    "test_review_feedback_integration.py",
+    "test_review_integration.py",
+    "test_task5_requirements.py",
+    "verify_task6_complete.py",
+    "test_audit_integration.py",
+    "demo_batch_review.py",
 ]
 
 # Directories to remove
 DIRS_TO_REMOVE = [
     "__pycache__",
     ".pytest_cache",
+    "test_audit_integration",
+    "test_audit_logs",
 ]
 
 
@@ -155,8 +179,10 @@ def main():
     print()
     print("✅ Project cleanup successful!")
     print()
-    print("Optional: To also remove test files, uncomment TEST_FILES_TO_REMOVE")
-    print("in this script and run again.")
+    print("Note: Core files preserved:")
+    print("  - Main implementation files (check*.py, agent.py, ai_engine.py, etc.)")
+    print("  - Essential documentation (README.md, API_DOCUMENTATION.md, etc.)")
+    print("  - Configuration files (*.json, .env)")
     print()
 
 
