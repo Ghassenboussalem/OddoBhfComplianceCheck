@@ -1,0 +1,55 @@
+======================================================================
+A/B TESTING SUMMARY REPORT
+======================================================================
+
+Date: 2025-11-23 10:49:40
+Total test files: 1
+Successful tests: 1/1
+
+----------------------------------------------------------------------
+VIOLATION STATISTICS
+----------------------------------------------------------------------
+Total violations (old system): 0
+Total violations (new system): 0
+Difference: 0
+
+Matched violations: 0
+  Exact matches: 0
+  Partial matches: 0
+
+----------------------------------------------------------------------
+PERFORMANCE STATISTICS
+----------------------------------------------------------------------
+Total execution time (old system): 196.44s
+Total execution time (new system): 61.91s
+Overall speedup: 68.5% faster
+
+----------------------------------------------------------------------
+DISCREPANCY STATISTICS
+----------------------------------------------------------------------
+Total discrepancies: 0
+
+----------------------------------------------------------------------
+PER-FILE RESULTS
+----------------------------------------------------------------------
+
+exemple.json:
+  Violations: 0 → 0
+  Execution time: 196.44s → 61.91s
+  Matched: 0 (0 exact)
+  Discrepancies: 0
+  Performance: ✓ 68.5% faster
+
+======================================================================
+OVERALL ASSESSMENT
+======================================================================
+
+✅ ALL TESTS PASSED
+
+Both systems produce identical results:
+  ✓ All violation counts match
+  ✓ All violations match exactly
+  ✓ No discrepancies detected
+
+✓ New system is 68.5% faster overall
+======================================================================

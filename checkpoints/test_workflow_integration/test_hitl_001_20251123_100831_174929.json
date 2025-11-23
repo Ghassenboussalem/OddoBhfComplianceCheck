@@ -1,0 +1,16 @@
+{
+  "checkpoint_id": "test_hitl_001_20251123_100831_174929",
+  "timestamp": "2025-11-23T10:08:31.175905",
+  "document_id": "test_hitl_001",
+  "current_agent": "reviewer",
+  "workflow_status": "interrupted_for_review",
+  "violation_count": 1,
+  "metadata": {
+    "interrupt_type": "hitl"
+  },
+  "state_json": "{\n  \"document\": {\n    \"document_metadata\": {\n      \"fund_isin\": \"FR0010135103\",\n      \"fund_name\": \"Test Fund\",\n      \"client_type\": \"retail\",\n      \"document_type\": \"fund_presentation\",\n      \"fund_esg_classification\": \"article_8\",\n      \"fund_age_years\": 5,\n      \"document_date\": \"2024-01-15\",\n      \"fund_inception_date\": \"2020-01-15\"\n    },\n    \"page_de_garde\": {\n      \"title\": \"Fund Presentation\",\n      \"subtitle\": \"Test Fund\",\n      \"date\": \"2024-01-15\"\n    },\n    \"slide_2\": {\n      \"title\": \"Overview\",\n      \"content\": \"The fund may provide good returns based on market conditions.\"\n    },\n    \"pages_suivantes\": [\n      {\n        \"slide_number\": 3,\n        \"title\": \"Strategy\",\n        \"content\": \"Investment in technology stocks with growth potential.\"\n      }\n    ],\n    \"page_de_fin\": {\n      \"legal\": \"Test Asset Management SAS\",\n      \"disclaimers\": \"Standard disclaimers\"\n    }\n  },\n  \"document_id\": \"test_hitl_001\",\n  \"document_type\": \"fund_presentation\",\n  \"client_type\": \"retail\",\n  \"metadata\": {},\n  \"whitelist\": [],\n  \"normalized_document\": {},\n  \"violations\": [\n    {\n      \"type\": \"SECURITIES\",\n      \"rule\": \"prohibited_phrases\",\n      \"confidence\": 65,\n      \"evidence\": \"Test evidence\",\n      \"severity\": \"MEDIUM\"\n    }\n  ],\n  \"context_analysis\": {},\n  \"intent_classifications\": {},\n  \"evidence_extractions\": {},\n  \"review_queue\": [\n    {\n      \"review_id\": \"r1\",\n      \"violation\": {\n        \"type\": \"SECURITIES\",\n        \"rule\": \"prohibited_phrases\",\n        \"confidence\": 65,\n        \"evidence\": \"Test evidence\"\n      }\n    }\n  ],\n  \"feedback_history\": [],\n  \"confidence_scores\": {},\n  \"aggregated_confidence\": 100,\n  \"current_agent\": \"reviewer\",\n  \"next_action\": \"start\",\n  \"workflow_status\": \"interrupted_for_review\",\n  \"execution_plan\": [],\n  \"error_log\": [],\n  \"agent_timings\": {},\n  \"api_calls\": 0,\n  \"cache_hits\": 0,\n  \"config\": {\n    \"routing\": {\n      \"review_threshold\": 70\n    }\n  },\n  \"started_at\": \"2025-11-23T10:08:31.174929\",\n  \"updated_at\": \"2025-11-23T10:08:31.174929\",\n  \"completed_at\": null,\n  \"hitl_interrupt_required\": true,\n  \"hitl_interrupt_reason\": \"Low confidence violations require review\"\n}",
+  "is_valid": false,
+  "validation_errors": [
+    "Invalid workflow_status: interrupted_for_review"
+  ]
+}

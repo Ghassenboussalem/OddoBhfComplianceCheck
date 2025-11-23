@@ -1,0 +1,16 @@
+{
+  "checkpoint_id": "test_failure_001_20251122_210058_738383",
+  "timestamp": "2025-11-22T21:00:58.738383",
+  "document_id": "test_failure_001",
+  "current_agent": "structure",
+  "workflow_status": "agent_failed",
+  "violation_count": 0,
+  "metadata": {
+    "failure_type": "agent_timeout"
+  },
+  "state_json": "{\n  \"document\": {\n    \"page_de_garde\": {\n      \"text\": \"Test\"\n    }\n  },\n  \"document_id\": \"test_failure_001\",\n  \"document_type\": \"fund_presentation\",\n  \"client_type\": \"retail\",\n  \"metadata\": {},\n  \"whitelist\": [],\n  \"normalized_document\": {},\n  \"violations\": [],\n  \"context_analysis\": {},\n  \"intent_classifications\": {},\n  \"evidence_extractions\": {},\n  \"review_queue\": [],\n  \"feedback_history\": [],\n  \"confidence_scores\": {},\n  \"aggregated_confidence\": 100,\n  \"current_agent\": \"structure\",\n  \"next_action\": \"start\",\n  \"workflow_status\": \"agent_failed\",\n  \"execution_plan\": [],\n  \"error_log\": [\n    {\n      \"agent\": \"structure\",\n      \"tool\": \"check_promotional_mention\",\n      \"error\": \"API timeout\",\n      \"timestamp\": \"2025-11-22T21:00:58.738383\"\n    }\n  ],\n  \"agent_timings\": {},\n  \"api_calls\": 0,\n  \"cache_hits\": 0,\n  \"config\": {},\n  \"started_at\": \"2025-11-22T21:00:58.738383\",\n  \"updated_at\": \"2025-11-22T21:00:58.738383\",\n  \"completed_at\": null\n}",
+  "is_valid": false,
+  "validation_errors": [
+    "Invalid workflow_status: agent_failed"
+  ]
+}

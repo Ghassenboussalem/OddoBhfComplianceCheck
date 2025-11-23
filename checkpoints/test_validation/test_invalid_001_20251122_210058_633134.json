@@ -1,0 +1,19 @@
+{
+  "checkpoint_id": "test_invalid_001_20251122_210058_633134",
+  "timestamp": "2025-11-22T21:00:58.633134",
+  "document_id": "test_invalid_001",
+  "current_agent": "unknown",
+  "workflow_status": "unknown",
+  "violation_count": 0,
+  "metadata": {},
+  "state_json": "{\n  \"document_id\": \"test_invalid_001\"\n}",
+  "is_valid": false,
+  "validation_errors": [
+    "Missing required field: document",
+    "Missing required field: document_type",
+    "Missing required field: client_type",
+    "Missing required field: violations",
+    "Missing required field: workflow_status",
+    "Missing required field: config"
+  ]
+}

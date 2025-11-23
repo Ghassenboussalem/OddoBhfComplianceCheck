@@ -1,0 +1,41 @@
+{
+  "summary": {
+    "total": 5,
+    "passed": 4,
+    "failed": 1,
+    "duration_seconds": 59.395072,
+    "timestamp": "2025-11-23T10:09:50.457927"
+  },
+  "tests": [
+    {
+      "test": "Complete Workflow Execution",
+      "passed": true,
+      "details": "Executed in 6.89s with 10 agents",
+      "timestamp": "2025-11-23T10:09:06.986655"
+    },
+    {
+      "test": "Parallel Agent Execution",
+      "passed": true,
+      "details": "4 agents executed in parallel",
+      "timestamp": "2025-11-23T10:09:25.041346"
+    },
+    {
+      "test": "Conditional Routing",
+      "passed": true,
+      "details": "All routing scenarios tested successfully",
+      "timestamp": "2025-11-23T10:09:50.324052"
+    },
+    {
+      "test": "State Persistence and Resume",
+      "passed": true,
+      "details": "Checkpoint created and restored successfully",
+      "timestamp": "2025-11-23T10:09:50.398334"
+    },
+    {
+      "test": "HITL Interrupts and Recovery",
+      "passed": false,
+      "details": "'QueueStats' object has no attribute 'get'",
+      "timestamp": "2025-11-23T10:09:50.456929"
+    }
+  ]
+}

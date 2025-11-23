@@ -1,0 +1,208 @@
+{
+  "schema_version": 2,
+  "last_updated": "2025-11-23T12:55:23.298688",
+  "total_entries": 11,
+  "entries": [
+    {
+      "audit_id": "audit_20251121_212959_273150",
+      "timestamp": "2025-11-21T21:29:59.273150",
+      "action": "check_completed",
+      "reviewer_id": null,
+      "review_id": null,
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "check_id": "check_20251121_212959_a949dbe2",
+        "document_id": "test_document.json",
+        "check_type": "full_compliance",
+        "total_violations": 4,
+        "queued_for_review": 3,
+        "fund_isin": "FR0013326246",
+        "client_type": "retail",
+        "ai_enabled": true,
+        "review_threshold": 70
+      },
+      "previous_hash": "genesis",
+      "entry_hash": "ba2acbd0adcaeeecd57fec88e986c2a8d07cde4559deb4bbd55c5e72f7fe123d"
+    },
+    {
+      "audit_id": "audit_20251121_213015_798972",
+      "timestamp": "2025-11-21T21:30:15.798972",
+      "action": "check_completed",
+      "reviewer_id": null,
+      "review_id": null,
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "check_id": "check_20251121_213015_ff1bab13",
+        "document_id": "test_document.json",
+        "check_type": "full_compliance",
+        "total_violations": 4,
+        "queued_for_review": 3,
+        "fund_isin": "FR0013326246",
+        "client_type": "retail",
+        "ai_enabled": true,
+        "review_threshold": 70
+      },
+      "previous_hash": "ba2acbd0adcaeeecd57fec88e986c2a8d07cde4559deb4bbd55c5e72f7fe123d",
+      "entry_hash": "a98f3de06c8fe3fae7aa980f7694c882744f089a7ca2aaf655e54ac7aab403fe"
+    },
+    {
+      "audit_id": "audit_20251121_213056_482865",
+      "timestamp": "2025-11-21T21:30:56.482865",
+      "action": "check_completed",
+      "reviewer_id": null,
+      "review_id": null,
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "check_id": "check_20251121_213056_0403793c",
+        "document_id": "test_document.json",
+        "check_type": "full_compliance",
+        "total_violations": 4,
+        "queued_for_review": 3,
+        "fund_isin": "FR0013326246",
+        "client_type": "retail",
+        "ai_enabled": true,
+        "review_threshold": 70
+      },
+      "previous_hash": "a98f3de06c8fe3fae7aa980f7694c882744f089a7ca2aaf655e54ac7aab403fe",
+      "entry_hash": "c14b9dce3cae8ca8ef01dc41f0893b92a9acc97f437d7e6ab3b0cc584312d9e3"
+    },
+    {
+      "audit_id": "audit_20251121_213116_876568",
+      "timestamp": "2025-11-21T21:31:16.876568",
+      "action": "ITEM_ASSIGNED",
+      "reviewer_id": "default_reviewer",
+      "review_id": "check_20251121_212910_d1e58486_item_3",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "check_20251121_212910_d1e58486_item_3",
+        "reviewer_id": "default_reviewer",
+        "check_type": "PROSPECTUS"
+      },
+      "previous_hash": "c14b9dce3cae8ca8ef01dc41f0893b92a9acc97f437d7e6ab3b0cc584312d9e3",
+      "entry_hash": "4b83f92d984d3a29aa9cec6c5cbc9b648c1e06e2bda76489ce0d4c597ce249e9"
+    },
+    {
+      "audit_id": "audit_20251123_125522_888817",
+      "timestamp": "2025-11-23T12:55:22.888817",
+      "action": "ITEM_ADDED",
+      "reviewer_id": null,
+      "review_id": "02612662-82c4-4942-8574-6cbcee151b6b",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "02612662-82c4-4942-8574-6cbcee151b6b",
+        "check_type": "STRUCTURE",
+        "confidence": 20,
+        "priority_score": 90.0
+      },
+      "previous_hash": "4b83f92d984d3a29aa9cec6c5cbc9b648c1e06e2bda76489ce0d4c597ce249e9",
+      "entry_hash": "58eae98d592863cd70c038b8e360b5f936480c006885e9ad36af497642d59b9d"
+    },
+    {
+      "audit_id": "audit_20251123_125522_945618",
+      "timestamp": "2025-11-23T12:55:22.945618",
+      "action": "ITEM_ADDED",
+      "reviewer_id": null,
+      "review_id": "0291e5b1-ec4b-4aaa-aa19-62a870367e97",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "0291e5b1-ec4b-4aaa-aa19-62a870367e97",
+        "check_type": "STRUCTURE",
+        "confidence": 20,
+        "priority_score": 90.0
+      },
+      "previous_hash": "58eae98d592863cd70c038b8e360b5f936480c006885e9ad36af497642d59b9d",
+      "entry_hash": "0eafc934850fb3ab214a818d0313510cf2b659a09c9bfd42894a6a4455ed9313"
+    },
+    {
+      "audit_id": "audit_20251123_125523_014952",
+      "timestamp": "2025-11-23T12:55:23.014952",
+      "action": "ITEM_ADDED",
+      "reviewer_id": null,
+      "review_id": "80fcee36-8d7b-459b-a157-1127606428bf",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "80fcee36-8d7b-459b-a157-1127606428bf",
+        "check_type": "STRUCTURE",
+        "confidence": 20,
+        "priority_score": 90.0
+      },
+      "previous_hash": "0eafc934850fb3ab214a818d0313510cf2b659a09c9bfd42894a6a4455ed9313",
+      "entry_hash": "1734999b8ab1173f50469d278f4df95ea4f2e1508b94abf6984804897b008208"
+    },
+    {
+      "audit_id": "audit_20251123_125523_086271",
+      "timestamp": "2025-11-23T12:55:23.086271",
+      "action": "ITEM_ADDED",
+      "reviewer_id": null,
+      "review_id": "6ac851dd-d6db-4cd1-8d48-d7e1b7eada38",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "6ac851dd-d6db-4cd1-8d48-d7e1b7eada38",
+        "check_type": "STRUCTURE",
+        "confidence": 20,
+        "priority_score": 90.0
+      },
+      "previous_hash": "1734999b8ab1173f50469d278f4df95ea4f2e1508b94abf6984804897b008208",
+      "entry_hash": "e8acac273530ba8e392bd5f8b4d4f6c00c69a9cdbf0aa86cbd032654f82121ca"
+    },
+    {
+      "audit_id": "audit_20251123_125523_151089",
+      "timestamp": "2025-11-23T12:55:23.151089",
+      "action": "ITEM_ADDED",
+      "reviewer_id": null,
+      "review_id": "f326eff6-c10f-43b9-8774-733bc0aa7ee2",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "f326eff6-c10f-43b9-8774-733bc0aa7ee2",
+        "check_type": "STRUCTURE",
+        "confidence": 20,
+        "priority_score": 90.0
+      },
+      "previous_hash": "e8acac273530ba8e392bd5f8b4d4f6c00c69a9cdbf0aa86cbd032654f82121ca",
+      "entry_hash": "9741186d6cfdaa53c7b0c4a9ce317822f2b4c9a4f2a7ede5eb9eb1a6e6e4b7e0"
+    },
+    {
+      "audit_id": "audit_20251123_125523_229932",
+      "timestamp": "2025-11-23T12:55:23.229932",
+      "action": "ITEM_ADDED",
+      "reviewer_id": null,
+      "review_id": "baea10a6-b921-45f6-ba44-f2e44afe3f42",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "baea10a6-b921-45f6-ba44-f2e44afe3f42",
+        "check_type": "STRUCTURE",
+        "confidence": 20,
+        "priority_score": 90.0
+      },
+      "previous_hash": "9741186d6cfdaa53c7b0c4a9ce317822f2b4c9a4f2a7ede5eb9eb1a6e6e4b7e0",
+      "entry_hash": "069393d4cf9a5f4a7f79df103c8c473f2435e6446afe263bf10a02538d3f1767"
+    },
+    {
+      "audit_id": "audit_20251123_125523_298688",
+      "timestamp": "2025-11-23T12:55:23.298688",
+      "action": "ITEM_ADDED",
+      "reviewer_id": null,
+      "review_id": "fa4ce1ee-b109-425d-b442-83507f29c858",
+      "original_prediction": null,
+      "human_decision": null,
+      "additional_data": {
+        "review_id": "fa4ce1ee-b109-425d-b442-83507f29c858",
+        "check_type": "STRUCTURE",
+        "confidence": 20,
+        "priority_score": 90.0
+      },
+      "previous_hash": "069393d4cf9a5f4a7f79df103c8c473f2435e6446afe263bf10a02538d3f1767",
+      "entry_hash": "1f1b7b74d7a8623313b17f879f2a42d809291e29b83471593422c1eeed35d4bc"
+    }
+  ]
+}

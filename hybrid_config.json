@@ -154,5 +154,145 @@
     "critical_severity_boost": 20,
     "low_confidence_boost": 10,
     "age_penalty_per_hour": 0.5
+  },
+  "multi_agent": {
+    "enabled": false,
+    "parallel_execution": true,
+    "max_parallel_agents": 4,
+    "agent_timeout_seconds": 30,
+    "checkpoint_interval": 5,
+    "state_persistence": true,
+    "checkpoint_db_path": "./checkpoints/compliance_workflow.db",
+    "enable_workflow_visualization": true,
+    "enable_agent_logging": true
+  },
+  "agents": {
+    "supervisor": {
+      "enabled": true,
+      "timeout_seconds": 10
+    },
+    "preprocessor": {
+      "enabled": true,
+      "timeout_seconds": 15,
+      "auto_extract_metadata": true,
+      "auto_build_whitelist": true
+    },
+    "structure": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "parallel_tool_execution": true
+    },
+    "performance": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "parallel_tool_execution": true
+    },
+    "securities": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "parallel_tool_execution": true,
+      "use_whitelist_filtering": true
+    },
+    "general": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "parallel_tool_execution": true
+    },
+    "prospectus": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "conditional": true,
+      "condition": "prospectus_data_available"
+    },
+    "registration": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "conditional": true,
+      "condition": "fund_isin_available"
+    },
+    "esg": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "conditional": true,
+      "condition": "esg_classification_not_other"
+    },
+    "aggregator": {
+      "enabled": true,
+      "timeout_seconds": 10,
+      "deduplication_enabled": true,
+      "confidence_calculation_method": "weighted_average"
+    },
+    "context": {
+      "enabled": true,
+      "timeout_seconds": 45,
+      "confidence_threshold": 80,
+      "skip_if_all_high_confidence": true,
+      "intent_classification_enabled": true,
+      "semantic_validation_enabled": true
+    },
+    "evidence": {
+      "enabled": true,
+      "timeout_seconds": 45,
+      "extract_quotes": true,
+      "find_performance_data": true,
+      "track_locations": true
+    },
+    "reviewer": {
+      "enabled": true,
+      "timeout_seconds": 10,
+      "confidence_threshold": 70,
+      "auto_queue_enabled": true,
+      "priority_scoring_enabled": true,
+      "batch_operations_enabled": true
+    },
+    "feedback": {
+      "enabled": true,
+      "timeout_seconds": 10,
+      "real_time_calibration": true,
+      "pattern_detection_enabled": true,
+      "rule_suggestion_enabled": false
+    }
+  },
+  "routing": {
+    "context_threshold": 80,
+    "review_threshold": 70,
+    "skip_context_if_high_confidence": true,
+    "skip_review_if_high_confidence": true,
+    "parallel_specialist_agents": ["structure", "performance", "securities", "general"],
+    "conditional_agents": ["prospectus", "registration", "esg"],
+    "sequential_flow": ["supervisor", "preprocessor", "aggregator", "context", "evidence", "reviewer"]
+  },
+  "state_management": {
+    "checkpoint_enabled": true,
+    "checkpoint_interval_agents": 5,
+    "save_intermediate_states": true,
+    "state_history_max_size": 100,
+    "enable_state_validation": true,
+    "auto_cleanup_old_checkpoints": true,
+    "checkpoint_retention_days": 7
+  },
+  "error_handling": {
+    "agent_failure_strategy": "continue",
+    "max_agent_retries": 2,
+    "retry_delay_seconds": 1.0,
+    "fallback_to_rules_on_ai_failure": true,
+    "partial_results_on_failure": true,
+    "circuit_breaker_enabled": true,
+    "circuit_breaker_threshold": 5,
+    "circuit_breaker_timeout_seconds": 60
+  },
+  "monitoring": {
+    "enabled": true,
+    "log_agent_invocations": true,
+    "log_level": "INFO",
+    "track_execution_times": true,
+    "track_success_rates": true,
+    "track_cache_hits": true,
+    "track_api_calls": true,
+    "metrics_export_enabled": true,
+    "metrics_export_path": "./monitoring/metrics/",
+    "dashboard_enabled": false,
+    "alert_on_failures": true,
+    "alert_threshold_failure_rate": 0.2
   }
 }

@@ -1,0 +1,68 @@
+======================================================================
+A/B TESTING COMPARISON REPORT
+======================================================================
+
+Test file: exemple.json
+Date: 2025-11-23 10:49:40
+
+----------------------------------------------------------------------
+SYSTEMS TESTED
+----------------------------------------------------------------------
+Old system: check.py
+New system: check_multiagent.py
+
+----------------------------------------------------------------------
+EXECUTION STATUS
+----------------------------------------------------------------------
+Old system: ✓ Success
+New system: ✓ Success
+
+----------------------------------------------------------------------
+VIOLATION COMPARISON
+----------------------------------------------------------------------
+Old system violations: 0
+New system violations: 0
+Count match: ✓
+
+Matched violations: 0
+  Exact matches: 0
+  Partial matches: 0
+
+Unmatched in old: 0
+Unmatched in new: 0
+
+----------------------------------------------------------------------
+PERFORMANCE COMPARISON
+----------------------------------------------------------------------
+Old system execution time: 196.44s
+New system execution time: 61.91s
+Performance improvement: 68.5% faster
+
+Multi-agent system metrics:
+  Workflow status: aggregating
+  Total execution time: 53.16s
+  Top 5 agent execution times:
+    securities: 53.07s
+    performance: 0.03s
+    general: 0.02s
+    structure: 0.02s
+    preprocessor: 0.01s
+
+----------------------------------------------------------------------
+DISCREPANCIES
+----------------------------------------------------------------------
+✓ No discrepancies found
+
+======================================================================
+OVERALL ASSESSMENT
+======================================================================
+
+✅ SYSTEMS MATCH PERFECTLY
+
+All checks passed:
+  ✓ Violation counts match
+  ✓ All violations match exactly
+  ✓ No discrepancies detected
+
+✓ New system is 68.5% faster
+======================================================================

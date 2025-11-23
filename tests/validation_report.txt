@@ -1,0 +1,29 @@
+
+======================================================================
+VALIDATION REPORT
+======================================================================
+
+⚠️  VALIDATION INCOMPLETE
+
+Check results:
+  ✓ Violation count matches (0 violations)
+  ✓ All violations match between systems
+  ✗ Expected 6 violations, got 0
+  ✓ No false positives detected
+
+----------------------------------------------------------------------
+Multi-Agent System Metrics:
+  Workflow status: aggregating
+  Total execution time: 43.66s
+  Agent execution times:
+    securities: 43.58s
+    performance: 0.03s
+    structure: 0.02s
+    preprocessor: 0.01s
+    general: 0.01s
+    prospectus: 0.00s
+    registration: 0.00s
+    esg: 0.00s
+    aggregator: 0.00s
+    supervisor: 0.00s
+======================================================================

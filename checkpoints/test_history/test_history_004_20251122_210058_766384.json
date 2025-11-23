@@ -1,0 +1,12 @@
+{
+  "checkpoint_id": "test_history_004_20251122_210058_766384",
+  "timestamp": "2025-11-22T21:00:58.766384",
+  "document_id": "test_history_004",
+  "current_agent": "agent_4",
+  "workflow_status": "initialized",
+  "violation_count": 0,
+  "metadata": {},
+  "state_json": "{\n  \"document\": {\n    \"page_de_garde\": {\n      \"text\": \"Test 4\"\n    }\n  },\n  \"document_id\": \"test_history_004\",\n  \"document_type\": \"fund_presentation\",\n  \"client_type\": \"retail\",\n  \"metadata\": {},\n  \"whitelist\": [],\n  \"normalized_document\": {},\n  \"violations\": [],\n  \"context_analysis\": {},\n  \"intent_classifications\": {},\n  \"evidence_extractions\": {},\n  \"review_queue\": [],\n  \"feedback_history\": [],\n  \"confidence_scores\": {},\n  \"aggregated_confidence\": 100,\n  \"current_agent\": \"agent_4\",\n  \"next_action\": \"start\",\n  \"workflow_status\": \"initialized\",\n  \"execution_plan\": [],\n  \"error_log\": [],\n  \"agent_timings\": {},\n  \"api_calls\": 0,\n  \"cache_hits\": 0,\n  \"config\": {},\n  \"started_at\": \"2025-11-22T21:00:58.766384\",\n  \"updated_at\": \"2025-11-22T21:00:58.766384\",\n  \"completed_at\": null\n}",
+  "is_valid": true,
+  "validation_errors": []
+}

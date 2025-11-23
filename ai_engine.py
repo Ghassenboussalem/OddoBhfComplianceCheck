@@ -278,7 +278,7 @@ class GeminiClient(LLMClient):
 
 
 class ResponseCache:
-    """Intelligent in-memory cache for AI responses with LRU eviction and monitoring"""
+    """Intelligent in-memory cache for AI responses with LRU eviction, monitoring, and deduplication"""
     
     def __init__(self, max_size: int = 1000, ttl_seconds: Optional[int] = None):
         """
@@ -295,9 +295,13 @@ class ResponseCache:
         self.last_access_time: Dict[str, float] = {}
         self.creation_time: Dict[str, float] = {}
         
+        # Request deduplication - track in-flight requests
+        self._pending_requests: Dict[str, List[Callable]] = {}
+        
         # Monitoring metrics
         self.hits = 0
         self.misses = 0
+        self.deduplicated_requests = 0
         self.evictions = 0
         self.invalidations = 0
         

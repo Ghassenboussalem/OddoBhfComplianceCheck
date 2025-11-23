@@ -1,0 +1,12 @@
+{
+  "exemple.json": {
+    "success": true,
+    "old_violations": 0,
+    "new_violations": 0,
+    "old_execution_time": 196.4367938041687,
+    "new_execution_time": 61.907007455825806,
+    "matched_count": 0,
+    "exact_matches": 0,
+    "discrepancy_count": 0
+  }
+}

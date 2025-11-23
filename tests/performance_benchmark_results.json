@@ -1,0 +1,80 @@
+{
+  "summary": {
+    "total_tests": 5,
+    "passed": 3,
+    "failed": 2,
+    "duration": 1099.1017787456512,
+    "timestamp": "2025-11-23T11:11:51.661874"
+  },
+  "test_results": [
+    {
+      "test": "Total Execution Time Comparison",
+      "passed": true,
+      "details": "Multi-agent: 29.732s, Current: 127.540s, Speedup: 4.29x",
+      "timestamp": "2025-11-23T10:56:43.818387"
+    },
+    {
+      "test": "Per-Agent Execution Time",
+      "passed": true,
+      "details": "10 agents measured, total: 277.136s",
+      "timestamp": "2025-11-23T11:00:55.864307"
+    },
+    {
+      "test": "Parallel Execution Speedup",
+      "passed": false,
+      "details": "Speedup: 1.11x (10.7% improvement)",
+      "timestamp": "2025-11-23T11:05:13.805524"
+    },
+    {
+      "test": "Multi-Document Batch Performance",
+      "passed": false,
+      "details": "5 docs in 290.869s (avg: 58.174s/doc)",
+      "timestamp": "2025-11-23T11:10:04.755137"
+    },
+    {
+      "test": "Performance Regression Detection",
+      "passed": true,
+      "details": "Regression: -84.2% (threshold: 10%)",
+      "timestamp": "2025-11-23T11:11:51.656875"
+    }
+  ],
+  "benchmark_results": {
+    "multi_agent": {
+      "total_time": 29.73161244392395,
+      "violations": 8,
+      "agent_timings": {
+        "supervisor": 0.001997709274291992,
+        "preprocessor": 0.00800013542175293,
+        "esg": 0.12155580520629883,
+        "general": 0.1005561351776123,
+        "performance": 251.9789261817932,
+        "prospectus": 0.003998517990112305,
+        "registration": 0.005001068115234375,
+        "securities": 24.808989763259888,
+        "structure": 0.09855484962463379,
+        "aggregator": 0.00800013542175293
+      },
+      "total_agent_time": 277.1355803012848,
+      "parallel_time": 257.8875744342804,
+      "sequential_time": 285.42089676856995,
+      "parallel_speedup": 1.1067648272495816,
+      "improvement_percent": 10.67648272495816,
+      "batch_total_time": 290.86936950683594,
+      "batch_avg_time": 58.17387390136719,
+      "batch_document_count": 5
+    },
+    "current_system": {
+      "total_time": 127.54037094116211,
+      "violations": 20
+    },
+    "comparison": {
+      "speedup": 4.289722637200145,
+      "time_diff": -97.80875849723816,
+      "percent_diff": -76.68846952182696,
+      "regression_ratio": 0.15757708594213607,
+      "regression_percent": -84.24229140578639,
+      "threshold": 1.1,
+      "passed_threshold": true
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "last_saved": "2025-11-23T09:00:04.005711",
+  "system_metrics": {
+    "total_workflows": 0,
+    "successful_workflows": 0,
+    "failed_workflows": 0,
+    "total_processing_time": 0.0,
+    "avg_workflow_duration": 0.0,
+    "min_workflow_duration": null,
+    "max_workflow_duration": null,
+    "total_api_calls": 0,
+    "total_cache_hits": 0,
+    "overall_cache_hit_rate": 0.0,
+    "workflows_per_hour": 0.0,
+    "documents_processed": 0,
+    "total_violations_found": 0,
+    "avg_violations_per_document": 0.0,
+    "tracking_started": "2025-11-22T22:27:05.958252",
+    "last_updated": "2025-11-22T22:27:05.958252"
+  },
+  "agent_metrics": {},
+  "recent_workflows": []
+}

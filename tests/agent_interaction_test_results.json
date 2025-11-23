@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "total": 4,
+    "passed": 3,
+    "failed": 1,
+    "duration_seconds": 43.893202,
+    "timestamp": "2025-11-23T10:20:56.559304"
+  },
+  "tests": [
+    {
+      "test": "State Passing Between Agents",
+      "passed": false,
+      "details": "Missing fields: ['document', 'document_id', 'config']",
+      "timestamp": "2025-11-23T10:20:12.679141"
+    },
+    {
+      "test": "Violation Aggregation",
+      "passed": true,
+      "details": "0 violations from 0 agents",
+      "timestamp": "2025-11-23T10:20:12.689667"
+    },
+    {
+      "test": "Context Analysis Flow",
+      "passed": true,
+      "details": "Flow completed: aggregator \u2192 context \u2192 evidence",
+      "timestamp": "2025-11-23T10:20:39.200827"
+    },
+    {
+      "test": "Review Queue Flow",
+      "passed": true,
+      "details": "2 items in review queue, HITL=True",
+      "timestamp": "2025-11-23T10:20:56.559304"
+    }
+  ]
+}
